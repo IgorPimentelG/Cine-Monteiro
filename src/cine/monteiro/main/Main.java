@@ -11,9 +11,9 @@ public class Main {
 		Persistencia bancoDeInformacoes = new Persistencia();
 		CentralDeInformacoes cpd = bancoDeInformacoes.recuperarCentralDeInformacoes();
 		
-		WindowsSobre windowsSobre = new WindowsSobre();
+		WindowsSplash splash = new WindowsSplash();
 		Thread.sleep(3000);
-		windowsSobre.dispose();
+		splash.dispose();
 		
 		if(cpd.getUsuarios().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Atenção! Realize o Cadastro do Administrador.", "Administrador Não Cadastrado", JOptionPane.WARNING_MESSAGE);

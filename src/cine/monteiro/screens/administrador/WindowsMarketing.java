@@ -9,6 +9,7 @@ import javax.swing.JSeparator;
 import cine.monteiro.imagens.Imagens;
 import cine.monteiro.screens.componentes.Separador;
 import cine.monteiro.screens.componentes.Windows;
+import cine.monteiro.screens.ouvintes.OuvinteBtnVoltar;
 
 public class WindowsMarketing extends Windows {
 	public WindowsMarketing() {
@@ -50,6 +51,7 @@ public class WindowsMarketing extends Windows {
 		
 		JButton btnVoltar = new JButton("VOLTAR");
 		btnVoltar.setBounds(290, 100, 150, 30);
+		btnVoltar.addActionListener(new OuvinteBtnVoltar(this));
 		add(btnVoltar);
 	}
 }

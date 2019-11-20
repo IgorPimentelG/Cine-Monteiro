@@ -21,12 +21,12 @@ public class WindowsCadastro extends Windows {
 	private JTextField tfDataDeNascimento;
 	private JTextField tfTelefone;
 	private JTextField tfEmail;
-	private JTextField tfSenha;
-	private JTextField tfConfirmarSenha;
+	private JPasswordField tfSenha;
+	private JPasswordField tfConfirmarSenha;
 	
 	
 	public WindowsCadastro() {
-		super("Cadastro - Cine Monteiro", 635, 575);
+		super("Cadastro - Cine Monteiro", 635, 515);
 		adicionarSeparador();
 		adicionarImagens();
 		adicionarInputs();
@@ -38,30 +38,34 @@ public class WindowsCadastro extends Windows {
 	// Componentes
 	private void adicionarImagens() {
 		JLabel iconeNovoUsuario = new JLabel(Imagens.NOVO_USER_100x100);
-		iconeNovoUsuario.setBounds(40, 185, 100, 100);
+		iconeNovoUsuario.setBounds(40, 165, 100, 100);
 		add(iconeNovoUsuario);
 	}
 	
 	private void adicionarInputs() {
-		tfNome = new Input(195, 85, 400, 30);
+		tfNome = new Input(195, 85, 400, 35);
 		add(tfNome);
 		
-		tfCPF = new Input(195, 155, 195, 30);
+		tfCPF = new Input(195, 155, 195, 35);
 		add(tfCPF);
 		
-		tfDataDeNascimento = new Input(400, 155, 195, 30);
+		tfDataDeNascimento = new Input(400, 155, 195, 35);
 		add(tfDataDeNascimento);
 		
-		tfTelefone = new Input(195, 225, 400, 30);
+		tfTelefone = new Input(195, 225, 400, 35);
 		add(tfTelefone);
 		
-		tfEmail = new Input(195, 295, 400, 30);
+		tfEmail = new Input(195, 295, 400, 35);
 		add(tfEmail);
 		
-		tfSenha = new Input(195, 365, 400, 30);
+		tfSenha = new JPasswordField();
+		tfSenha.setBounds(195, 365, 195, 35);
+		tfSenha.setHorizontalAlignment(JPasswordField.CENTER);
 		add(tfSenha);
 		
-		tfConfirmarSenha = new Input(195, 435, 400, 30);
+		tfConfirmarSenha = new JPasswordField();
+		tfConfirmarSenha.setBounds(400, 365, 195, 35);
+		tfConfirmarSenha.setHorizontalAlignment(JPasswordField.CENTER);
 		add(tfConfirmarSenha);
 	}
 	
@@ -73,7 +77,7 @@ public class WindowsCadastro extends Windows {
 		
 		JLabel lblTitulo = new JLabel("NOVA CONTA");
 		lblTitulo.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
-		lblTitulo.setBounds(35, 295, 200, 20);
+		lblTitulo.setBounds(35, 275, 200, 20);
 		add(lblTitulo);
 		
 		JLabel lblNome = new Rotulo("Nome:", 195, 45, 50, 50);
@@ -94,19 +98,19 @@ public class WindowsCadastro extends Windows {
 		JLabel lblSenha = new Rotulo("Senha:", 195, 325, 100, 50);
 		add(lblSenha);
 		
-		JLabel lblConfirmarSenha = new Rotulo("Confirmar Senha:", 195, 395, 200, 50);
+		JLabel lblConfirmarSenha = new Rotulo("Confirmar Senha:", 400, 325, 200, 50);
 		add(lblConfirmarSenha);
 	}
 	
 	private void adicionarButtons() {
 		JButton btnCadastrar = new JButton("CADASTRAR");
-		btnCadastrar.setBounds(195, 480, 190, 35);
+		btnCadastrar.setBounds(195, 415, 195, 40);
 		btnCadastrar.addActionListener(new OuvinteCadastrar());
 		add(btnCadastrar);
 		
 		
 		JButton btnCancelar = new JButton("CANCELAR");
-		btnCancelar.setBounds(405, 480, 190, 35);
+		btnCancelar.setBounds(400, 415, 195, 40);
 		btnCancelar.addActionListener(new OuvinteCancelar());
 		add(btnCancelar);
 	}
@@ -114,7 +118,7 @@ public class WindowsCadastro extends Windows {
 	private void adicionarSeparador() {
 		JSeparator separador = new JSeparator(SwingConstants.VERTICAL);
 		separador.setForeground(Color.GRAY);
-		separador.setBounds(170, 5, 2, 525);
+		separador.setBounds(170, 5, 2, 465);
 		add(separador);
 	}
 	

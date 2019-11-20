@@ -1,8 +1,11 @@
 package cine.monteiro.screens.administrador;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
 
@@ -11,6 +14,7 @@ import cine.monteiro.screens.componentes.*;
 import cine.monteiro.screens.ouvintes.OuvinteBtnVoltar;
 
 public class WindowsSala extends Windows {
+	// Construtor
 	public WindowsSala() {
 		super("Painel de Controle - Sala", 370, 220);
 		adicionarImagens();
@@ -20,6 +24,7 @@ public class WindowsSala extends Windows {
 		setVisible(true);
 	}
 	
+	// Componentes
 	private void adicionarImagens() {
 		JLabel iconeSala = new JLabel(Imagens.SALA_100x100);
 		iconeSala.setBounds(27, 45, 64, 64);
@@ -41,6 +46,7 @@ public class WindowsSala extends Windows {
 	private void adicionarButtons() {
 		JButton btnCadastrarSala = new JButton("CADASTRAR NOVA SALA");
 		btnCadastrarSala.setBounds(135, 15, 200, 30);
+		btnCadastrarSala.addActionListener(new OuvinteBtnCadastrarSala(this));
 		add(btnCadastrarSala);
 		
 		JButton btnExcluirSala = new JButton("EXCLUIR SALA");
@@ -56,4 +62,20 @@ public class WindowsSala extends Windows {
 		btnVoltar.addActionListener(new OuvinteBtnVoltar(this));
 		add(btnVoltar);
 	}
+	
+	// Ouvintes
+	public class OuvinteBtnCadastrarSala implements ActionListener {
+		private JFrame windows;
+		
+		public OuvinteBtnCadastrarSala(JFrame windows) {
+			this.windows = windows;
+		}
+		
+		public void actionPerformed(ActionEvent e) {
+			windows.dispose();
+			new WindowsCadastrarSala();
+		}
+	}
+
+	
 }

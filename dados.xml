@@ -1,5 +1,15 @@
 <cine.monteiro.dados.CentralDeInformacoes>
-  <usuarios/>
+  <usuarios>
+    <cine.monteiro.usuarios.Administrador>
+      <nome>Igor Pimentel</nome>
+      <CPF>123.125.594-39</CPF>
+      <telefone>(83) 991905120</telefone>
+      <idade>0</idade>
+      <dataDeNascimento>18/03/198</dataDeNascimento>
+      <email>igor.pimentel.msi@hotmail.com</email>
+      <senha>KP88X0VC</senha>
+    </cine.monteiro.usuarios.Administrador>
+  </usuarios>
   <salas/>
   <filmes/>
 </cine.monteiro.dados.CentralDeInformacoes>

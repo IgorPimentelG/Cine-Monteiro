@@ -12,7 +12,7 @@ public abstract class Email {
 	private String password = "d=uYu3wu";
 	
 	public MimeMessage configuracao() {
-		// ConfiguraÃ§Ã£o do Gmail
+		// Configuração do Gmail
 		Properties props = new Properties();
 		props.put("mail.smtp.user", this.remetente);
 		props.put("mail.smtp.host", "smtp.gmail.com");
@@ -26,7 +26,7 @@ public abstract class Email {
 		props.setProperty("mail.smtp.port", "465");
 		props.setProperty("mail.smtp.socketFactory.port", "465");
 		
-		// AutenticaÃ§Ã£o
+		// Autenticação
 		Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
 			protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
 				return new javax.mail.PasswordAuthentication(remetente, password);

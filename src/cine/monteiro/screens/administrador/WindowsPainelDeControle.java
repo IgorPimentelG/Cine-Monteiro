@@ -5,6 +5,8 @@ import cine.monteiro.screens.componentes.*;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
@@ -39,14 +41,17 @@ public class WindowsPainelDeControle extends Windows {
 	private void adicionarButtons() {
 		JButton btnFilmes = new JButton("FILMES");
 		btnFilmes.setBounds(230, 70, 130, 80);
+		btnFilmes.addActionListener(new OuvinteBtnFilmes());
 		add(btnFilmes);
 		
 		JButton btnSessoes = new JButton("SESSÕES");
 		btnSessoes.setBounds(380, 70, 130, 80);
+		btnSessoes.addActionListener(new OuvinteBtnSessoes());
 		add(btnSessoes);
 		
 		JButton btnSalas = new JButton("SALAS");
 		btnSalas.setBounds(530, 70, 130, 80);
+		btnSalas.addActionListener(new OuvinteBtnSalas());
 		add(btnSalas);
 		
 		JButton btnRelatorios = new JButton("RELATÓRIOS");
@@ -59,6 +64,7 @@ public class WindowsPainelDeControle extends Windows {
 		
 		JButton btnMarketing = new JButton("MARKETING");
 		btnMarketing.setBounds(530, 170, 130, 80);
+		btnMarketing.addActionListener(new OuvinteBtnMarketing());
 		add(btnMarketing);
 	}
 	
@@ -67,5 +73,34 @@ public class WindowsPainelDeControle extends Windows {
 		separador.setBounds(195, 10, 1, 260);
 		separador.setForeground(Color.GRAY);
 		add(separador);
+	}
+
+	// Ouvintes
+	public class OuvinteBtnFilmes implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			dispose();
+			new WindowsFilmes();
+		}
+	}
+	
+	public class OuvinteBtnSessoes implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			dispose();
+			new WindowsSessao();
+		}
+	}
+	
+	public class OuvinteBtnSalas implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			dispose();
+			new WindowsSala();
+		}
+	}
+	
+	public class OuvinteBtnMarketing implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			dispose();
+			new WindowsMarketing();
+		}
 	}
 }

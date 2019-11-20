@@ -2,7 +2,8 @@ package cine.monteiro.screens.componentes;
 
 import javax.swing.*;
 
-public class Windows extends JFrame {
+public abstract class Windows extends JFrame {
+	// Construtor
 	public Windows(String titulo, int width, int height) {
 		setSize(width, height);
 		setTitle(titulo);

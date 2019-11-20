@@ -8,11 +8,12 @@ import cine.monteiro.usuarios.*;
 import cine.monteiro.gerenciamento.*;
 
 public class CentralDeInformacoes {
+	// Atributos
 	private ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
 	private ArrayList<Sala> salas = new ArrayList<Sala>();
 	private ArrayList<Filme> filmes = new ArrayList<Filme>();
 	
-	// Usu√°rio
+	// Usu·rio
 	public void adicionarUsuario(Usuario usuario) throws Exception {
 		if(!usuarios.isEmpty()) {
 			for(Usuario u : usuarios) {
@@ -49,22 +50,18 @@ public class CentralDeInformacoes {
 	}
 
 	// Sala
-	public void adicionarSala(Sala sala) throws Exception {
-		if(salas.isEmpty()) {
-			salas.add(sala);
-		} else {
-			for(Sala s : salas) {
-				if(s.getID() == sala.getID() || s.getNomeDaSala().equalsIgnoreCase(sala.getNomeDaSala())) {
-					throw new Exception("Sala j√° cadastrada!");
-				}
+	public void adicionarSala(Sala novaSala) throws Exception {
+		for(Sala s : salas) {
+			if(s.getNomeDaSala().equalsIgnoreCase(novaSala.getNomeDaSala())) {
+				throw new Exception("J· existe uma sala com o mesmo nome cadastrado!");
 			}
-			salas.add(sala);
 		}
+		salas.add(novaSala);
 	}
 	
 	public void excluirSala(long ID) throws Exception {
 		if(salas.isEmpty()) {
-			throw new Exception("N√£o existe salas cadastradas!");
+			throw new Exception("N„o existe salas cadastradas.");
 		} else {
 			for(Sala s : salas) {
 				if(s.getID() == ID) {
@@ -72,7 +69,6 @@ public class CentralDeInformacoes {
 					return;
 				}
 			}
-			throw new Exception("Sala n√£o existe!");
 		}
 	}
 	
@@ -91,16 +87,12 @@ public class CentralDeInformacoes {
 	
 	// Filme
 	public void adicionarFilme(Filme filme) throws Exception{
-		if(filmes.isEmpty()) {
-			filmes.add(filme);
-		} else {
-			for(Filme f : filmes) {
-				if(f.getNomeDoFilme().equalsIgnoreCase(filme.getNomeDoFilme())) {
-					throw new Exception("O filme j√° foi cadastrado");
-				}
+		for(Filme f : filmes) {
+			if(f != null && f.getNomeDoFilme().equalsIgnoreCase(filme.getNomeDoFilme())) {
+				throw new Exception("O filme j· foi cadastrado");
 			}
-			filmes.add(filme);
 		}
+		filmes.add(filme);
 	}
 		
 	public ArrayList<Filme> getFilmes() {
@@ -116,16 +108,16 @@ public class CentralDeInformacoes {
 		return null;
 	}
 	
-	// Sess√£o
+	// Sess„o
 	public void adicionarSessao(Sessao novaSessao, Sala sala) throws Exception {
 		if(salas.isEmpty()) {
-			throw new Exception("N√£o existe salas cadastradas!");
+			throw new Exception("N„o existe salas cadastradas!");
 		} else {
 				ArrayList<Sessao> sessoesDaSala = sala.getSessoes();
 					
 				for(Sessao velhaSessao : sessoesDaSala) {
 					if(!(novaSessao.getHoraDeInicio().isAfter(velhaSessao.getHoraDoTermino()) || novaSessao.getHoraDoTermino().isBefore(velhaSessao.getHoraDeInicio()))) {
-						throw new Exception("J√° existe uma sess√£o cadastrada neste per√≠odo de exibi√ß√£o.");
+						throw new Exception("J· existe uma sess„o cadastrada neste perÌodo de exibiÁ„o.");
 					}
 				}
 				sala.addSessao(novaSessao);
