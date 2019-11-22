@@ -2,6 +2,8 @@ package cine.monteiro.screens.administrador;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
@@ -36,6 +38,12 @@ public class WindowsFilmes extends Windows {
 		JButton btnCadastrarFilme = new JButton("CADASTRAR FILME");
 		btnCadastrarFilme.setBounds(125, 15, 200, 30);
 		btnCadastrarFilme.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
+		btnCadastrarFilme.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new WindowsCadastrarFilme();
+			}
+		});
 		add(btnCadastrarFilme);
 		
 		JButton btnListarTodosFilmes = new JButton("LISTAR TODOS OS FILMES");

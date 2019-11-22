@@ -2,6 +2,7 @@ package cine.monteiro.screens;
 
 // APIs
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,9 +31,16 @@ import cine.monteiro.usuarios.Administrador;
 import cine.monteiro.usuarios.Usuario;
 
 public class WindowsLogin extends Windows {
+	Persistencia bancoDeInformacoes = new Persistencia();
+	CentralDeInformacoes cpd = bancoDeInformacoes.recuperarCentralDeInformacoes();
+	
 	// Atributos
 	private JTextField tfLogin;
 	private JPasswordField tfSenha;
+	private JCheckBox cbLembrarEmail;
+	private String emailSalvo = cpd.getEmailSalvo();
+	private boolean statusCheckBox = cpd.getStatusCheckBox();
+	
 	
 	public WindowsLogin() {
 		super("Login - Cine Monteiro", 410, 490);
@@ -81,8 +89,11 @@ public class WindowsLogin extends Windows {
 	}
 	
 	private void adicionarInputs() {
-		tfLogin = new Input(65, 225, 305, 36);
+		tfLogin = new JTextField(this.emailSalvo);
 		tfLogin.setToolTipText("Digite seu e-mail aqui");
+		tfLogin.setBounds(65, 225, 305, 36);
+		tfLogin.setHorizontalAlignment(JTextField.CENTER);
+		tfLogin.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
 		add(tfLogin);
 		
 		tfSenha = new JPasswordField();
@@ -97,13 +108,19 @@ public class WindowsLogin extends Windows {
 		btnEntrar.setBounds(30, 385, 160, 40);
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Persistencia bancoDeInformacoes = new Persistencia();
-				CentralDeInformacoes cpd = bancoDeInformacoes.recuperarCentralDeInformacoes();
-				
 				if(tfLogin.getText().isBlank() || tfSenha.getText().isBlank()) {
 					JOptionPane.showMessageDialog(null, "Preencha todos os campos!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
+				} else if(cpd.validarEmail(tfLogin.getText()) == false) {
+					JOptionPane.showMessageDialog(null, "E-mail não é válido!", "ATENÇÃO!", JOptionPane.ERROR_MESSAGE);
 				} else {
-
+					if(cbLembrarEmail.isSelected()) {
+						cpd.setEmailSalvo(tfLogin.getText());
+						cpd.setStatusCheckBox(true);
+					} else {
+						cpd.setEmailSalvo("");
+						cpd.setStatusCheckBox(false);
+					}
+					
 					try {
 						Usuario usuarioAtivo = cpd.autenticarUsuario(tfLogin.getText(), tfSenha.getText());
 						
@@ -112,11 +129,13 @@ public class WindowsLogin extends Windows {
 							new WindowsPainelDeControle();
 						}
 					} catch(Exception erro) {
-						JOptionPane.showMessageDialog(null, erro.getMessage());
+						JOptionPane.showMessageDialog(null, erro.getMessage(), "ATENÇÃO!", JOptionPane.ERROR_MESSAGE);
 					}
 				}
+				bancoDeInformacoes.salvarCentralDeInformacoes(cpd);
 			}
 		});
+		btnEntrar.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		add(btnEntrar);
 		
 		JButton btnNovaConta = new JButton("CRIAR CONTA");
@@ -127,14 +146,16 @@ public class WindowsLogin extends Windows {
 				dispose();
 			}
 		});
+		btnNovaConta.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		add(btnNovaConta);
 	}
 
 	private void adicionarCheckcBox() {
-		JCheckBox cbLembrarDados = new JCheckBox("Lembrar e-mail", false);
-		cbLembrarDados.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 13));
-		cbLembrarDados.setBounds(30, 340, 150, 40);
-		add(cbLembrarDados);
+		cbLembrarEmail= new JCheckBox("Lembrar e-mail", statusCheckBox);
+		cbLembrarEmail.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 13));
+		cbLembrarEmail.setBounds(30, 340, 150, 40);
+		cbLembrarEmail.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		add(cbLembrarEmail);
 	}
 
 }

@@ -77,24 +77,17 @@ public class WindowsRecuperarSenha extends Windows {
 			CentralDeInformacoes cpd = bancoDeInformacoes.recuperarCentralDeInformacoes();
 			
 			public void actionPerformed(ActionEvent e) {
+				RecuperarSenha rs = new RecuperarSenha();
 				try {
-					Usuario usuario = cpd.autenticarEmailDoUsuario(tfEmail.getText());
-					
-					if(usuario != null) {
-						RecuperarSenha rs = new RecuperarSenha();
-						try {
-							rs.recuperarSenha(usuario);
-							JOptionPane.showMessageDialog(null, "Verifique seu e-mail.", "ATEN플O!", JOptionPane.WARNING_MESSAGE);
-							dispose();
-							new WindowsLogin();
-						} catch(MessagingException e2) {
-							JOptionPane.showMessageDialog(null, "Erro ao enviar e-mail", "ATEN플O!", JOptionPane.ERROR_MESSAGE);
-						}
-						
-					}
-				} catch (Exception erro) {
+					rs.recuperarSenha(cpd.autenticarEmailDoUsuario(tfEmail.getText()));
+					JOptionPane.showMessageDialog(null, "Verifique seu e-mail.", "ATEN플O!", JOptionPane.WARNING_MESSAGE);
+					dispose();
+					new WindowsLogin();
+				} catch(MessagingException e2) {
+					JOptionPane.showMessageDialog(null, "Erro ao enviar e-mail", "ATEN플O!", JOptionPane.ERROR_MESSAGE);
+				} catch(Exception erro) {
 					JOptionPane.showMessageDialog(null, erro.getMessage(), "ATEN플O!",JOptionPane.ERROR_MESSAGE);
-				}
+				}	
 			}
 			
 		});

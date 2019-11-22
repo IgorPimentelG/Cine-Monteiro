@@ -3,6 +3,9 @@ package cine.monteiro.dados;
 // Bibliotecas
 import java.util.ArrayList;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+
 // Pacotes
 import cine.monteiro.usuarios.*;
 import cine.monteiro.gerenciamento.*;
@@ -12,6 +15,9 @@ public class CentralDeInformacoes {
 	private ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
 	private ArrayList<Sala> salas = new ArrayList<Sala>();
 	private ArrayList<Filme> filmes = new ArrayList<Filme>();
+	
+	private String emailSalvo = "";
+	private boolean statusCheckBox = false;
 	
 	// Usuário
 	public void adicionarUsuario(Usuario usuario) throws Exception {
@@ -46,9 +52,21 @@ public class CentralDeInformacoes {
 				return usuario;
 			}
 		}
-		throw new Exception("Usuário não cadastrado.");
+		throw new Exception("Dados Inválidos!");
 	}
-
+	
+	public boolean validarEmail(String email) {
+		 boolean valido = true;
+		 
+		    try {
+		        InternetAddress enderecoEmail = new InternetAddress(email);
+		        enderecoEmail.validate();
+		    } catch (AddressException ex) {
+		        valido = false;
+		    }
+		    return valido;
+	}
+	
 	// Sala
 	public void adicionarSala(Sala novaSala) throws Exception {
 		for(Sala s : salas) {
@@ -59,15 +77,11 @@ public class CentralDeInformacoes {
 		salas.add(novaSala);
 	}
 	
-	public void excluirSala(long ID) throws Exception {
-		if(salas.isEmpty()) {
-			throw new Exception("Não existe salas cadastradas.");
-		} else {
-			for(Sala s : salas) {
-				if(s.getID() == ID) {
-					salas.remove(s);
-					return;
-				}
+	public void excluirSala(long ID)  {
+		for(Sala s : salas) {
+			if(s.getID() == ID) {
+				salas.remove(s);
+				break;
 			}
 		}
 	}
@@ -134,5 +148,21 @@ public class CentralDeInformacoes {
 				}
 			}
 		}
+	}
+	
+	public void setEmailSalvo(String email) {
+		this.emailSalvo = email;
+	}
+	
+	public String getEmailSalvo() {
+		return emailSalvo;
+	}
+	
+	public void setStatusCheckBox(boolean status) {
+		this.statusCheckBox = status;
+	}
+	
+	public boolean getStatusCheckBox() {
+		return statusCheckBox;
 	}
 }

@@ -3,13 +3,18 @@
     <cine.monteiro.usuarios.Administrador>
       <nome>Igor Pimentel</nome>
       <CPF>123.125.594-39</CPF>
-      <telefone>(83) 991905120</telefone>
-      <idade>0</idade>
-      <dataDeNascimento>18/03/198</dataDeNascimento>
+      <telefone>(83) 9.9190-5120</telefone>
+      <idade>21</idade>
+      <dataDeNascimento>
+        <time>890190000000</time>
+        <timezone>America/Fortaleza</timezone>
+      </dataDeNascimento>
       <email>igor.pimentel.msi@hotmail.com</email>
-      <senha>KP88X0VC</senha>
+      <senha>d=uYu3wu</senha>
     </cine.monteiro.usuarios.Administrador>
   </usuarios>
   <salas/>
   <filmes/>
+  <emailSalvo>igor.pimentel.msi@hotmail.com</emailSalvo>
+  <statusCheckBox>true</statusCheckBox>
 </cine.monteiro.dados.CentralDeInformacoes>

@@ -14,13 +14,9 @@ public class Sessao {
 	private boolean ativa;
 	
 	// Construtor
-	public Sessao(Filme filme, LocalTime horaDeInicio, Calendar periodoDeExibicao) {
-		this.ID = System.currentTimeMillis();
-		this.ativa = true;
-		this.filme = filme;
-		this.horaDeInicio = horaDeInicio;
-		this.periodoDeExibicao = periodoDeExibicao;
-		this.horaDoTermino = horaDeInicio.plusMinutes(this.filme.getDuracaco());
+	public Sessao() {
+		ID = System.currentTimeMillis();
+		ativa = true;
 	}
 	
 	// Setters

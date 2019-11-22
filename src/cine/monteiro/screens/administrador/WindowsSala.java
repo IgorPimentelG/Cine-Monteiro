@@ -46,11 +46,22 @@ public class WindowsSala extends Windows {
 	private void adicionarButtons() {
 		JButton btnCadastrarSala = new JButton("CADASTRAR NOVA SALA");
 		btnCadastrarSala.setBounds(135, 15, 200, 30);
-		btnCadastrarSala.addActionListener(new OuvinteBtnCadastrarSala(this));
+		btnCadastrarSala.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new WindowsCadastrarSala();
+			}
+		});
 		add(btnCadastrarSala);
 		
 		JButton btnExcluirSala = new JButton("EXCLUIR SALA");
 		btnExcluirSala.setBounds(135, 55, 200, 30);
+		btnExcluirSala.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new WindowsExcluirSala();
+			}
+		});
 		add(btnExcluirSala);
 		
 		JButton btnListarTodasAsSalas = new JButton("LISTAR TODAS AS SALAS");
@@ -65,17 +76,8 @@ public class WindowsSala extends Windows {
 	
 	// Ouvintes
 	public class OuvinteBtnCadastrarSala implements ActionListener {
-		private JFrame windows;
-		
-		public OuvinteBtnCadastrarSala(JFrame windows) {
-			this.windows = windows;
-		}
-		
 		public void actionPerformed(ActionEvent e) {
-			windows.dispose();
-			new WindowsCadastrarSala();
+			
 		}
 	}
-
-	
 }

@@ -1,5 +1,7 @@
 package cine.monteiro.email;
 
+import java.util.ArrayList;
+
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Transport;
@@ -19,26 +21,26 @@ public class RecuperarSenha extends Email {
 		
 		for(int c = 0; c < 8; c++) {
 			int caractereSorteado = (int) (Math.random() * caracteres.length);
-			this.novaSenha += caracteres[caractereSorteado];
+			novaSenha += caracteres[caractereSorteado];
 		}
 	}
 	
-	public void recuperarSenha(Usuario usuario) throws MessagingException{
+	public void recuperarSenha(Usuario usuario) throws MessagingException {
+		gerarNovaSenha();
+		
 		Persistencia bancoDeInformacoes = new Persistencia();
 		CentralDeInformacoes cpd = bancoDeInformacoes.recuperarCentralDeInformacoes();
 		
-		this.gerarNovaSenha();
-		
-		cpd.getUsuarios().get(0).setSenha(this.novaSenha);
-		//usuario.setSenha(this.novaSenha);
-		System.out.print(usuario.getSenha());
 		// Criar Mensagem
 		Message mensagem = super.configuracao();
 		mensagem.setFrom(new InternetAddress(super.getRemetente()));
 		mensagem.setRecipients(Message.RecipientType.TO, InternetAddress.parse(usuario.getEmail()));
 		mensagem.setSubject("Cine Monteiro - Recuperação da Senha");
-		mensagem.setText("Olá " + usuario.getNome() + ",\n\nVocê solicitou uma nova senha para sua conta do Cine Monteiro. \nSua senha temporária é: " + this.novaSenha);
+		mensagem.setText("Olá " + usuario.getNome() + ",\n\nVocê solicitou uma nova senha para sua conta do Cine Monteiro. \nSua senha temporária é: " + novaSenha);
 		Transport.send(mensagem);
+		
+		// Alterar Senha
+		usuario.setSenha(novaSenha);
 		bancoDeInformacoes.salvarCentralDeInformacoes(cpd);
 	}
 }

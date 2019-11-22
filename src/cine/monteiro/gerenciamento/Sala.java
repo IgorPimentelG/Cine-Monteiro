@@ -8,17 +8,13 @@ public class Sala {
 	private final long ID;
 	private String nomeDaSala;
 	private int quantidadeDeAssentos;
-	private float precoDoIngresso;
+	private String precoDoIngresso;
 	private String tipoDaProjecaoSuportada; // Criar enum
 	private ArrayList<Sessao> sessoes = new ArrayList<Sessao>();
 	
 	// Construtor
-	public Sala(String nomeDaSala, int quantidadeDeAssentos, float precoDoIngresso, String tipoDaProjecaoSuportada) {
+	public Sala() {
 		this.ID = System.currentTimeMillis();
-		this.nomeDaSala = nomeDaSala;
-		this.quantidadeDeAssentos = quantidadeDeAssentos;
-		this.precoDoIngresso = precoDoIngresso;
-		this.tipoDaProjecaoSuportada = tipoDaProjecaoSuportada;
 	}
 	
 	// Setters
@@ -30,7 +26,7 @@ public class Sala {
 		this.quantidadeDeAssentos = quantidadeDeAssentos;
 	}
 	
-	public void setPrecoDoIngresso(float precoDoIngresso) {
+	public void setPrecoDoIngresso(String precoDoIngresso) {
 		this.precoDoIngresso = precoDoIngresso;
 	}
 	
@@ -52,7 +48,7 @@ public class Sala {
 	}
 	
 	public String getPrecoDoIngresso() {
-		return NumberFormat.getCurrencyInstance().format(precoDoIngresso);
+		return precoDoIngresso;
 	}
 	
 	public String getTipoDaProjecaoSuportada() {

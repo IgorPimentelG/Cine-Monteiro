@@ -1,9 +1,9 @@
 package cine.monteiro.usuarios;
 
-import java.util.Calendar;
+import java.util.Date;
 
 public class Administrador extends Usuario {
-	public Administrador(String nome, String CPF, String telefone, String dataDeNascimento, String email, String senha) {
+	public Administrador(String nome, String CPF, String telefone, Date dataDeNascimento, String email, String senha) {
 		super(nome, CPF, telefone, dataDeNascimento, email, senha);
 	}
 }

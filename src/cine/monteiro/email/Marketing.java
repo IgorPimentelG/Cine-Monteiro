@@ -17,6 +17,6 @@ public class Marketing extends Email {
 		
 		ArrayList<Usuario> usuarios = cpd.getUsuarios();
 		
-		ArrayList<String> emailsDosClientes = new ArrayList<String>;
+		ArrayList<String> emailsDosClientes = new ArrayList<String>();
 	}
 }

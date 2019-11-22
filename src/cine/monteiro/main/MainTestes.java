@@ -9,10 +9,8 @@ public class MainTestes {
 		//WindowsSplash ws = new WindowsSplash();
 		//Thread.sleep(3000);
 		//ws.dispose();
-		new WindowsLogin();
-		
+		//new WindowsLogin();
 		//new WindowsCadastrarSala();
-		
 		//new WindowsSobre();
 		//new WindowsRecuperarSenha();
 		//new WindowsPainelDeControle();
@@ -21,5 +19,9 @@ public class MainTestes {
 		//new WindowsFilmes();
 		//new WindowsMarketing();
 		//new WindowsSessao();
+		
+		//new WindowsExcluirSala();
+		//new WindowsCadastrarFilme();
+		new WindowsCadastrarSessao();
 	}
 }

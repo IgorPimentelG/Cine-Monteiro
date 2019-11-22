@@ -1,23 +1,24 @@
 package cine.monteiro.usuarios;
 
 import java.util.Calendar;
+import java.util.Date;
 
 public abstract class Usuario {
 	private String nome;
 	private String CPF;
 	private String telefone;
 	private int idade;
-	private String dataDeNascimento;
+	private Date dataDeNascimento;
 	private String email;
 	private String senha;
 	
 	// Construtor
-	public Usuario(String nome, String CPF, String telefone, String dataDeNascimento, String email, String senha) {
+	public Usuario(String nome, String CPF, String telefone, Date dataDeNascimento, String email, String senha) {
 		this.nome = nome;
 		this.CPF = CPF;
 		this.telefone = telefone;
 		this.dataDeNascimento = dataDeNascimento;
-		//this.setIdade(dataDeNascimento);
+		this.setIdade(dataDeNascimento);
 		this.email = email;
 		this.senha = senha;
 	}
@@ -36,12 +37,12 @@ public abstract class Usuario {
 	}
 	
 	// Tratar dia e mês
-	public void setIdade(Calendar dataDeNascimento) {
+	public void setIdade(Date dataDeNascimento) {
 		Calendar dataAtual = Calendar.getInstance();
-		this.idade = dataAtual.get(Calendar.YEAR) - dataDeNascimento.get(Calendar.YEAR);
+		this.idade = dataAtual.get(Calendar.YEAR) - dataDeNascimento.getYear();
 	}
 	
-	public void setDataDeNascimento(String dataDeNascimento) {
+	public void setDataDeNascimento(Date dataDeNascimento) {
 		this.dataDeNascimento = dataDeNascimento;
 	}
 	
@@ -70,7 +71,7 @@ public abstract class Usuario {
 		return idade;
 	}
 	
-	public String getDataDeNascimento() {
+	public Date getDataDeNascimento() {
 		return dataDeNascimento;
 	}
 	

@@ -10,16 +10,23 @@ import cine.monteiro.usuarios.*;
 
 // Bibliotecas
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import javax.swing.*;
+import javax.swing.text.MaskFormatter;
 
 public class WindowsCadastro extends Windows {
 	private JTextField tfNome;
-	private JTextField  tfCPF;
-	private JTextField tfDataDeNascimento;
-	private JTextField tfTelefone;
+	private JFormattedTextField  tfCPF;
+	private JFormattedTextField tfDataDeNascimento;
+	private JFormattedTextField tfTelefone;
 	private JTextField tfEmail;
 	private JPasswordField tfSenha;
 	private JPasswordField tfConfirmarSenha;
@@ -46,14 +53,39 @@ public class WindowsCadastro extends Windows {
 		tfNome = new Input(195, 85, 400, 35);
 		add(tfNome);
 		
-		tfCPF = new Input(195, 155, 195, 35);
-		add(tfCPF);
+		try {
+			MaskFormatter mascaraDoCPF = new MaskFormatter("###.###.###-##");
+			tfCPF = new JFormattedTextField(mascaraDoCPF);
+			tfCPF.setBounds(195, 155, 195, 35);
+			tfCPF.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
+			tfCPF.setHorizontalAlignment(JTextField.CENTER);
+			add(tfCPF);
+		} catch(ParseException e) {
+			
+		}
 		
-		tfDataDeNascimento = new Input(400, 155, 195, 35);
-		add(tfDataDeNascimento);
+		try {
+			MaskFormatter mascaraDataDeNascimento = new MaskFormatter("##/##/####");
+			tfDataDeNascimento = new JFormattedTextField(mascaraDataDeNascimento);
+			tfDataDeNascimento.setBounds(400, 155, 195, 35);
+			tfDataDeNascimento.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
+			tfDataDeNascimento.setHorizontalAlignment(JTextField.CENTER);
+			add(tfDataDeNascimento);
+		} catch(ParseException e) {
+			
+		}
 		
-		tfTelefone = new Input(195, 225, 400, 35);
-		add(tfTelefone);
+		try {
+			MaskFormatter mascaraTelefone = new MaskFormatter("(##) #.####-####");
+			tfTelefone = new JFormattedTextField(mascaraTelefone);
+			tfTelefone.setBounds(195, 225, 400, 35);
+			tfTelefone.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
+			tfTelefone.setHorizontalAlignment(JTextField.CENTER);
+			add(tfTelefone);
+		} catch(ParseException e) {
+			
+		}
+		
 		
 		tfEmail = new Input(195, 295, 400, 35);
 		add(tfEmail);
@@ -106,12 +138,14 @@ public class WindowsCadastro extends Windows {
 		JButton btnCadastrar = new JButton("CADASTRAR");
 		btnCadastrar.setBounds(195, 415, 195, 40);
 		btnCadastrar.addActionListener(new OuvinteCadastrar());
+		btnCadastrar.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		add(btnCadastrar);
 		
 		
 		JButton btnCancelar = new JButton("CANCELAR");
 		btnCancelar.setBounds(400, 415, 195, 40);
 		btnCancelar.addActionListener(new OuvinteCancelar());
+		btnCancelar.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		add(btnCancelar);
 	}
 	
@@ -138,11 +172,20 @@ public class WindowsCadastro extends Windows {
 				JOptionPane.showMessageDialog(null, "Preencha Todos os Dados.", "ATENÇÃO!", JOptionPane.WARNING_MESSAGE);
 			} else {
 				Usuario novoUsuario;
+				Date dataDeNascimento = null;
+			
+				
+				try {
+					SimpleDateFormat formatoDataDeNascimento = new SimpleDateFormat("dd/MM/yyyy");
+					 dataDeNascimento = formatoDataDeNascimento.parse(tfDataDeNascimento.getText());
+				} catch (Exception erro) {
+					JOptionPane.showMessageDialog(null, "DATA DE NASCIMENTO INVÁLIDA!", "ATENÇÃO!", JOptionPane.ERROR_MESSAGE);
+				}
 				
 				if(cpd.getUsuarios().isEmpty()) {
-					novoUsuario = new Administrador(tfNome.getText(), tfCPF.getText(), tfTelefone.getText(), tfDataDeNascimento.getText(), tfEmail.getText(), tfSenha.getText());
+					novoUsuario = new Administrador(tfNome.getText(), tfCPF.getText(), tfTelefone.getText(), dataDeNascimento, tfEmail.getText(), tfSenha.getText());
 				} else {
-					novoUsuario = new Cliente(tfNome.getText(), tfCPF.getText(), tfTelefone.getText(), tfDataDeNascimento.getText(), tfEmail.getText(), tfSenha.getText());
+					novoUsuario = new Cliente(tfNome.getText(), tfCPF.getText(), tfTelefone.getText(), dataDeNascimento, tfEmail.getText(), tfSenha.getText());
 				}
 				
 				

@@ -6,6 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
 
+import cine.monteiro.gerenciamento.Sessao;
 import cine.monteiro.imagens.Imagens;
 import cine.monteiro.screens.componentes.*;
 import cine.monteiro.screens.ouvintes.OuvinteBtnVoltar;
