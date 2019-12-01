@@ -9,6 +9,6 @@ public class RotuloTitulo extends JLabel {
 		super(titulo);
 		setBounds(x, y, width, height);
 		setHorizontalAlignment(JLabel.CENTER);
-		setFont(new Font(Font.MONOSPACED, Font.BOLD, 18));
+		setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
 	}
 }

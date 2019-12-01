@@ -4,11 +4,16 @@ package cine.monteiro.screens.administrador;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 
@@ -19,15 +24,24 @@ import cine.monteiro.gerenciamento.Filme;
 import cine.monteiro.gerenciamento.Sala;
 import cine.monteiro.gerenciamento.Sessao;
 import cine.monteiro.screens.componentes.*;
+import cine.monteiro.screens.ouvintes.OuvinteBtnVoltarSessao;
 
 public class WindowsCadastrarSessao extends Windows {
+	// Atributos
+	private JComboBox<String> cbFilmesDisponiveis;
+	private JComboBox<String> cbSalasCadastradas;
+	private JTextField tfIdentificacao;
+	private JFormattedTextField tfPeridoEmExibicao;
+	private JFormattedTextField tfHorarioDaSessao;
+	
+	// Inst√¢ncias
 	Persistencia bancoDeInformacoes = new Persistencia();
 	CentralDeInformacoes cpd = bancoDeInformacoes.recuperarCentralDeInformacoes();
-	
 	Sessao novaSessao = new Sessao();
 	
+	// Construtor
 	public WindowsCadastrarSessao() {
-		super("Sessıes - Cadastrar Nova Sess„o", 400, 425);
+		super("Sess√µes - Cadastrar Nova Sess√£o", 400, 425);
 		adicionarLabels();
 		adicionarInputs();
 		adicionarComboBox();
@@ -35,37 +49,38 @@ public class WindowsCadastrarSessao extends Windows {
 		setVisible(true);
 	}
 	
+	// Componentes
 	private void adicionarLabels() {
-		JLabel lblTitulo = new RotuloTitulo("CADASTRAR NOVA SESS√O", 0, 20, 400, 20);
+		JLabel lblTitulo = new RotuloTitulo("CADASTRAR NOVA SESS√ÉO", 0, 20, 400, 20);
 		add(lblTitulo);
 		
-		JLabel lblID = new Rotulo("IdentificaÁ„o:", 20, 50, 150, 30);
+		JLabel lblID = new Rotulo("Identifica√ß√£o:", 20, 50, 150, 30);
 		add(lblID);
 		
 		JLabel lblFilmeDaSessao = new Rotulo("Filme:", 20, 110, 50, 50);
 		add(lblFilmeDaSessao);
 		
-		JLabel lblSalaDeExibicao = new Rotulo("Sala de exibiÁ„o:", 20, 195, 150, 20);
+		JLabel lblSalaDeExibicao = new Rotulo("Sala de exibi√ß√£o:", 20, 195, 150, 20);
 		add(lblSalaDeExibicao);
 		
-		JLabel lblHorarioDaSessao = new Rotulo("Hor·rio da sess„o:", 20, 265, 150, 20);
+		JLabel lblHorarioDaSessao = new Rotulo("Hor√°rio da sess√£o:", 20, 265, 150, 20);
 		add(lblHorarioDaSessao);
 		
-		JLabel lblPeridoEmExibicao = new Rotulo("PerÌodo em exibiÁ„o:", 175, 265, 150, 20);
+		JLabel lblPeridoEmExibicao = new Rotulo("Per√≠odo em exibi√ß√£o:", 175, 265, 150, 20);
 		add(lblPeridoEmExibicao);
 	}
 	
 	private void adicionarInputs() {
-		JTextField tfIdentificacao = new JTextField(novaSessao.getID() + "");
+		tfIdentificacao = new JTextField(novaSessao.getID() + "");
 		tfIdentificacao.setBounds(20, 80, 345, 30);
-		tfIdentificacao.enable(false);
+		tfIdentificacao.setEditable(false);
 		tfIdentificacao.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
 		tfIdentificacao.setHorizontalAlignment(JTextField.CENTER);
 		add(tfIdentificacao);
 		
 		try {
 			MaskFormatter mascaraHorario = new MaskFormatter("##:##");
-			JFormattedTextField tfHorarioDaSessao = new JFormattedTextField(mascaraHorario);
+			tfHorarioDaSessao = new JFormattedTextField(mascaraHorario);
 			tfHorarioDaSessao.setBounds(20, 290, 145, 30);
 			tfHorarioDaSessao.setHorizontalAlignment(JFormattedTextField.CENTER);
 			tfHorarioDaSessao.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
@@ -75,8 +90,8 @@ public class WindowsCadastrarSessao extends Windows {
 		}	
 		
 		try {
-			MaskFormatter mascaraData = new MaskFormatter("##/##/####");
-			JFormattedTextField tfPeridoEmExibicao = new JFormattedTextField(mascaraData);
+			MaskFormatter mascaraData = new MaskFormatter("##/##/#### - ##/##/####");
+			tfPeridoEmExibicao = new JFormattedTextField(mascaraData);
 			tfPeridoEmExibicao.setBounds(175, 290, 185, 30);
 			tfPeridoEmExibicao.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
 			tfPeridoEmExibicao.setHorizontalAlignment(JFormattedTextField.CENTER);
@@ -93,37 +108,64 @@ public class WindowsCadastrarSessao extends Windows {
 		ArrayList<Filme> filmesCadastrados = cpd.getFilmes();
 		ArrayList<Sala> salasCadastradas = cpd.getSalas();
 		
+		// Adicionar Filmes aos itens do ComboBox
 		for(int i = 0; i < filmesCadastrados.size(); i++) {
-			filmes[i] = filmesCadastrados.get(i).getNomeDoFilme() + " - " + filmesCadastrados.get(i).getTipoDaProjecao();
+			filmes[i] = filmesCadastrados.get(i).getNomeDoFilme();
 		}
 		
-		JComboBox<String> cbFilmesDisponiveis = new JComboBox<String>(filmes);
+		cbFilmesDisponiveis = new JComboBox<String>(filmes);
 		cbFilmesDisponiveis.setBounds(20, 150, 345, 30);
 		add(cbFilmesDisponiveis);
 		
+		// Adicionar Salas aos itens do ComboBox
 		for (int i = 0; i < salasCadastradas.size(); i++) {
-			salas[i] = salasCadastradas.get(i).getID() + " - " + salasCadastradas.get(i).getNomeDaSala() + " - " + salasCadastradas.get(i).getTipoDaProjecaoSuportada();
+			salas[i] = salasCadastradas.get(i).getNomeDaSala();
 		}
 		
-		JComboBox<String> cbSalasCadastradas = new JComboBox<String>(salas);
+		cbSalasCadastradas = new JComboBox<String>(salas);
 		cbSalasCadastradas.setBounds(20, 220, 345, 30);
 		add(cbSalasCadastradas);
-		
 	}
 
 	private void adicionarButtons() {
-		JButton btnCadastrar = new JButton("CADASTRAR");
-		btnCadastrar.setBounds(20, 335, 165, 35);
-		add(btnCadastrar);
-		
-		JButton btnCancelar = new JButton("CANCELAR");
-		btnCancelar.setBounds(200, 335, 165, 35);
-		btnCancelar.addActionListener(new ActionListener() {
+		JButton btnCadastrar = new ButtonPersonalizado("CADASTRAR", 20, 335, 165, 35);
+		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
-				new WindowsSessao();
+				try {
+					Filme filmeDaSessao = cpd.pesquisarFilme((String) cbFilmesDisponiveis.getSelectedItem());
+					novaSessao.setFilme(filmeDaSessao);
+					LocalTime horaDeInicio = LocalTime.parse(tfHorarioDaSessao.getText());
+					novaSessao.setHoraDeInicio(horaDeInicio);
+				
+					long duracao = filmeDaSessao.getDuracaco();
+					novaSessao.setHoraDoTermino(duracao);
+					
+					SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
+					String[] periodoDeExibicao = tfPeridoEmExibicao.getText().trim().split("-");
+					Date inicioDoPeriodoDeExibicao = formatoData.parse(periodoDeExibicao[0]);
+					Date terminoDoPeriodoDeExibicao = formatoData.parse(periodoDeExibicao[1]);
+					novaSessao.setInicioDoPeriodoDeExibicao(inicioDoPeriodoDeExibicao);
+					novaSessao.setTerminoDoPeridoDeExibicao(terminoDoPeriodoDeExibicao);
+					
+					novaSessao.setAtiva();
+					String salaSelecionada = (String) cbSalasCadastradas.getSelectedItem();
+					Sala sala = cpd.pesquisarSala(salaSelecionada);
+					cpd.adicionarSessao(novaSessao, sala);
+					sala.addFilmeExibido(filmeDaSessao);
+					JOptionPane.showMessageDialog(null, "SESS√ÉO CADASTRADA COM SUCESSO!", "AVISO!", JOptionPane.INFORMATION_MESSAGE);
+					bancoDeInformacoes.salvarCentralDeInformacoes(cpd);
+					
+					dispose();
+					new WindowsSessao();
+				} catch(Exception erro) {
+					JOptionPane.showMessageDialog(null, erro.getMessage(), "ATEN√á√ÉO!", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
+		add(btnCadastrar);
+		
+		JButton btnCancelar = new ButtonPersonalizado("CANCELAR", 200, 335, 165, 35);
+		btnCancelar.addActionListener(new OuvinteBtnVoltarSessao(this));
 		add(btnCancelar);
 	}
 }

@@ -1,6 +1,8 @@
 package cine.monteiro.screens.administrador;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -9,11 +11,11 @@ import javax.swing.JSeparator;
 import cine.monteiro.gerenciamento.Sessao;
 import cine.monteiro.imagens.Imagens;
 import cine.monteiro.screens.componentes.*;
-import cine.monteiro.screens.ouvintes.OuvinteBtnVoltar;
+import cine.monteiro.screens.ouvintes.OuvinteBtnVoltarPainelDeControle;
 
 public class WindowsSessao extends Windows {
 	public WindowsSessao() {
-		super("Painel de Controle - Cine Monteiro", 350, 220);
+		super("Painel de Controle - Sess√µes", 350, 220);
 		adicionarImagens();
 		adicionarLabels();
 		adicionarButtons();
@@ -28,28 +30,36 @@ public class WindowsSessao extends Windows {
 	}
 	
 	private void adicionarLabels() {
-		JLabel lblTitulo = new JLabel("SESS’ES");
+		JLabel lblTitulo = new JLabel("SESS√ïES");
 		lblTitulo.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
 		lblTitulo.setBounds(15, 88, 100, 60);
 		add(lblTitulo);
 	}
 	
 	private void adicionarButtons() {
-		JButton btnCadastrarSessao = new JButton("CADASTRAR SESS√O");
-		btnCadastrarSessao.setBounds(120, 15, 200, 30);
+		JButton btnCadastrarSessao = new ButtonPersonalizado("CADASTRAR SESS√ÉO", 120, 15, 200, 30);
+		btnCadastrarSessao.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new WindowsCadastrarSessao();
+			}
+		});
 		add(btnCadastrarSessao);
 		
-		JButton btnInterromperSessao = new JButton("INTERROMPER SESS√O");
-		btnInterromperSessao.setBounds(120, 55, 200, 30);
+		JButton btnInterromperSessao = new ButtonPersonalizado("INTERROMPER SESS√ÉO", 120, 55, 200, 30);
+		btnInterromperSessao.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new WindowsInterromperSessao();
+			}
+		});
 		add(btnInterromperSessao);
 		
-		JButton btnListarTodasAsSessoes = new JButton("LISTAR TODAS AS SESS’ES");
-		btnListarTodasAsSessoes.setBounds(120, 95, 200, 30);
+		JButton btnListarTodasAsSessoes = new ButtonPersonalizado("LISTAR TODAS AS SESS√ïES", 120, 95, 200, 30);
 		add(btnListarTodasAsSessoes);
 		
-		JButton btnVoltar = new JButton("VOLTAR");
-		btnVoltar.addActionListener(new OuvinteBtnVoltar(this));
-		btnVoltar.setBounds(120, 135, 200, 30);
+		JButton btnVoltar = new ButtonPersonalizado("VOLTAR", 120, 135, 200, 30);
+		btnVoltar.addActionListener(new OuvinteBtnVoltarPainelDeControle(this));
 		add(btnVoltar);
 	}
 	

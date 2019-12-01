@@ -1,7 +1,6 @@
 package cine.monteiro.screens.componentes;
 
 import java.awt.Font;
-
 import javax.swing.JLabel;
 
 public class Rotulo extends JLabel {

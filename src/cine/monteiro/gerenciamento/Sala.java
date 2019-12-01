@@ -3,18 +3,23 @@ package cine.monteiro.gerenciamento;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
+
 public class Sala {
 	//Atributos
 	private final long ID;
 	private String nomeDaSala;
 	private int quantidadeDeAssentos;
 	private String precoDoIngresso;
-	private String tipoDaProjecaoSuportada; // Criar enum
+	private int quantidadeDeIngressoVendidos;
+	private float totalArrecadado;
 	private ArrayList<Sessao> sessoes = new ArrayList<Sessao>();
+	private ArrayList<Filme> todosOsFilmesExibidos = new ArrayList<Filme>();
 	
 	// Construtor
 	public Sala() {
 		this.ID = System.currentTimeMillis();
+		quantidadeDeAssentos = 0;
+		totalArrecadado = 0f;
 	}
 	
 	// Setters
@@ -30,8 +35,16 @@ public class Sala {
 		this.precoDoIngresso = precoDoIngresso;
 	}
 	
-	public void setTipoDaProjecaoSuportada(String tipoDaProjecaoSuportada) {
-		this.tipoDaProjecaoSuportada = tipoDaProjecaoSuportada;
+	public void setTodosOsFilmesExibidos(ArrayList<Filme> todosOsFilmesExibidos) {
+		this.todosOsFilmesExibidos = todosOsFilmesExibidos;
+	}
+	
+	public void setQuantidadeDeIngressoVendidos(int quantidadeDeIngressoVendidos) {
+		this.quantidadeDeIngressoVendidos = quantidadeDeIngressoVendidos;
+	}
+	
+	public void setTotalArrecadado() {
+		this.totalArrecadado *= quantidadeDeIngressoVendidos;
 	}
 	
 	// Getters
@@ -51,12 +64,20 @@ public class Sala {
 		return precoDoIngresso;
 	}
 	
-	public String getTipoDaProjecaoSuportada() {
-		return tipoDaProjecaoSuportada;
-	}
-	
 	public ArrayList<Sessao> getSessoes() {
 		return sessoes;
+	}
+	
+	public ArrayList<Filme> getTodosOsFilmesExibidos() {
+		return todosOsFilmesExibidos;
+	}
+	
+	public int getQuantidadeDeIngressoVendidos() {
+		return quantidadeDeIngressoVendidos;
+	}
+	
+	public String getTotalArrecadado() {
+		return NumberFormat.getCurrencyInstance().format(totalArrecadado);
 	}
 	
 	// Métodos
@@ -64,8 +85,12 @@ public class Sala {
 		sessoes.add(novaSessao);
 	}
 	
-	// Sobreescritas
-	public String toString() {
-		return "\nID: " + this.ID + "\nNome da sala: " + this.nomeDaSala + "\nQuantidade de Assentos: " + this.quantidadeDeAssentos + "\nPreço do ingresso: " + this.precoDoIngresso + "\nTipo da Projeção SUportada: " + this.tipoDaProjecaoSuportada;
+	public void addFilmeExibido(Filme filme) {
+		for(Filme filmeCadastrado : todosOsFilmesExibidos) {
+			if(filmeCadastrado.getNomeDoFilme().equals(filme.getNomeDoFilme())) {
+				return;
+			}
+		}
+		todosOsFilmesExibidos.add(filme);
 	}
 }

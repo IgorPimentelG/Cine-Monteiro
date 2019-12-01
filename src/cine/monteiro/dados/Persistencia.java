@@ -4,19 +4,24 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.io.Writer;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
+
 public class Persistencia {
-	private XStream xStream = new XStream(new DomDriver());
+	private XStream xStream = new XStream(new DomDriver("UTF-8"));
 	private File arquivo = new File("dados.xml");
 	
+	OutputStream outputStream = null;
+	Writer writer = null;
+
 	public void salvarCentralDeInformacoes(CentralDeInformacoes cpd) {
-		String dados = xStream.toXML(cpd);
-		
-		try {
+		try {			
+			String dados = xStream.toXML(cpd);
 			arquivo.createNewFile();
 			PrintWriter gravar = new PrintWriter(arquivo);
 			gravar.print(dados);

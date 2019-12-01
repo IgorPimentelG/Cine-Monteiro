@@ -12,7 +12,11 @@ import cine.monteiro.dados.CentralDeInformacoes;
 import cine.monteiro.dados.Persistencia;
 import cine.monteiro.email.RecuperarSenha;
 import cine.monteiro.imagens.Imagens;
+import cine.monteiro.screens.componentes.ButtonPersonalizado;
 import cine.monteiro.screens.componentes.Icone;
+import cine.monteiro.screens.componentes.Input;
+import cine.monteiro.screens.componentes.Rotulo;
+import cine.monteiro.screens.componentes.RotuloTitulo;
 import cine.monteiro.screens.componentes.Windows;
 import cine.monteiro.usuarios.Usuario;
 
@@ -23,7 +27,7 @@ public class WindowsRecuperarSenha extends Windows {
 	
 	// Construtor
 	public WindowsRecuperarSenha() {
-		super("Recuperar Senha - Cine Monteiro", 540, 225);
+		super("Recuperar Senha - Cine Monteiro", 545, 225);
 		adicionarImagens();
 		adicionarSeparador();
 		adicionarLabels();
@@ -50,28 +54,20 @@ public class WindowsRecuperarSenha extends Windows {
 	}
 	
 	private void adicionarLabels() {	
-		JLabel lblTitulo = new JLabel("RECUPERAR SENHA");
-		lblTitulo.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
-		lblTitulo.setBounds(260, 10, 200, 50);
+		JLabel lblTitulo = new RotuloTitulo("RECUPERAR SENHA", 260, 10, 200, 50);
 		add(lblTitulo);
 		
-		JLabel lblEmail = new JLabel("E-mail cadastrado:");
-		lblEmail.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 13));
-		lblEmail.setBounds(180, 40, 200, 50);
+		JLabel lblEmail = new Rotulo("E-mail cadastrado:", 180, 40, 200, 50);
 		add(lblEmail);
 	}
 	
 	private void adicionarInputs() {
-		tfEmail = new JTextField();
-		tfEmail.setHorizontalAlignment(JTextField.CENTER);
-		tfEmail.setBounds(220, 80, 300, 35);
-		tfEmail.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
+		tfEmail = new Input(214, 80, 300, 36);
 		add(tfEmail);
 	}
 	
 	private void adicionarButtons() {
-		JButton btnConfirmar = new JButton("CONFIRMAR");
-		btnConfirmar.setBounds(180, 130, 165, 35);
+		JButton btnConfirmar = new ButtonPersonalizado("CONFIRMAR", 180, 130, 165, 35);
 		btnConfirmar.addActionListener(new ActionListener() {
 			Persistencia bancoDeInformacoes = new Persistencia();
 			CentralDeInformacoes cpd = bancoDeInformacoes.recuperarCentralDeInformacoes();
@@ -80,34 +76,26 @@ public class WindowsRecuperarSenha extends Windows {
 				RecuperarSenha rs = new RecuperarSenha();
 				try {
 					rs.recuperarSenha(cpd.autenticarEmailDoUsuario(tfEmail.getText()));
-					JOptionPane.showMessageDialog(null, "Verifique seu e-mail.", "ATEN«√O!", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Verifique seu e-mail.", "AVISO!", JOptionPane.PLAIN_MESSAGE, Imagens.EMAIL_ENVIADO_25x25);
 					dispose();
 					new WindowsLogin();
 				} catch(MessagingException e2) {
-					JOptionPane.showMessageDialog(null, "Erro ao enviar e-mail", "ATEN«√O!", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Erro ao enviar e-mail", "ATEN√á√ÉO!", JOptionPane.ERROR_MESSAGE);
 				} catch(Exception erro) {
-					JOptionPane.showMessageDialog(null, erro.getMessage(), "ATEN«√O!",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, erro.getMessage(), "ATEN√á√ÉO!",JOptionPane.ERROR_MESSAGE);
 				}	
 			}
 			
 		});
 		add(btnConfirmar);
 		
-		JButton btnCancelar = new JButton("CANCELAR");
-		btnCancelar.setBounds(350, 130, 165, 35);
-		btnCancelar.addActionListener(new OuvinteBtnVoltar(this));
+		JButton btnCancelar = new ButtonPersonalizado("CANCELAR", 350, 130, 165, 35);
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new WindowsLogin();
+			}
+		});
 		add(btnCancelar);
-	}
-	
-	public class OuvinteBtnVoltar implements ActionListener {
-		private JFrame windows;
-		
-		public OuvinteBtnVoltar(JFrame windows) {
-			this.windows = windows;
-		}
-		public void actionPerformed(ActionEvent e) {
-			windows.dispose();
-			new WindowsLogin();
-		}
 	}
 }

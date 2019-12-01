@@ -1,8 +1,10 @@
 package cine.monteiro.gerenciamento;
 
+import java.text.SimpleDateFormat;
+// APIs
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
+import java.util.Date;
 
 public class Sessao {
 	// Atributos
@@ -10,13 +12,13 @@ public class Sessao {
 	private Filme filme;
 	private LocalTime horaDeInicio;
 	private LocalTime horaDoTermino;
-	private Calendar periodoDeExibicao;
+	private Date inicioDoPeriodoDeExibicao;
+	private Date terminoDoPeriodoDeExibicao;
 	private boolean ativa;
 	
 	// Construtor
 	public Sessao() {
 		ID = System.currentTimeMillis();
-		ativa = true;
 	}
 	
 	// Setters
@@ -28,16 +30,38 @@ public class Sessao {
 		this.horaDeInicio = horaDeInicio;
 	}
 	
-	public void setHoraDoTermino(LocalTime horaDoTermino) {
-		this.horaDoTermino = horaDoTermino;
+	public void setHoraDoTermino(long duracaoDoFilme) {
+		horaDoTermino = horaDeInicio.plusMinutes(duracaoDoFilme);
 	}
 	
-	public void setAtiva(boolean ativa) {
-		this.ativa = ativa;
+	public void setAtiva() {
+		SimpleDateFormat formatoDaData = new SimpleDateFormat("dd/MM/yyyy");
+		Date obterDataAtual = new Date();
+		String dataString = formatoDaData.format(obterDataAtual);
+		
+		try {
+			Date dataAtual = formatoDaData.parse(dataString);
+			
+			if((dataAtual.before(terminoDoPeriodoDeExibicao) || dataAtual.equals(terminoDoPeriodoDeExibicao)) && (inicioDoPeriodoDeExibicao.after(dataAtual) || inicioDoPeriodoDeExibicao.equals(dataAtual))) {
+				ativa = true;
+			} else {
+				ativa = false;
+			}
+		} catch (Exception e) {
+			
+		}		
 	}
 	
-	public void setPeriodoDeExibicao(Calendar periodoDeExibicao) {
-		this.periodoDeExibicao = periodoDeExibicao;
+	public void setAtiva(Boolean status) {
+		ativa = status;
+	}
+	
+	public void setInicioDoPeriodoDeExibicao(Date inicioDoPeriodoDeExibicao) {
+		this.inicioDoPeriodoDeExibicao = inicioDoPeriodoDeExibicao;
+	}
+	
+	public void setTerminoDoPeridoDeExibicao(Date terminoDoPeriodoDeExibicao) {
+		this.terminoDoPeriodoDeExibicao = terminoDoPeriodoDeExibicao;
 	}
 	
 	// Getters
@@ -53,8 +77,12 @@ public class Sessao {
 		return horaDoTermino;
 	}
 	
-	public Calendar getPeriodoDeExibicao() {
-		return periodoDeExibicao;
+	public Date getInicioDoPeriodoDeExibicao() {
+		return inicioDoPeriodoDeExibicao;
+	}
+	
+	public Date getTerminoDoPeriodoDeExibicao() {
+		return terminoDoPeriodoDeExibicao;
 	}
 	
 	public long getID() {

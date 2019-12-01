@@ -15,18 +15,17 @@ public class CentralDeInformacoes {
 	private ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
 	private ArrayList<Sala> salas = new ArrayList<Sala>();
 	private ArrayList<Filme> filmes = new ArrayList<Filme>();
-	
 	private String emailSalvo = "";
 	private boolean statusCheckBox = false;
 	
-	// Usu·rio
+	// Usu√°rio
 	public void adicionarUsuario(Usuario usuario) throws Exception {
 		if(!usuarios.isEmpty()) {
 			for(Usuario u : usuarios) {
 				if(u.getCPF().equals(usuario.getCPF())) {
-					throw new Exception("Usu·rio j· cadastrado.");
+					throw new Exception("USU√ÅRIO J√Å CADASTRADO!");
 				} else if(u.getEmail().equals(usuario.getEmail())) {
-					throw new Exception("E-mail j· cadastrado.");
+					throw new Exception("E-MAIL J√Å CADASTRADO!");
 				} 
 			}
 		}
@@ -43,7 +42,7 @@ public class CentralDeInformacoes {
 				return usuario;
 			}
 		}
-		throw new Exception("Usu·rio n„o cadastrado.");
+		throw new Exception("USU√ÅRIO N√ÉO CADASTRADO!");
 	}
 	
 	public Usuario autenticarUsuario(String email, String senha) throws Exception {
@@ -52,7 +51,7 @@ public class CentralDeInformacoes {
 				return usuario;
 			}
 		}
-		throw new Exception("Dados Inv·lidos!");
+		throw new Exception("DADOS INV√ÅLIDOS!");
 	}
 	
 	public boolean validarEmail(String email) {
@@ -70,8 +69,8 @@ public class CentralDeInformacoes {
 	// Sala
 	public void adicionarSala(Sala novaSala) throws Exception {
 		for(Sala s : salas) {
-			if(s.getNomeDaSala().equalsIgnoreCase(novaSala.getNomeDaSala())) {
-				throw new Exception("J· existe uma sala com o mesmo nome cadastrado!");
+			if(s.getNomeDaSala().equalsIgnoreCase(novaSala.getNomeDaSala()) || s.getID() == novaSala.getID()) {
+				throw new Exception("J√Å UMA SALA COM O MESMO NOME CADASTRADO!");
 			}
 		}
 		salas.add(novaSala);
@@ -91,19 +90,20 @@ public class CentralDeInformacoes {
 	}
 	
 	public Sala pesquisarSala(String nomeDaSala) {
-		for(Sala sala : salas) {
-			if(sala.getNomeDaSala().equalsIgnoreCase(nomeDaSala)) {
-				return sala;
+		for(Sala salaCadastrada : salas) {
+			if(salaCadastrada.getNomeDaSala().equalsIgnoreCase(nomeDaSala)) {
+				return salaCadastrada;
 			}
 		}
 		return null;
 	}
 	
+	
 	// Filme
 	public void adicionarFilme(Filme filme) throws Exception{
 		for(Filme f : filmes) {
 			if(f != null && f.getNomeDoFilme().equalsIgnoreCase(filme.getNomeDoFilme())) {
-				throw new Exception("O filme j· foi cadastrado");
+				throw new Exception("O FILME J√Å FOI CADASTRADO!");
 			}
 		}
 		filmes.add(filme);
@@ -114,24 +114,24 @@ public class CentralDeInformacoes {
 	}
 	
 	public Filme pesquisarFilme(String nomeDoFilme) {
-		for(Filme filme : filmes) {
-			if(filme.getNomeDoFilme().equalsIgnoreCase(nomeDoFilme)) {
-				return filme;
+		for(Filme filmeCadastrado : filmes) {
+			if(filmeCadastrado.getNomeDoFilme().equalsIgnoreCase(nomeDoFilme)) {
+				return filmeCadastrado;
 			}
 		}
 		return null;
 	}
-	
-	// Sess„o
+		
+	// Sess√£o
 	public void adicionarSessao(Sessao novaSessao, Sala sala) throws Exception {
 		if(salas.isEmpty()) {
-			throw new Exception("N„o existe salas cadastradas!");
+			throw new Exception("N√ÉO EXISTE SALAS CADASTRADAS!");
 		} else {
 				ArrayList<Sessao> sessoesDaSala = sala.getSessoes();
 					
 				for(Sessao velhaSessao : sessoesDaSala) {
 					if(!(novaSessao.getHoraDeInicio().isAfter(velhaSessao.getHoraDoTermino()) || novaSessao.getHoraDoTermino().isBefore(velhaSessao.getHoraDeInicio()))) {
-						throw new Exception("J· existe uma sess„o cadastrada neste perÌodo de exibiÁ„o.");
+						throw new Exception("JÔøΩ existe uma sessÔøΩo cadastrada neste perÔøΩodo de exibiÔøΩÔøΩo.");
 					}
 				}
 				sala.addSessao(novaSessao);
@@ -150,6 +150,21 @@ public class CentralDeInformacoes {
 		}
 	}
 	
+	public Sessao pesquisarSessao(Sala local,long idDaSessao) {
+		for(Sala salaCadastrada : salas) {
+			if(salaCadastrada.getNomeDaSala().equals(local.getNomeDaSala())) {
+				ArrayList<Sessao> sessoesCadastradas = salaCadastrada.getSessoes();
+				for(Sessao sessaoCadastrada : sessoesCadastradas) {
+					if(sessaoCadastrada.getID() == idDaSessao) {
+						return sessaoCadastrada;
+					}
+				}
+			}
+		}
+		return null;
+	}
+	
+	// Setters & Getters
 	public void setEmailSalvo(String email) {
 		this.emailSalvo = email;
 	}

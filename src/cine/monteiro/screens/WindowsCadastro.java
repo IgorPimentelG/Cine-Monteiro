@@ -3,6 +3,7 @@ package cine.monteiro.screens;
 // Pacotes
 import cine.monteiro.dados.*;
 import cine.monteiro.imagens.Imagens;
+import cine.monteiro.screens.componentes.ButtonPersonalizado;
 import cine.monteiro.screens.componentes.Input;
 import cine.monteiro.screens.componentes.Rotulo;
 import cine.monteiro.screens.componentes.Windows;
@@ -23,6 +24,7 @@ import javax.swing.*;
 import javax.swing.text.MaskFormatter;
 
 public class WindowsCadastro extends Windows {
+	// Atributos
 	private JTextField tfNome;
 	private JFormattedTextField  tfCPF;
 	private JFormattedTextField tfDataDeNascimento;
@@ -31,7 +33,7 @@ public class WindowsCadastro extends Windows {
 	private JPasswordField tfSenha;
 	private JPasswordField tfConfirmarSenha;
 	
-	
+	// Construtor
 	public WindowsCadastro() {
 		super("Cadastro - Cine Monteiro", 635, 515);
 		adicionarSeparador();
@@ -135,17 +137,13 @@ public class WindowsCadastro extends Windows {
 	}
 	
 	private void adicionarButtons() {
-		JButton btnCadastrar = new JButton("CADASTRAR");
-		btnCadastrar.setBounds(195, 415, 195, 40);
+		JButton btnCadastrar = new ButtonPersonalizado("CADASTRAR", 195, 415, 195, 40);
 		btnCadastrar.addActionListener(new OuvinteCadastrar());
-		btnCadastrar.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		add(btnCadastrar);
 		
 		
-		JButton btnCancelar = new JButton("CANCELAR");
-		btnCancelar.setBounds(400, 415, 195, 40);
+		JButton btnCancelar = new ButtonPersonalizado("CANCELAR", 400, 415, 195, 40);
 		btnCancelar.addActionListener(new OuvinteCancelar());
-		btnCancelar.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		add(btnCancelar);
 	}
 	
@@ -164,12 +162,12 @@ public class WindowsCadastro extends Windows {
 			
 			// Validar Dados
 			if(!(tfSenha.getText().equals(tfConfirmarSenha.getText()))) {
-				JOptionPane.showMessageDialog(null, "ATENÇÃO! Senha Incorretas.", "ATENÇÃO!", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(null, "ATENÃ‡ÃƒO! Senha Incorretas.", "ATENÃ‡ÃƒO!", JOptionPane.WARNING_MESSAGE);
 				tfSenha.setText("");
 				tfConfirmarSenha.setText("");
 				repaint();
 			} else if (tfNome.getText().isBlank() || tfCPF.getText().isBlank() || tfTelefone.getText().isBlank() || tfDataDeNascimento.getText().isBlank() ||tfEmail.getText().isBlank() || tfSenha.getText().isBlank()){
-				JOptionPane.showMessageDialog(null, "Preencha Todos os Dados.", "ATENÇÃO!", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Preencha Todos os Dados.", "ATENÃ‡ÃƒO!", JOptionPane.WARNING_MESSAGE);
 			} else {
 				Usuario novoUsuario;
 				Date dataDeNascimento = null;
@@ -179,7 +177,7 @@ public class WindowsCadastro extends Windows {
 					SimpleDateFormat formatoDataDeNascimento = new SimpleDateFormat("dd/MM/yyyy");
 					 dataDeNascimento = formatoDataDeNascimento.parse(tfDataDeNascimento.getText());
 				} catch (Exception erro) {
-					JOptionPane.showMessageDialog(null, "DATA DE NASCIMENTO INVÁLIDA!", "ATENÇÃO!", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "DATA DE NASCIMENTO INVÃLIDA!", "ATENÃ‡ÃƒO!", JOptionPane.ERROR_MESSAGE);
 				}
 				
 				if(cpd.getUsuarios().isEmpty()) {
@@ -191,11 +189,12 @@ public class WindowsCadastro extends Windows {
 				
 				try {
 					cpd.adicionarUsuario(novoUsuario);
+					JOptionPane.showMessageDialog(null, "CADASTRO REALIZADO COM SUCESSO!", "NOVA CONTA", JOptionPane.PLAIN_MESSAGE);
 					bancoDeInformacoes.salvarCentralDeInformacoes(cpd);
 					dispose();
 					new WindowsLogin();
 				} catch(Exception erro) {
-					JOptionPane.showMessageDialog(null, erro.getMessage(), "ATENÇÃO!", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, erro.getMessage(), "ATENÃ‡ÃƒO!", JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		}

@@ -5,11 +5,12 @@ import java.awt.event.ActionListener;
 
 import cine.monteiro.screens.administrador.WindowsPainelDeControle;
 import cine.monteiro.screens.componentes.Windows;
+import cine.monteiro.usuarios.Usuario;
 
-public class OuvinteBtnVoltar implements ActionListener {
+public class OuvinteBtnVoltarPainelDeControle implements ActionListener {
 	private Windows janelaAtual;
 	
-	public OuvinteBtnVoltar(Windows janelaAtual) {
+	public OuvinteBtnVoltarPainelDeControle(Windows janelaAtual) {
 		this.janelaAtual = janelaAtual;
 	}
 	

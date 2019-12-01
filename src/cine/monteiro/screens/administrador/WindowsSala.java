@@ -5,13 +5,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 
+import cine.monteiro.dados.CentralDeInformacoes;
+import cine.monteiro.dados.Persistencia;
 import cine.monteiro.imagens.Imagens;
 import cine.monteiro.screens.componentes.*;
-import cine.monteiro.screens.ouvintes.OuvinteBtnVoltar;
+import cine.monteiro.screens.ouvintes.OuvinteBtnVoltarPainelDeControle;
 
 public class WindowsSala extends Windows {
 	// Construtor
@@ -54,23 +56,36 @@ public class WindowsSala extends Windows {
 		});
 		add(btnCadastrarSala);
 		
-		JButton btnExcluirSala = new JButton("EXCLUIR SALA");
+		JButton btnExcluirSala = new JButton("EXCLUÍR SALA");
 		btnExcluirSala.setBounds(135, 55, 200, 30);
 		btnExcluirSala.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
-				new WindowsExcluirSala();
+				Persistencia bancoDeInformacoes = new Persistencia();
+				CentralDeInformacoes cpd = bancoDeInformacoes.recuperarCentralDeInformacoes();
+				
+				if(cpd.getSalas().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "NÃO EXISTE SALAS CADASTRADAS!", "ATENÇÃO", JOptionPane.ERROR_MESSAGE);
+				} else {
+					dispose();
+					new WindowsExcluirSala();
+				}
 			}
 		});
 		add(btnExcluirSala);
 		
 		JButton btnListarTodasAsSalas = new JButton("LISTAR TODAS AS SALAS");
 		btnListarTodasAsSalas.setBounds(135, 95, 200, 30);
+		btnListarTodasAsSalas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new WindowsListarSalas();
+			}
+		});
 		add(btnListarTodasAsSalas);
 		
 		JButton btnVoltar = new JButton("VOLTAR");
 		btnVoltar.setBounds(135, 135, 200, 30);
-		btnVoltar.addActionListener(new OuvinteBtnVoltar(this));
+		btnVoltar.addActionListener(new OuvinteBtnVoltarPainelDeControle(this));
 		add(btnVoltar);
 	}
 	

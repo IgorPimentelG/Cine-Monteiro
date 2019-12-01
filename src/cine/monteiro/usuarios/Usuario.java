@@ -1,5 +1,6 @@
 package cine.monteiro.usuarios;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -38,8 +39,10 @@ public abstract class Usuario {
 	
 	// Tratar dia e mês
 	public void setIdade(Date dataDeNascimento) {
-		Calendar dataAtual = Calendar.getInstance();
-		this.idade = dataAtual.get(Calendar.YEAR) - dataDeNascimento.getYear();
+		SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
+		Date dataAtual = new Date();
+	
+		idade = dataAtual.getYear() - dataDeNascimento.getYear();
 	}
 	
 	public void setDataDeNascimento(Date dataDeNascimento) {

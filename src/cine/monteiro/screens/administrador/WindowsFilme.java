@@ -1,18 +1,23 @@
 package cine.monteiro.screens.administrador;
 
+// APIs
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.*;
 
+import cine.monteiro.dados.CentralDeInformacoes;
+import cine.monteiro.dados.Persistencia;
+// Pacotes
 import cine.monteiro.imagens.Imagens;
+import cine.monteiro.screens.componentes.ButtonPersonalizado;
 import cine.monteiro.screens.componentes.Windows;
-import cine.monteiro.screens.ouvintes.OuvinteBtnVoltar;
+import cine.monteiro.screens.ouvintes.OuvinteBtnVoltarPainelDeControle;
 
-public class WindowsFilmes extends Windows {
-	public WindowsFilmes() {
+public class WindowsFilme extends Windows {
+	// Construtor
+	public WindowsFilme() {
 		super("Filmes - Cine Monteiro", 360, 180);
 		adicionarImagens();
 		adicionarLabels();
@@ -21,6 +26,7 @@ public class WindowsFilmes extends Windows {
 		setVisible(true);
 	}
 	
+	// Componentes
 	private void adicionarImagens() {
 		JLabel iconeFilme = new JLabel(Imagens.FILME_64x64);
 		iconeFilme.setBounds(20, 20, 64, 64);
@@ -35,9 +41,7 @@ public class WindowsFilmes extends Windows {
 	}
 	
 	private void adicionarButtons() {
-		JButton btnCadastrarFilme = new JButton("CADASTRAR FILME");
-		btnCadastrarFilme.setBounds(125, 15, 200, 30);
-		btnCadastrarFilme.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
+		JButton btnCadastrarFilme = new ButtonPersonalizado("CADASTRAR FILME", 125, 15, 200, 30);
 		btnCadastrarFilme.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
@@ -46,15 +50,24 @@ public class WindowsFilmes extends Windows {
 		});
 		add(btnCadastrarFilme);
 		
-		JButton btnListarTodosFilmes = new JButton("LISTAR TODOS OS FILMES");
-		btnListarTodosFilmes.setBounds(125, 55, 200, 30);
-		btnListarTodosFilmes.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
+		JButton btnListarTodosFilmes = new ButtonPersonalizado("LISTAR TODOS OS FILMES", 125, 55, 200, 30);
+		btnListarTodosFilmes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Persistencia bancoDeInformacoes = new Persistencia();
+				CentralDeInformacoes cpd = bancoDeInformacoes.recuperarCentralDeInformacoes();
+				
+				if(cpd.getFilmes().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "NÃO EXISTE FILMES CADASTRADOS!", "ATENÇÃO!", JOptionPane.ERROR_MESSAGE);
+				} else {
+					dispose();
+					new WindowsListarFilmes();
+				}
+			}
+		});
 		add(btnListarTodosFilmes);
 		
-		JButton btnVoltar = new JButton("VOLTAR");
-		btnVoltar.setBounds(125, 95, 200, 30);
-		btnVoltar.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
-		btnVoltar.addActionListener(new OuvinteBtnVoltar(this));
+		JButton btnVoltar = new ButtonPersonalizado("VOLTAR", 125, 95, 200, 30);
+		btnVoltar.addActionListener(new OuvinteBtnVoltarPainelDeControle(this));
 		add(btnVoltar);
 	}
 	

@@ -1,7 +1,9 @@
 package cine.monteiro.screens;
 
+
 // APIs
 import java.awt.Font;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 // Pacotes
@@ -14,6 +16,7 @@ public class WindowsSobre extends Windows {
 		super("Cine Monteiro", 400, 400);
 		adicionarImagens();	
 		adicionarLabels();
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setVisible(true);
 	}
 	
@@ -30,13 +33,13 @@ public class WindowsSobre extends Windows {
 	}
 	
 	private void adicionarLabels() {
-		JLabel lblVersao = new JLabel("Vers„o 1.0");
+		JLabel lblVersao = new JLabel("Vers√£o 1.0");
 		lblVersao.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
 		lblVersao.setHorizontalAlignment(JLabel.CENTER);
 		lblVersao.setBounds(0, 270, 400, 30);
 		add(lblVersao);
 		
-		JLabel lblDisciplina = new JLabel("A.D.S - ProgramaÁ„o II");
+		JLabel lblDisciplina = new JLabel("A.D.S - Programa√ß√£o II");
 		lblDisciplina.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
 		lblDisciplina.setHorizontalAlignment(JLabel.CENTER);
 		lblDisciplina.setBounds(0, 290, 400, 30);

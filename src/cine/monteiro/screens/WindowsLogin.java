@@ -23,8 +23,11 @@ import cine.monteiro.dados.CentralDeInformacoes;
 import cine.monteiro.dados.Persistencia;
 import cine.monteiro.imagens.Imagens;
 import cine.monteiro.screens.administrador.WindowsPainelDeControle;
+import cine.monteiro.screens.cliente.WindowsHomeCliente;
+import cine.monteiro.screens.componentes.ButtonPersonalizado;
 import cine.monteiro.screens.componentes.Icone;
 import cine.monteiro.screens.componentes.Input;
+import cine.monteiro.screens.componentes.Rotulo;
 import cine.monteiro.screens.componentes.Windows;
 import cine.monteiro.screens.ouvintes.OuvinteLinkRecuperarSenha;
 import cine.monteiro.usuarios.Administrador;
@@ -41,7 +44,7 @@ public class WindowsLogin extends Windows {
 	private String emailSalvo = cpd.getEmailSalvo();
 	private boolean statusCheckBox = cpd.getStatusCheckBox();
 	
-	
+	// Construtor
 	public WindowsLogin() {
 		super("Login - Cine Monteiro", 410, 490);
 		adicionarImagens();
@@ -68,16 +71,10 @@ public class WindowsLogin extends Windows {
 	}
 	
 	private void adicionarLabels() {
-		JLabel lblLogin = new JLabel("Login:");
-		lblLogin.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 15));
-		lblLogin.setBounds(30, 160, 100, 100);
-		lblLogin.setToolTipText("Digite seu e-mail aqui");
+		JLabel lblLogin = new Rotulo("Login:", 30, 160, 100, 100);
 		add(lblLogin);
 		
-		JLabel lblSenha = new JLabel("Senha:");
-		lblSenha.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 15));
-		lblSenha.setBounds(30, 235, 100, 100);
-		lblSenha.setToolTipText("Digite sua senha aqui");
+		JLabel lblSenha = new Rotulo("Senha:", 30, 235, 100, 100);
 		add(lblSenha);
 		
 		JLabel lblEsqueceuASenha = new JLabel("Esqueceu a senha?");
@@ -104,14 +101,13 @@ public class WindowsLogin extends Windows {
 	}
 	
 	private void adicionarButtons() {
-		JButton btnEntrar = new JButton("ENTRAR");
-		btnEntrar.setBounds(30, 385, 160, 40);
+		JButton btnEntrar = new ButtonPersonalizado("ENTRAR", 30, 385, 160, 40);
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(tfLogin.getText().isBlank() || tfSenha.getText().isBlank()) {
-					JOptionPane.showMessageDialog(null, "Preencha todos os campos!", "ATEN«√O", JOptionPane.WARNING_MESSAGE);
+				if(tfLogin.getText().isBlank() || tfSenha.getPassword().length == 0) {
+					JOptionPane.showMessageDialog(null, "Preencha todos os campos!", "ATEN√á√ÉO", JOptionPane.WARNING_MESSAGE);
 				} else if(cpd.validarEmail(tfLogin.getText()) == false) {
-					JOptionPane.showMessageDialog(null, "E-mail n„o È v·lido!", "ATEN«√O!", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "E-mail n√£o √© v√°lido!", "ATEN√á√ÉO!", JOptionPane.ERROR_MESSAGE);
 				} else {
 					if(cbLembrarEmail.isSelected()) {
 						cpd.setEmailSalvo(tfLogin.getText());
@@ -122,24 +118,29 @@ public class WindowsLogin extends Windows {
 					}
 					
 					try {
-						Usuario usuarioAtivo = cpd.autenticarUsuario(tfLogin.getText(), tfSenha.getText());
+						Usuario usuarioAtivo = cpd.autenticarUsuario(tfLogin.getText(), new String(tfSenha.getPassword()));
 						
-						if(usuarioAtivo instanceof Administrador) {
+						if(usuarioAtivo.getSenha().contains("CM#")) {
+							JOptionPane.showMessageDialog(null, "ALTERE SUA SENHA ATUAL!", "ATEN√á√ÉO!", JOptionPane.WARNING_MESSAGE);
 							dispose();
-							new WindowsPainelDeControle();
+							new WindowsDefinirNovaSenha(usuarioAtivo);
+						} else if(usuarioAtivo instanceof Administrador) {
+							dispose();
+							new WindowsPainelDeControle(usuarioAtivo);
+						} else {
+							dispose();
+							new WindowsHomeCliente(usuarioAtivo);
 						}
 					} catch(Exception erro) {
-						JOptionPane.showMessageDialog(null, erro.getMessage(), "ATEN«√O!", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, erro.getMessage(), "ATEN√á√ÉO!", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 				bancoDeInformacoes.salvarCentralDeInformacoes(cpd);
 			}
 		});
-		btnEntrar.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		add(btnEntrar);
 		
-		JButton btnNovaConta = new JButton("CRIAR CONTA");
-		btnNovaConta.setBounds(210, 385, 160, 40);
+		JButton btnNovaConta = new ButtonPersonalizado("CRIAR CONTA", 210, 385, 160, 40);
 		btnNovaConta.addActionListener(new ActionListener() {			
 			public void actionPerformed(ActionEvent e) {
 				new WindowsCadastro();

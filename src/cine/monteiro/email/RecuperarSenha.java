@@ -1,18 +1,18 @@
 package cine.monteiro.email;
 
-import java.util.ArrayList;
-
+// APIs
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 
+// Pacotes 
 import cine.monteiro.dados.CentralDeInformacoes;
 import cine.monteiro.dados.Persistencia;
 import cine.monteiro.usuarios.*;
 
 public class RecuperarSenha extends Email {
-	private String novaSenha = "";
+	private String novaSenha = "CM#";
 	
 	private void gerarNovaSenha() {
 		String[] caracteres = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", 
@@ -35,8 +35,8 @@ public class RecuperarSenha extends Email {
 		Message mensagem = super.configuracao();
 		mensagem.setFrom(new InternetAddress(super.getRemetente()));
 		mensagem.setRecipients(Message.RecipientType.TO, InternetAddress.parse(usuario.getEmail()));
-		mensagem.setSubject("Cine Monteiro - Recuperação da Senha");
-		mensagem.setText("Olá " + usuario.getNome() + ",\n\nVocê solicitou uma nova senha para sua conta do Cine Monteiro. \nSua senha temporária é: " + novaSenha);
+		mensagem.setSubject("Cine Monteiro - RecuperaÃ§Ã£o da Senha");
+		mensagem.setText("OlÃ¡ " + usuario.getNome() + ",\n\nVocÃª solicitou uma nova senha para sua conta do Cine Monteiro. \nSua senha temporÃ¡ria Ã©: " + novaSenha);
 		Transport.send(mensagem);
 		
 		// Alterar Senha

@@ -7,6 +7,7 @@ public interface Imagens {
 		public static final ImageIcon LOGO_CINE_MONTEIRO_200x173 = new ImageIcon("imagens/logo-projeto_200x173.png");
 		public static final ImageIcon LOGO_CINE_MONTEIRO_125x100 = new ImageIcon("imagens/logo-projeto_125x100.png");
 		public static final ImageIcon LOGO_CINE_MONTEIRO_180x156 = new ImageIcon("imagens/logo-projeto_180x156.png");
+		public static final ImageIcon ICONE_PROGRAMA = new ImageIcon("imagens/icone-programa.png");
 		
 		// Icones
 		public static final ImageIcon LOGO_IFPB_50x50 = new ImageIcon("imagens/logo-ifpb.png");
@@ -20,4 +21,9 @@ public interface Imagens {
 		public static final ImageIcon EMAIL_64x64 = new ImageIcon("imagens/email_64x64.png");
 		public static final ImageIcon SESSAO_64x64 = new ImageIcon("imagens/sessoes_64x64.png");
 		public static final ImageIcon ADD_30x30 = new ImageIcon("imagens/icone-add_30x30.png");
+		public static final ImageIcon SAIR_64x64 = new ImageIcon("imagens/sair_64x64.png");
+		public static final ImageIcon ALTERAR_64x64 = new ImageIcon("imagens/alterar_64x64.png");
+		public static final ImageIcon EMAIL_ENVIADO_25x25 = new ImageIcon("imagens/email-enviado_25x25.png");
+		public static final ImageIcon PASTA = new ImageIcon("imagens/icone-pasta.png");
+		public static final ImageIcon INGRESSO = new ImageIcon("imagens/icone_ingresso.png");
 }
