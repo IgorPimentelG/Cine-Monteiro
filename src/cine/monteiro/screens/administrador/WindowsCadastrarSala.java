@@ -72,7 +72,7 @@ public class WindowsCadastrarSala extends Windows {
 		add(tfNomeDaSala);
 		
 		try {
-			MaskFormatter mascaraPrecoDoIngresso = new MaskFormatter("R$ ##,##");
+			MaskFormatter mascaraPrecoDoIngresso = new MaskFormatter("R$ ##.##");
 			tfPrecoDoIngresso = new JFormattedTextField(mascaraPrecoDoIngresso);
 			tfPrecoDoIngresso.setBounds(20, 225, 145, 30);
 			tfPrecoDoIngresso.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));

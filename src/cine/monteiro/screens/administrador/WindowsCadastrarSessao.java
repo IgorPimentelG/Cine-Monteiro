@@ -152,6 +152,7 @@ public class WindowsCadastrarSessao extends Windows {
 					Sala sala = cpd.pesquisarSala(salaSelecionada);
 					cpd.adicionarSessao(novaSessao, sala);
 					sala.addFilmeExibido(filmeDaSessao);
+					novaSessao.setVagasDisponiveis(sala.getQuantidadeDeAssentos());
 					JOptionPane.showMessageDialog(null, "SESSÃO CADASTRADA COM SUCESSO!", "AVISO!", JOptionPane.INFORMATION_MESSAGE);
 					bancoDeInformacoes.salvarCentralDeInformacoes(cpd);
 					

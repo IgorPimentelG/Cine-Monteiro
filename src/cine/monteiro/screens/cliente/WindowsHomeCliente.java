@@ -1,5 +1,7 @@
 package cine.monteiro.screens.cliente;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -85,13 +87,20 @@ public class WindowsHomeCliente extends Windows {
 	}
 	
 	private void adicionarLabels() {
-		JLabel lblTitulo = new RotuloTitulo("FILMES EM CARTAZ", 175, 15, 660, 30);
+		JLabel lblTitulo = new RotuloTitulo("FILMES EM CARTAZ", 170, 15, 660, 30);
+		lblTitulo.setForeground(new Color(225, 112, 85));
 		add(lblTitulo);
+		
+		JLabel lblMensagemCliente = new JLabel("<html><center> SEJA BEM VINDO <br>" + usuarioAtivo.getNome().toUpperCase() + "</center></html>");
+		lblMensagemCliente.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
+		lblMensagemCliente.setForeground(new Color(56, 103, 214));
+		lblMensagemCliente.setBounds(35, 10, 300, 50);
+		add(lblMensagemCliente);
 	}
 	
 	private void adicionarImagem() {
 		JLabel lblLogoProjeto = new JLabel(Imagens.LOGO_CINE_MONTEIRO_180x156);
-		lblLogoProjeto.setBounds(10, 85, 180, 156);
+		lblLogoProjeto.setBounds(5, 50, 180, 156);
 		add(lblLogoProjeto);
 	}
 	
@@ -101,11 +110,11 @@ public class WindowsHomeCliente extends Windows {
 	}
 	
 	private void adicionarButton() {
-		JButton btnComprar = new ButtonPersonalizado("COMPRAR", 355, 290, 150, 35);
+		JButton btnComprar = new ButtonPersonalizado("COMPRAR", 300, 290, 200, 35);
 		btnComprar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(tabelaDasSessoes.getSelectedRow() == -1) {
-					JOptionPane.showMessageDialog(null, "NENHUM SESSÃO FOI SELECIONADA!", "ATENÇÃO!", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "NENHUMA SESSÃO FOI SELECIONADA!", "ATENÇÃO!", JOptionPane.ERROR_MESSAGE);
 				} else {
 					Sala local = cpd.pesquisarSala((String) tabelaDasSessoes.getValueAt(tabelaDasSessoes.getSelectedRow(), 1));
 					long idDaSessao = Long.parseLong(tabelaDasSessoes.getValueAt(tabelaDasSessoes.getSelectedRow(),  0) + "");
@@ -116,24 +125,25 @@ public class WindowsHomeCliente extends Windows {
 				}
 			}
 		});
+		btnComprar.setForeground(Color.WHITE);
+		btnComprar.setBackground(new Color(0, 184, 148));
 		add(btnComprar);
 		
-		JButton btnInformacoes = new ButtonPersonalizado("INFORMAÇÕES", 530, 290, 150, 35);
+		JButton btnInformacoes = new ButtonPersonalizado("INFORMAÇÕES", 520, 290, 200, 35);
+		btnInformacoes.setForeground(Color.WHITE);
+		btnInformacoes.setBackground(new Color(120, 111, 166));
 		add(btnInformacoes);
 		
-		if(usuarioAtivo instanceof Administrador) {
-			btnComprar.setEnabled(false);
-		}
 	}
 	
 	private void adicionarTabela() {
 		DefaultTableModel modeloDaTabela = new DefaultTableModel();	
 		modeloDaTabela.addColumn("Sessão");
 		modeloDaTabela.addColumn("Sala");
-		modeloDaTabela.addColumn("Início da Sessão");
 		modeloDaTabela.addColumn("Nome do Filme");
-		modeloDaTabela.addColumn("Classificação Etária");
-		modeloDaTabela.addColumn("Preço do Ingresso");
+		modeloDaTabela.addColumn("Classificação");
+		modeloDaTabela.addColumn("Ingresso");
+		modeloDaTabela.addColumn("Vagas");
 		
 		tabelaDasSessoes = new JTable(modeloDaTabela);
 		
@@ -143,7 +153,7 @@ public class WindowsHomeCliente extends Windows {
 			
 			for(Sessao sessao : sessoes) {
 				if(sessao.isAtiva()) {		
-					Object[] linha = new Object[] {sessao.getID(), sala.getNomeDaSala(), sessao.getHoraDeInicio(), sessao.getFilme().getNomeDoFilme(), sessao.getFilme().getClassificacaoEtaria(), sala.getPrecoDoIngresso()};
+					Object[] linha = new Object[] {sessao.getID(), sala.getNomeDaSala(),  sessao.getFilme().getNomeDoFilme(), sessao.getFilme().getClassificacaoEtaria(), sala.getPrecoDoIngresso(), sessao.getVagasDisponiveis()};
 					modeloDaTabela.addRow(linha);
 				}
 			}

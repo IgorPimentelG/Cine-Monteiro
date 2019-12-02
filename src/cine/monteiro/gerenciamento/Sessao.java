@@ -14,6 +14,7 @@ public class Sessao {
 	private LocalTime horaDoTermino;
 	private Date inicioDoPeriodoDeExibicao;
 	private Date terminoDoPeriodoDeExibicao;
+	private int vagasDisponiveis;
 	private boolean ativa;
 	
 	// Construtor
@@ -32,6 +33,10 @@ public class Sessao {
 	
 	public void setHoraDoTermino(long duracaoDoFilme) {
 		horaDoTermino = horaDeInicio.plusMinutes(duracaoDoFilme);
+	}
+	
+	public void setVagasDisponiveis(int vagasDisponveis) {
+		this.vagasDisponiveis = vagasDisponveis;
 	}
 	
 	public void setAtiva() {
@@ -87,6 +92,10 @@ public class Sessao {
 	
 	public long getID() {
 		return ID;
+	}
+	
+	public int getVagasDisponiveis() {
+		return vagasDisponiveis;
 	}
 	
 	public boolean isAtiva() {

@@ -126,7 +126,7 @@ public class WindowsLogin extends Windows {
 							new WindowsDefinirNovaSenha(usuarioAtivo);
 						} else if(usuarioAtivo instanceof Administrador) {
 							dispose();
-							new WindowsPainelDeControle(usuarioAtivo);
+							new WindowsPainelDeControle();
 						} else {
 							dispose();
 							new WindowsHomeCliente(usuarioAtivo);

@@ -30,9 +30,8 @@ public class WindowsMarketing extends Windows {
 	CentralDeInformacoes cpd = bancoDeInformacoes.recuperarCentralDeInformacoes();
 	
 	// Construtor
-	public WindowsMarketing(Usuario usuarioAtivo) {
+	public WindowsMarketing() {
 		super("Painel De Controle - Marketing", 475, 185);
-		this.usuarioAtivo = usuarioAtivo;
 		adicionarImagens();
 		adicionarLabels();
 		adicionarSeparador();
@@ -74,7 +73,7 @@ public class WindowsMarketing extends Windows {
 					marketing.enviarProgramacao();
 					JOptionPane.showMessageDialog(null, "PROGRAMAÇÃO ENVIADA COM SUCESSO PARA TODOS OS CLIENTES!", "AVISO!", JOptionPane.INFORMATION_MESSAGE);
 					dispose();
-					new WindowsPainelDeControle(usuarioAtivo);
+					new WindowsPainelDeControle();
 				} catch(MessagingException erro) {
 					JOptionPane.showMessageDialog(null, "HOUVE UM ERRO AO ENVIAR A PROGRAMAÇÃO!", "ATENÇÃO!", JOptionPane.ERROR_MESSAGE);
 				}

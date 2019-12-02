@@ -9,48 +9,31 @@
       <email>igor.pimentel.msi@hotmail.com</email>
       <senha>admin</senha>
     </cine.monteiro.usuarios.Administrador>
-    <cine.monteiro.usuarios.Cliente>
-      <nome>Anderson Pimentel</nome>
-      <CPF>123.857.362-12</CPF>
-      <telefone>(83) 9.9950-8033</telefone>
-      <idade>23</idade>
-      <dataDeNascimento>1996-10-08 03:00:00.0 UTC</dataDeNascimento>
-      <email>igorpimentel46@gmail.com</email>
-      <senha>admin</senha>
-    </cine.monteiro.usuarios.Cliente>
   </usuarios>
   <salas>
     <cine.monteiro.gerenciamento.Sala>
-      <ID>1575091476624</ID>
+      <ID>1575262041980</ID>
       <nomeDaSala>Sala 01</nomeDaSala>
-      <quantidadeDeAssentos>50</quantidadeDeAssentos>
-      <precoDoIngresso>R$ 15,30</precoDoIngresso>
+      <quantidadeDeAssentos>35</quantidadeDeAssentos>
+      <precoDoIngresso>R$ 10.50</precoDoIngresso>
       <quantidadeDeIngressoVendidos>0</quantidadeDeIngressoVendidos>
       <totalArrecadado>0.0</totalArrecadado>
       <sessoes>
         <cine.monteiro.gerenciamento.Sessao>
-          <ID>1575091533425</ID>
+          <ID>1575262079810</ID>
           <filme>
-            <nomeDoFilme>Coringa</nomeDoFilme>
-            <sinopse>lorem ipsum.</sinopse>
-            <genero>Ação</genero>
-            <duracao>20</duracao>
-            <classificacaoEtaria>I16</classificacaoEtaria>
+            <nomeDoFilme>O Rei Leão</nomeDoFilme>
+            <sinopse>Lorem Ipsum</sinopse>
+            <genero>Aventura</genero>
+            <duracao>120</duracao>
+            <classificacaoEtaria>LIVRE</classificacaoEtaria>
           </filme>
           <horaDeInicio>17:30:00</horaDeInicio>
-          <horaDoTermino>17:50:00</horaDoTermino>
-          <inicioDoPeriodoDeExibicao>2019-11-30 03:00:00.0 UTC</inicioDoPeriodoDeExibicao>
+          <horaDoTermino>19:30:00</horaDoTermino>
+          <inicioDoPeriodoDeExibicao>2019-12-02 03:00:00.0 UTC</inicioDoPeriodoDeExibicao>
           <terminoDoPeriodoDeExibicao>2019-12-20 03:00:00.0 UTC</terminoDoPeriodoDeExibicao>
+          <vagasDisponiveis>35</vagasDisponiveis>
           <ativa>true</ativa>
-        </cine.monteiro.gerenciamento.Sessao>
-        <cine.monteiro.gerenciamento.Sessao>
-          <ID>1575091876006</ID>
-          <filme reference="../../cine.monteiro.gerenciamento.Sessao/filme"/>
-          <horaDeInicio>19:20:00</horaDeInicio>
-          <horaDoTermino>19:40:00</horaDoTermino>
-          <inicioDoPeriodoDeExibicao>2019-11-30 03:00:00.0 UTC</inicioDoPeriodoDeExibicao>
-          <terminoDoPeriodoDeExibicao>2019-12-20 03:00:00.0 UTC</terminoDoPeriodoDeExibicao>
-          <ativa>false</ativa>
         </cine.monteiro.gerenciamento.Sessao>
       </sessoes>
       <todosOsFilmesExibidos>
@@ -61,6 +44,6 @@
   <filmes>
     <cine.monteiro.gerenciamento.Filme reference="../../salas/cine.monteiro.gerenciamento.Sala/sessoes/cine.monteiro.gerenciamento.Sessao/filme"/>
   </filmes>
-  <emailSalvo></emailSalvo>
-  <statusCheckBox>false</statusCheckBox>
+  <emailSalvo>igor.pimentel.msi@hotmail.com</emailSalvo>
+  <statusCheckBox>true</statusCheckBox>
 </cine.monteiro.dados.CentralDeInformacoes>

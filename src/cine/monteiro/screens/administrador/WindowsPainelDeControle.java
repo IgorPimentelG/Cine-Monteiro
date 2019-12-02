@@ -1,5 +1,7 @@
 package cine.monteiro.screens.administrador;
 
+import cine.monteiro.dados.CentralDeInformacoes;
+import cine.monteiro.dados.Persistencia;
 // Pacotes
 import cine.monteiro.imagens.Imagens;
 import cine.monteiro.screens.*;
@@ -16,22 +18,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class WindowsPainelDeControle extends Windows {
-	// Atributos
-	private Usuario usuarioAtivo;
-	
 	// Construtor
-	public WindowsPainelDeControle(Usuario usuarioAtivo) {
-		super("Painel de Controle - Cine Monteiro", 700, 320);
-		this.usuarioAtivo = usuarioAtivo;
-		adicionarLabels();
-		adicionarImagens();
-		adicionarButtons();
-		adicionarSeparador();
-		adicionarMenuBar();
-		setVisible(true);
-	}
-	
-	// Sobreescrita do Construtor
 	public WindowsPainelDeControle() {
 		super("Painel de Controle - Cine Monteiro", 700, 320);
 		adicionarLabels();
@@ -95,8 +82,10 @@ public class WindowsPainelDeControle extends Windows {
 		JButton btnAreaDoCliente = new ButtonPersonalizado("<html><center>ÁREA<br> DO CLIENTE<center></html>", 380, 150, 130, 80);
 		btnAreaDoCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Persistencia bancoDeInformacoes = new Persistencia();
+				CentralDeInformacoes centralDeInformacoes = bancoDeInformacoes.recuperarCentralDeInformacoes();
 				dispose();
-				new WindowsHomeCliente(usuarioAtivo);
+				new WindowsHomeCliente(centralDeInformacoes.getUsuarios().get(0));
 			}
 		});
 		add(btnAreaDoCliente);
@@ -105,7 +94,7 @@ public class WindowsPainelDeControle extends Windows {
 		btnMarketing.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				new WindowsMarketing(usuarioAtivo);
+				new WindowsMarketing();
 			}
 		});
 		add(btnMarketing);
@@ -124,16 +113,7 @@ public class WindowsPainelDeControle extends Windows {
 		
 		JMenu menu = new JMenu("OPÇÕES");
 		menuBar.add(menu);
-		
-		JMenuItem itemAlterarSenha = new JMenuItem("ALTERAR SENHA");
-		itemAlterarSenha.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-				new WindowsDefinirNovaSenha(usuarioAtivo);	
-			}
-		});
-		menu.add(itemAlterarSenha);
-		
+			
 		JMenuItem itemSobre = new JMenuItem("SOBRE");
 		itemSobre.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

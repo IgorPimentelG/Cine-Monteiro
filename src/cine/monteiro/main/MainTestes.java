@@ -41,9 +41,9 @@ public class MainTestes {
 		//new WindowsListarSessao();
 		//new WindowsDefinirNovaSenha();
 		//new WindowsComprarIngresso();
-		Persistencia persistencia = new Persistencia();
-		CentralDeInformacoes centralDeInformacoes = persistencia.recuperarCentralDeInformacoes();
-		new WindowsHomeCliente(centralDeInformacoes.getUsuarios().get(1));
+		//Persistencia persistencia = new Persistencia();
+		//CentralDeInformacoes centralDeInformacoes = persistencia.recuperarCentralDeInformacoes();
+		//new WindowsHomeCliente(centralDeInformacoes.getUsuarios().get(1));
 		
 		
 	}
