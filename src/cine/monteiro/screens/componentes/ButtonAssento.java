@@ -13,10 +13,9 @@ import javax.swing.JButton;
 
 public class ButtonAssento extends JButton {
 
-	public ButtonAssento(String assento, int x, int y) {
+	public ButtonAssento(String assento) {
 		super(assento);
-		setFont(new Font(Font.SANS_SERIF, Font.BOLD, 10));
-		setBounds(x, y, 55, 55);
+		setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
 		setEnabled(false);
 		setBackground(new Color(198, 226, 255));
 	}

@@ -2,6 +2,7 @@ package cine.monteiro.email;
 
 // APIs
 import java.io.FileOutputStream;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.activation.DataHandler;
@@ -44,34 +45,31 @@ public class Boleto extends Email {
 		titulo.setAlignment(1);
 		doc.add(titulo);
 		
-		Paragraph subTitulo = new Paragraph("\n- - - - - - - - - - - - - - - - - - - - - • D A D O S • - - - - - - - - - - - - - - - - - - - - -", fonteTitulo);
+		Paragraph subTitulo = new Paragraph("\n- - - - • D A D O S • - - - -", fonteTitulo);
 		subTitulo.setAlignment(1);
 		doc.add(subTitulo);
 		
 		Font fonteDoTexto= new Font(FontFamily.HELVETICA, 14);
-		Paragraph dadosDoCliente = new Paragraph("Nome: " + ingresso.getCliente().getNome() + "\nCPF: " + ingresso.getCliente().getCPF(), fonteDoTexto);
-		dadosDoCliente.setAlignment(1);
+		Paragraph dadosDoCliente = new Paragraph("\nNome: " + ingresso.getCliente().getNome() + "\nCPF: " + ingresso.getCliente().getCPF(), fonteDoTexto);
 		doc.add(dadosDoCliente);
 		
 		Paragraph dadosDoLocal = new Paragraph("Local: " + ingresso.getLocal().getNomeDaSala(), fonteDoTexto);
-		dadosDoLocal.setAlignment(1);
 		doc.add(dadosDoLocal);
 		
 		SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
 		Paragraph dadosDaSessao = new Paragraph("Início da Sessão: " + ingresso.getSessao().getHoraDeInicio() + "\nFilme: " + ingresso.getSessao().getFilme().getNomeDoFilme() + "\nDuração: " + ingresso.getSessao().getFilme().getDuracaco() + " min" + "\nClassificação Etária: " + ingresso.getSessao().getFilme().getClassificacaoEtaria() + "\nVálido até: " + formatoData.format(ingresso.getSessao().getTerminoDoPeriodoDeExibicao()), fonteDoTexto);
-		dadosDaSessao.setAlignment(1);
 		doc.add(dadosDaSessao);
 		
-		Paragraph dadosDoAssento = new Paragraph("Assento reservado: " + ingresso.getAssentoReservado(), fonteDoTexto);
-		dadosDoAssento.setAlignment(1);
+		Paragraph dadosDoAssento = new Paragraph("Assento(s) reservado(s): " + ingresso.getAssentoReservado(), fonteDoTexto);
 		doc.add(dadosDoAssento);
 		
-		Image qr_code = Image.getInstance("imagens/qr_code.png");
-		qr_code.setAbsolutePosition(210, 180);
-		doc.add(qr_code);
-		
-		Paragraph l2 = new Paragraph("\n\n\n\n\n\n\n\n\n\n\n\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
+		Paragraph valores = new Paragraph("\n\nQUANTIDADE: " + ingresso.getAssentoReservado().size() + "\nVALOR UNITÁRIO: " + ingresso.getLocal().getPrecoDoIngresso() + "\nVALOR TOTAL: " + ingresso.getValorTotal(), fonteTitulo);
+		valores.setAlignment(1);
+		doc.add(valores);
+
+		Paragraph l2 = new Paragraph("\n\n\n\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
 		doc.add(l2);
+		
 		Image codigoDeBarra = Image.getInstance("imagens/codigo_barra.png");
 		codigoDeBarra.setAbsolutePosition(110, 20);
 		doc.add(codigoDeBarra);

@@ -66,7 +66,7 @@ public class WindowsCadastrarSessao extends Windows {
 		JLabel lblHorarioDaSessao = new Rotulo("Horário da sessão:", 20, 265, 150, 20);
 		add(lblHorarioDaSessao);
 		
-		JLabel lblPeridoEmExibicao = new Rotulo("Período em exibição:", 175, 265, 150, 20);
+		JLabel lblPeridoEmExibicao = new Rotulo("Em exibição até:", 175, 265, 150, 20);
 		add(lblPeridoEmExibicao);
 	}
 	
@@ -90,7 +90,7 @@ public class WindowsCadastrarSessao extends Windows {
 		}	
 		
 		try {
-			MaskFormatter mascaraData = new MaskFormatter("##/##/#### - ##/##/####");
+			MaskFormatter mascaraData = new MaskFormatter("##/##/####");
 			tfPeridoEmExibicao = new JFormattedTextField(mascaraData);
 			tfPeridoEmExibicao.setBounds(175, 290, 185, 30);
 			tfPeridoEmExibicao.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
@@ -141,10 +141,8 @@ public class WindowsCadastrarSessao extends Windows {
 					novaSessao.setHoraDoTermino(duracao);
 					
 					SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
-					String[] periodoDeExibicao = tfPeridoEmExibicao.getText().trim().split("-");
-					Date inicioDoPeriodoDeExibicao = formatoData.parse(periodoDeExibicao[0]);
-					Date terminoDoPeriodoDeExibicao = formatoData.parse(periodoDeExibicao[1]);
-					novaSessao.setInicioDoPeriodoDeExibicao(inicioDoPeriodoDeExibicao);
+					formatoData.setLenient(true);
+					Date terminoDoPeriodoDeExibicao = formatoData.parse(tfPeridoEmExibicao.getText());
 					novaSessao.setTerminoDoPeridoDeExibicao(terminoDoPeriodoDeExibicao);
 					
 					novaSessao.setAtiva();

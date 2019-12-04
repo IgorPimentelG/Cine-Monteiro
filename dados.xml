@@ -1,8 +1,8 @@
 <cine.monteiro.dados.CentralDeInformacoes>
   <usuarios>
     <cine.monteiro.usuarios.Administrador>
-      <nome>Igor Pimentel</nome>
-      <CPF>123.125.594-39</CPF>
+      <nome>Igor Pimentel Gusmão</nome>
+      <CPF>123.125.584-39</CPF>
       <telefone>(83) 9.9190-5120</telefone>
       <idade>21</idade>
       <dataDeNascimento>1998-03-18 03:00:00.0 UTC</dataDeNascimento>
@@ -12,26 +12,25 @@
   </usuarios>
   <salas>
     <cine.monteiro.gerenciamento.Sala>
-      <ID>1575262041980</ID>
+      <ID>1575432409026</ID>
       <nomeDaSala>Sala 01</nomeDaSala>
       <quantidadeDeAssentos>35</quantidadeDeAssentos>
-      <precoDoIngresso>R$ 10.50</precoDoIngresso>
+      <precoDoIngresso>R$ 18.30</precoDoIngresso>
       <quantidadeDeIngressoVendidos>0</quantidadeDeIngressoVendidos>
       <totalArrecadado>0.0</totalArrecadado>
       <sessoes>
         <cine.monteiro.gerenciamento.Sessao>
-          <ID>1575262079810</ID>
+          <ID>1575432423287</ID>
           <filme>
-            <nomeDoFilme>O Rei Leão</nomeDoFilme>
-            <sinopse>Lorem Ipsum</sinopse>
+            <nomeDoFilme>Coringa</nomeDoFilme>
+            <sinopse>Lorem Ipsum	</sinopse>
             <genero>Aventura</genero>
-            <duracao>120</duracao>
-            <classificacaoEtaria>LIVRE</classificacaoEtaria>
+            <duracao>70</duracao>
+            <classificacaoEtaria>I16</classificacaoEtaria>
           </filme>
-          <horaDeInicio>17:30:00</horaDeInicio>
-          <horaDoTermino>19:30:00</horaDoTermino>
-          <inicioDoPeriodoDeExibicao>2019-12-02 03:00:00.0 UTC</inicioDoPeriodoDeExibicao>
-          <terminoDoPeriodoDeExibicao>2019-12-20 03:00:00.0 UTC</terminoDoPeriodoDeExibicao>
+          <horaDeInicio>19:30:00</horaDeInicio>
+          <horaDoTermino>20:40:00</horaDoTermino>
+          <terminoDoPeriodoDeExibicao>2020-03-22 03:00:00.0 UTC</terminoDoPeriodoDeExibicao>
           <vagasDisponiveis>35</vagasDisponiveis>
           <ativa>true</ativa>
         </cine.monteiro.gerenciamento.Sessao>

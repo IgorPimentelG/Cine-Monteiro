@@ -2,6 +2,8 @@ package cine.monteiro.dados;
 
 // Bibliotecas
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
@@ -55,15 +57,18 @@ public class CentralDeInformacoes {
 	}
 	
 	public boolean validarEmail(String email) {
-		 boolean valido = true;
-		 
-		    try {
-		        InternetAddress enderecoEmail = new InternetAddress(email);
-		        enderecoEmail.validate();
-		    } catch (AddressException ex) {
-		        valido = false;
-		    }
-		    return valido;
+		boolean emailValido = false;
+		
+		if(email != null && email.length() > 0) {
+			String caracteresValidos = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+			Pattern pattern = Pattern.compile(caracteresValidos, Pattern.CASE_INSENSITIVE);
+			Matcher matcher = pattern.matcher(email);
+			
+			if(matcher.matches()) {
+				emailValido = true;
+			}
+		}
+		return emailValido;
 	}
 	
 	// Sala

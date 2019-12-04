@@ -26,4 +26,5 @@ public interface Imagens {
 		public static final ImageIcon EMAIL_ENVIADO_25x25 = new ImageIcon("imagens/email-enviado_25x25.png");
 		public static final ImageIcon PASTA = new ImageIcon("imagens/icone-pasta.png");
 		public static final ImageIcon INGRESSO = new ImageIcon("imagens/icone_ingresso.png");
+		public static final ImageIcon CONFIRMAR_25x25 = new ImageIcon("imagens/confirmar_25x25.png");
 }

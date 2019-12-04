@@ -1,8 +1,8 @@
 package cine.monteiro.screens.administrador;
 
-import java.awt.Menu;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -12,6 +12,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
+// Pacotes
 import cine.monteiro.gerenciamento.Sala;
 import cine.monteiro.gerenciamento.Sessao;
 import cine.monteiro.screens.componentes.RotuloDetalhar;
@@ -62,7 +63,9 @@ public class WindowsDetalharSessao extends Windows {
 		add(lblHorararioDaSessao);
 		
 		SimpleDateFormat formatoDaData = new SimpleDateFormat("dd/MM/yyyy");
-		JLabel lblPeridoDeExibicao = new RotuloDetalhar("Período de Exibição: " + formatoDaData.format(sessao.getInicioDoPeriodoDeExibicao()) + " - " + formatoDaData.format(sessao.getTerminoDoPeriodoDeExibicao()), 20, 160, 350, 20);
+		
+		
+		JLabel lblPeridoDeExibicao = new RotuloDetalhar("Em Exibição até: " + formatoDaData.format(sessao.getTerminoDoPeriodoDeExibicao()), 20, 160, 350, 20);
 		add(lblPeridoDeExibicao);
 		
 		String status = "";
@@ -96,7 +99,6 @@ public class WindowsDetalharSessao extends Windows {
 		JSeparator separador = new JSeparator(SwingConstants.HORIZONTAL);
 		separador.setBounds(10, 220, 465, 2);
 		add(separador);
-		
 	}
 	
 	private void adicionarMenuBar() {

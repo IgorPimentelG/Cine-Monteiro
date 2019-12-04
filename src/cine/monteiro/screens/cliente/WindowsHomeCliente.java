@@ -4,7 +4,11 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -49,7 +53,6 @@ public class WindowsHomeCliente extends Windows {
 		adicionarImagem();
 		adicionarButton();
 		setVisible(true);
-		
 	}
 	
 	private void adicionarMenuBar() {
@@ -87,20 +90,14 @@ public class WindowsHomeCliente extends Windows {
 	}
 	
 	private void adicionarLabels() {
-		JLabel lblTitulo = new RotuloTitulo("FILMES EM CARTAZ", 170, 15, 660, 30);
+		JLabel lblTitulo = new RotuloTitulo("FILMES EM CARTAZ", 165, 15, 660, 30);
 		lblTitulo.setForeground(new Color(225, 112, 85));
 		add(lblTitulo);
-		
-		JLabel lblMensagemCliente = new JLabel("<html><center> SEJA BEM VINDO <br>" + usuarioAtivo.getNome().toUpperCase() + "</center></html>");
-		lblMensagemCliente.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
-		lblMensagemCliente.setForeground(new Color(56, 103, 214));
-		lblMensagemCliente.setBounds(35, 10, 300, 50);
-		add(lblMensagemCliente);
 	}
 	
 	private void adicionarImagem() {
 		JLabel lblLogoProjeto = new JLabel(Imagens.LOGO_CINE_MONTEIRO_180x156);
-		lblLogoProjeto.setBounds(5, 50, 180, 156);
+		lblLogoProjeto.setBounds(5, 90, 180, 156);
 		add(lblLogoProjeto);
 	}
 	
@@ -118,10 +115,11 @@ public class WindowsHomeCliente extends Windows {
 				} else {
 					Sala local = cpd.pesquisarSala((String) tabelaDasSessoes.getValueAt(tabelaDasSessoes.getSelectedRow(), 1));
 					long idDaSessao = Long.parseLong(tabelaDasSessoes.getValueAt(tabelaDasSessoes.getSelectedRow(),  0) + "");
+					
 					Sessao sessaoEscolihada = cpd.pesquisarSessao(local, idDaSessao);
 					
 					dispose();
-					new WindowsComprarIngresso(local, sessaoEscolihada);
+					new WindowsComprarIngresso(usuarioAtivo, local, sessaoEscolihada);
 				}
 			}
 		});
@@ -152,6 +150,7 @@ public class WindowsHomeCliente extends Windows {
 			ArrayList<Sessao> sessoes = sala.getSessoes();
 			
 			for(Sessao sessao : sessoes) {
+				
 				if(sessao.isAtiva()) {		
 					Object[] linha = new Object[] {sessao.getID(), sala.getNomeDaSala(),  sessao.getFilme().getNomeDoFilme(), sessao.getFilme().getClassificacaoEtaria(), sala.getPrecoDoIngresso(), sessao.getVagasDisponiveis()};
 					modeloDaTabela.addRow(linha);

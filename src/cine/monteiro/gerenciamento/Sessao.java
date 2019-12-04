@@ -4,7 +4,10 @@ import java.text.SimpleDateFormat;
 // APIs
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
+
+import javax.swing.JOptionPane;
 
 public class Sessao {
 	// Atributos
@@ -12,7 +15,6 @@ public class Sessao {
 	private Filme filme;
 	private LocalTime horaDeInicio;
 	private LocalTime horaDoTermino;
-	private Date inicioDoPeriodoDeExibicao;
 	private Date terminoDoPeriodoDeExibicao;
 	private int vagasDisponiveis;
 	private boolean ativa;
@@ -47,22 +49,18 @@ public class Sessao {
 		try {
 			Date dataAtual = formatoDaData.parse(dataString);
 			
-			if((dataAtual.before(terminoDoPeriodoDeExibicao) || dataAtual.equals(terminoDoPeriodoDeExibicao)) && (inicioDoPeriodoDeExibicao.after(dataAtual) || inicioDoPeriodoDeExibicao.equals(dataAtual))) {
+			if((dataAtual.before(terminoDoPeriodoDeExibicao) || dataAtual.equals(terminoDoPeriodoDeExibicao))) {
 				ativa = true;
 			} else {
 				ativa = false;
 			}
 		} catch (Exception e) {
-			
+			JOptionPane.showMessageDialog(null, "ERRO AO CONVERTER DATA DO TERMINO DA SESSÃO", "ATENÇÃO!", JOptionPane.ERROR_MESSAGE);
 		}		
 	}
 	
 	public void setAtiva(Boolean status) {
 		ativa = status;
-	}
-	
-	public void setInicioDoPeriodoDeExibicao(Date inicioDoPeriodoDeExibicao) {
-		this.inicioDoPeriodoDeExibicao = inicioDoPeriodoDeExibicao;
 	}
 	
 	public void setTerminoDoPeridoDeExibicao(Date terminoDoPeriodoDeExibicao) {
@@ -80,10 +78,6 @@ public class Sessao {
 	
 	public LocalTime getHoraDoTermino() {
 		return horaDoTermino;
-	}
-	
-	public Date getInicioDoPeriodoDeExibicao() {
-		return inicioDoPeriodoDeExibicao;
 	}
 	
 	public Date getTerminoDoPeriodoDeExibicao() {

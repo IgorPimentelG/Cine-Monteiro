@@ -3,23 +3,16 @@ package cine.monteiro.screens;
 // Pacotes
 import cine.monteiro.dados.*;
 import cine.monteiro.imagens.Imagens;
-import cine.monteiro.screens.componentes.ButtonPersonalizado;
-import cine.monteiro.screens.componentes.Input;
-import cine.monteiro.screens.componentes.Rotulo;
-import cine.monteiro.screens.componentes.Windows;
+import cine.monteiro.screens.componentes.*;
 import cine.monteiro.usuarios.*;
 
 // Bibliotecas
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
+import java.util.*;
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
 
@@ -62,22 +55,14 @@ public class WindowsCadastro extends Windows {
 			tfCPF.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
 			tfCPF.setHorizontalAlignment(JTextField.CENTER);
 			add(tfCPF);
-		} catch(ParseException e) {
-			
-		}
 		
-		try {
 			MaskFormatter mascaraDataDeNascimento = new MaskFormatter("##/##/####");
 			tfDataDeNascimento = new JFormattedTextField(mascaraDataDeNascimento);
 			tfDataDeNascimento.setBounds(400, 155, 195, 35);
 			tfDataDeNascimento.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
 			tfDataDeNascimento.setHorizontalAlignment(JTextField.CENTER);
 			add(tfDataDeNascimento);
-		} catch(ParseException e) {
-			
-		}
 		
-		try {
 			MaskFormatter mascaraTelefone = new MaskFormatter("(##) #.####-####");
 			tfTelefone = new JFormattedTextField(mascaraTelefone);
 			tfTelefone.setBounds(195, 225, 400, 35);
@@ -85,9 +70,8 @@ public class WindowsCadastro extends Windows {
 			tfTelefone.setHorizontalAlignment(JTextField.CENTER);
 			add(tfTelefone);
 		} catch(ParseException e) {
-			
+			JOptionPane.showMessageDialog(null, "HOUVE UM ERRO DURANTE A CRIAÇÃO DAS MASCARAS DE VALIDAÇÃO!");
 		}
-		
 		
 		tfEmail = new Input(195, 295, 400, 35);
 		add(tfEmail);
@@ -104,7 +88,8 @@ public class WindowsCadastro extends Windows {
 	}
 	
 	private void adicionarLabels() {
-		JLabel lblSubTitulo = new JLabel("Preencha todos os dados");
+		// Modificar aqui
+		JLabel lblSubTitulo = new JLabel("PREENCHA TODOS OS DADOS");
 		lblSubTitulo.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
 		lblSubTitulo.setBounds(285, 20, 300, 20);
 		add(lblSubTitulo);
@@ -161,35 +146,38 @@ public class WindowsCadastro extends Windows {
 			CentralDeInformacoes cpd = bancoDeInformacoes.recuperarCentralDeInformacoes();
 			
 			// Validar Dados
-			if(!(tfSenha.getText().equals(tfConfirmarSenha.getText()))) {
-				JOptionPane.showMessageDialog(null, "ATENÇÃO! Senha Incorretas.", "ATENÇÃO!", JOptionPane.WARNING_MESSAGE);
+			if(!(new String(tfSenha.getPassword()).equals(new String(tfConfirmarSenha.getPassword())))) {
+				JOptionPane.showMessageDialog(null, "SENHAS INCORRETAS!", "ATENÇÃO!", JOptionPane.ERROR_MESSAGE);
 				tfSenha.setText("");
 				tfConfirmarSenha.setText("");
 				repaint();
-			} else if (tfNome.getText().isBlank() || tfCPF.getText().isBlank() || tfTelefone.getText().isBlank() || tfDataDeNascimento.getText().isBlank() ||tfEmail.getText().isBlank() || tfSenha.getText().isBlank()){
-				JOptionPane.showMessageDialog(null, "Preencha Todos os Dados.", "ATENÇÃO!", JOptionPane.WARNING_MESSAGE);
+			} else if (tfNome.getText().isEmpty() || tfCPF.getText().isEmpty() || tfTelefone.getText().isEmpty() || tfDataDeNascimento.getText().isEmpty() ||tfEmail.getText().isEmpty() || tfSenha.getPassword().length == 0){
+				JOptionPane.showMessageDialog(null, "PREENCHA TODOS OS DADOS!", "ATENÇÃO!", JOptionPane.WARNING_MESSAGE);
+			} else if(!(cpd.validarEmail(tfEmail.getText()))) {
+				JOptionPane.showMessageDialog(null, "E-MAIL INVÁLIDO!", "ATENÇÃO!", JOptionPane.ERROR_MESSAGE);
+				tfEmail.setText("");
 			} else {
 				Usuario novoUsuario;
 				Date dataDeNascimento = null;
-			
-				
+
 				try {
 					SimpleDateFormat formatoDataDeNascimento = new SimpleDateFormat("dd/MM/yyyy");
+					formatoDataDeNascimento.setLenient(false);
 					 dataDeNascimento = formatoDataDeNascimento.parse(tfDataDeNascimento.getText());
 				} catch (Exception erro) {
 					JOptionPane.showMessageDialog(null, "DATA DE NASCIMENTO INVÁLIDA!", "ATENÇÃO!", JOptionPane.ERROR_MESSAGE);
+					return;
 				}
 				
 				if(cpd.getUsuarios().isEmpty()) {
-					novoUsuario = new Administrador(tfNome.getText(), tfCPF.getText(), tfTelefone.getText(), dataDeNascimento, tfEmail.getText(), tfSenha.getText());
+					novoUsuario = new Administrador(tfNome.getText(), tfCPF.getText(), tfTelefone.getText(), dataDeNascimento, tfEmail.getText(), new String(tfSenha.getPassword()));
 				} else {
-					novoUsuario = new Cliente(tfNome.getText(), tfCPF.getText(), tfTelefone.getText(), dataDeNascimento, tfEmail.getText(), tfSenha.getText());
+					novoUsuario = new Cliente(tfNome.getText(), tfCPF.getText(), tfTelefone.getText(), dataDeNascimento, tfEmail.getText(), new String(tfSenha.getPassword()));
 				}
-				
 				
 				try {
 					cpd.adicionarUsuario(novoUsuario);
-					JOptionPane.showMessageDialog(null, "CADASTRO REALIZADO COM SUCESSO!", "NOVA CONTA", JOptionPane.PLAIN_MESSAGE);
+					JOptionPane.showMessageDialog(null, "CADASTRO REALIZADO COM SUCESSO!", "NOVA CONTA", JOptionPane.INFORMATION_MESSAGE);
 					bancoDeInformacoes.salvarCentralDeInformacoes(cpd);
 					dispose();
 					new WindowsLogin();
