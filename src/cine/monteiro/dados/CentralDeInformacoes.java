@@ -81,9 +81,15 @@ public class CentralDeInformacoes {
 		salas.add(novaSala);
 	}
 	
-	public void excluirSala(long ID)  {
+	public void excluirSala(long ID) throws Exception {
 		for(Sala s : salas) {
 			if(s.getID() == ID) {
+				ArrayList<Sessao> sessoes = s.getSessoes();
+				for(Sessao sessao : sessoes) {
+					if(sessao.isAtiva()) {
+						throw new Exception("A SALA POSSUI SESSÃO ATIVA!");
+					}
+				}
 				salas.remove(s);
 				break;
 			}
@@ -103,15 +109,14 @@ public class CentralDeInformacoes {
 		return null;
 	}
 	
-	
 	// Filme
 	public void adicionarFilme(Filme filme) throws Exception{
-		for(Filme f : filmes) {
-			if(f != null && f.getNomeDoFilme().equalsIgnoreCase(filme.getNomeDoFilme())) {
-				throw new Exception("O FILME JÁ FOI CADASTRADO!");
-			}
+		if(pesquisarFilme(filme.getNomeDoFilme()) == null) {
+			filmes.add(filme);
+		} else {
+			throw new Exception("O FILME JÁ FOI CADASTRADO!");
 		}
-		filmes.add(filme);
+		
 	}
 		
 	public ArrayList<Filme> getFilmes() {
@@ -185,4 +190,6 @@ public class CentralDeInformacoes {
 	public boolean getStatusCheckBox() {
 		return statusCheckBox;
 	}
+
+	
 }

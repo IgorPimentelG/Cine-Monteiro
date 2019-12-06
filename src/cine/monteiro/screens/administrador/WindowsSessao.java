@@ -8,7 +8,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
 
-import cine.monteiro.gerenciamento.Sessao;
 import cine.monteiro.imagens.Imagens;
 import cine.monteiro.screens.componentes.*;
 import cine.monteiro.screens.ouvintes.OuvinteBtnVoltarPainelDeControle;
@@ -56,6 +55,12 @@ public class WindowsSessao extends Windows {
 		add(btnInterromperSessao);
 		
 		JButton btnListarTodasAsSessoes = new ButtonPersonalizado("LISTAR TODAS AS SESSÕES", 120, 95, 200, 30);
+		btnListarTodasAsSessoes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new WindowsListarSessao();
+			}
+		});
 		add(btnListarTodasAsSessoes);
 		
 		JButton btnVoltar = new ButtonPersonalizado("VOLTAR", 120, 135, 200, 30);

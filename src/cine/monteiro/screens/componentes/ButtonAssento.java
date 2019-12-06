@@ -17,6 +17,7 @@ public class ButtonAssento extends JButton {
 		super(assento);
 		setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
 		setEnabled(false);
-		setBackground(new Color(198, 226, 255));
+		setBackground(new Color(140, 122, 230));
+		setForeground(Color.WHITE);
 	}
 }

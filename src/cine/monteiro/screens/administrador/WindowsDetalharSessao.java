@@ -1,5 +1,7 @@
 package cine.monteiro.screens.administrador;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -24,7 +26,11 @@ public class WindowsDetalharSessao extends Windows {
 	private Sala sala;
 	private long idDaSessao;
 	private Sessao sessao;
-
+	private JComboBox<String> cbData;
+	private JLabel lblQuantidadeDeIngressosVendidos;
+	private JLabel lblQuantidadeArrecadado;
+	
+	// Construtor
 	public WindowsDetalharSessao(Sala sala, long idDaSessao) {
 		super("Sessões - Detalhar Sessão", 500, 415);
 		this.sala = sala;
@@ -37,6 +43,7 @@ public class WindowsDetalharSessao extends Windows {
 		setVisible(true);
 	}
 	
+	// Componentes
 	private void pesquisarSessao() {
 		ArrayList<Sessao> sessoesDaSala = sala.getSessoes();
 		for(Sessao sessaoCadastrada : sessoesDaSala) {
@@ -56,14 +63,13 @@ public class WindowsDetalharSessao extends Windows {
 		JLabel lblSalaDaSessao = new RotuloDetalhar("Sala da sessão: " + sala.getNomeDaSala(), 20, 85, 300, 20);
 		add(lblSalaDaSessao);
 		
-		JLabel lblFilmeDaSessao = new RotuloDetalhar("Filme da sessão: " + sessao.getFilme().getNomeDoFilme(), 20, 110, 200, 20);
+		JLabel lblFilmeDaSessao = new RotuloDetalhar("Filme da sessão: " + sessao.getFilme().getNomeDoFilme(), 20, 110, 400, 20);
 		add(lblFilmeDaSessao);
 		
 		JLabel lblHorararioDaSessao = new RotuloDetalhar("Horário da sessão: " + sessao.getHoraDeInicio() + " - " + sessao.getHoraDoTermino(), 20, 135, 350, 20);
 		add(lblHorararioDaSessao);
 		
 		SimpleDateFormat formatoDaData = new SimpleDateFormat("dd/MM/yyyy");
-		
 		
 		JLabel lblPeridoDeExibicao = new RotuloDetalhar("Em Exibição até: " + formatoDaData.format(sessao.getTerminoDoPeriodoDeExibicao()), 20, 160, 350, 20);
 		add(lblPeridoDeExibicao);
@@ -81,17 +87,38 @@ public class WindowsDetalharSessao extends Windows {
 		JLabel lblDia = new RotuloDetalhar("DIA:", 180, 245, 50, 20);
 		add(lblDia);
 		
-		JLabel lblQuantidadeDeIngressosVendidos = new RotuloDetalhar("Quantidade de ingressos vendidos: ", 20, 290, 300, 20);
+		lblQuantidadeDeIngressosVendidos = new RotuloDetalhar("Quantidade de ingressos vendidos: ", 20, 290, 300, 20);
 		add(lblQuantidadeDeIngressosVendidos);
 		
-		JLabel lblQuantidadeArrecadado = new RotuloDetalhar("Quantidade arrecadado: ", 20, 315, 300, 20);
+		lblQuantidadeArrecadado = new RotuloDetalhar("Quantidade arrecadado: ", 20, 315, 300, 20);
 		add(lblQuantidadeArrecadado);
 	}
 	
 	private void adicionarComBox() {
-		String[] opcoes = {"10/11/2019"};
-		JComboBox<String> cbData = new JComboBox<String>(opcoes);
+		String[] opcoes = new String[sessao.getDadosDaSessao().size()];
+		ArrayList<ArrayList<String>> dadosDaSessao = sessao.getDadosDaSessao();
+		
+		for(int i = 0; i < dadosDaSessao.size(); i++) {
+			ArrayList<String> dados = dadosDaSessao.get(i);
+			System.out.println(dados.get(0));
+			opcoes[i] = dados.get(0);
+		}
+		
+		cbData = new JComboBox<String>(opcoes);
 		cbData.setBounds(215, 240, 100, 30);
+		cbData.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String dataSelecionada = (String) cbData.getSelectedItem();
+				for(int i = 0; i < dadosDaSessao.size(); i++) {
+					ArrayList<String> dados = dadosDaSessao.get(i);
+					if(dados.get(0).equals(dataSelecionada)) {
+						lblQuantidadeDeIngressosVendidos.setText("Quantidade de ingressos vendidos: " + dados.get(1));
+						lblQuantidadeArrecadado.setText("Quantidade arrecadado: " + dados.get(2));
+						repaint();
+					}
+				}
+			}
+		});
 		add(cbData);
 	}
 	
@@ -109,7 +136,12 @@ public class WindowsDetalharSessao extends Windows {
 		menuBar.add(menu);
 		
 		JMenuItem opSair = new JMenuItem("SAIR");
-		menu.add(opSair);
-		
+		opSair.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new WindowsListarSessao();
+			}
+		});
+		menu.add(opSair);	
 	}
 }

@@ -57,7 +57,7 @@ public class Boleto extends Email {
 		doc.add(dadosDoLocal);
 		
 		SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
-		Paragraph dadosDaSessao = new Paragraph("Início da Sessão: " + ingresso.getSessao().getHoraDeInicio() + "\nFilme: " + ingresso.getSessao().getFilme().getNomeDoFilme() + "\nDuração: " + ingresso.getSessao().getFilme().getDuracaco() + " min" + "\nClassificação Etária: " + ingresso.getSessao().getFilme().getClassificacaoEtaria() + "\nVálido até: " + formatoData.format(ingresso.getSessao().getTerminoDoPeriodoDeExibicao()), fonteDoTexto);
+		Paragraph dadosDaSessao = new Paragraph("Início da Sessão: " + ingresso.getSessao().getHoraDeInicio() + "\nFilme: " + ingresso.getSessao().getFilme().getNomeDoFilme() + "\nDuração: " + ingresso.getSessao().getFilme().getDuracao() + " min" + "\nClassificação Etária: " + ingresso.getSessao().getFilme().getClassificacaoEtaria() + "\nVálido até: " + formatoData.format(ingresso.getSessao().getTerminoDoPeriodoDeExibicao()), fonteDoTexto);
 		doc.add(dadosDaSessao);
 		
 		Paragraph dadosDoAssento = new Paragraph("Assento(s) reservado(s): " + ingresso.getAssentoReservado(), fonteDoTexto);

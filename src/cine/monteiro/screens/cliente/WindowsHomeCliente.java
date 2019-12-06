@@ -28,6 +28,7 @@ import cine.monteiro.gerenciamento.Sala;
 import cine.monteiro.gerenciamento.Sessao;
 import cine.monteiro.imagens.Imagens;
 import cine.monteiro.screens.*;
+import cine.monteiro.screens.administrador.WindowsPainelDeControle;
 import cine.monteiro.screens.componentes.ButtonPersonalizado;
 import cine.monteiro.screens.componentes.RotuloTitulo;
 import cine.monteiro.screens.componentes.Separador;
@@ -39,7 +40,6 @@ public class WindowsHomeCliente extends Windows {
 	private Usuario usuarioAtivo;
 	private JTable tabelaDasSessoes;
 	
-
 	Persistencia bancoDeInformacoes = new Persistencia();
 	CentralDeInformacoes cpd = bancoDeInformacoes.recuperarCentralDeInformacoes();
 	
@@ -79,6 +79,18 @@ public class WindowsHomeCliente extends Windows {
 		});
 		menu.add(itemSobre);
 		
+		if(usuarioAtivo instanceof Administrador) {
+			JMenuItem itemVoltar = new JMenuItem("VOLTAR");
+			itemVoltar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+					new WindowsPainelDeControle();
+				}
+			});
+			menu.add(itemVoltar);
+		}
+		
+		
 		JMenuItem itemSair = new JMenuItem("SAIR");
 		itemSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -110,14 +122,35 @@ public class WindowsHomeCliente extends Windows {
 		JButton btnComprar = new ButtonPersonalizado("COMPRAR", 300, 290, 200, 35);
 		btnComprar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Sala local = cpd.pesquisarSala((String) tabelaDasSessoes.getValueAt(tabelaDasSessoes.getSelectedRow(), 1));
+				long idDaSessao = Long.parseLong(tabelaDasSessoes.getValueAt(tabelaDasSessoes.getSelectedRow(),  0) + "");
+				Sessao sessaoEscolihada = cpd.pesquisarSessao(local, idDaSessao);
+				
 				if(tabelaDasSessoes.getSelectedRow() == -1) {
 					JOptionPane.showMessageDialog(null, "NENHUMA SESSÃO FOI SELECIONADA!", "ATENÇÃO!", JOptionPane.ERROR_MESSAGE);
+				} else if(sessaoEscolihada.getVagasDisponiveis() == 0) { 
+					JOptionPane.showMessageDialog(null, "NÃO HÁ MAIS VAGAS DISÓNÍVEIS PARA ESTA SESSÃO!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
 				} else {
-					Sala local = cpd.pesquisarSala((String) tabelaDasSessoes.getValueAt(tabelaDasSessoes.getSelectedRow(), 1));
-					long idDaSessao = Long.parseLong(tabelaDasSessoes.getValueAt(tabelaDasSessoes.getSelectedRow(),  0) + "");
-					
-					Sessao sessaoEscolihada = cpd.pesquisarSessao(local, idDaSessao);
-					
+					if(sessaoEscolihada.getFilme().getClassificacaoEtaria() != ClassificacaoEtaria.LIVRE) {
+						int classificacaoEtaria = 0;
+						
+						if(sessaoEscolihada.getFilme().getClassificacaoEtaria() == ClassificacaoEtaria.I10) {
+							classificacaoEtaria = 10;
+						} else if(sessaoEscolihada.getFilme().getClassificacaoEtaria() == ClassificacaoEtaria.I12) {
+							classificacaoEtaria = 12;
+						} else if(sessaoEscolihada.getFilme().getClassificacaoEtaria() == ClassificacaoEtaria.I14) {
+							classificacaoEtaria = 14;
+						} else if(sessaoEscolihada.getFilme().getClassificacaoEtaria() == ClassificacaoEtaria.I16) {
+							classificacaoEtaria = 16;
+						} else if(sessaoEscolihada.getFilme().getClassificacaoEtaria() == ClassificacaoEtaria.I18) {
+							classificacaoEtaria = 18;
+						}
+						
+						if(usuarioAtivo.getIdade() <= classificacaoEtaria) {
+							JOptionPane.showMessageDialog(null, "A CLASSIFICAÇÃO ETÁRIA DESTA SESSÃO É IMPRÓPRIA PARA SUA IDADE.", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
+							return;
+						}
+					}
 					dispose();
 					new WindowsComprarIngresso(usuarioAtivo, local, sessaoEscolihada);
 				}
@@ -130,6 +163,21 @@ public class WindowsHomeCliente extends Windows {
 		JButton btnInformacoes = new ButtonPersonalizado("INFORMAÇÕES", 520, 290, 200, 35);
 		btnInformacoes.setForeground(Color.WHITE);
 		btnInformacoes.setBackground(new Color(120, 111, 166));
+		btnInformacoes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				Sala local = cpd.pesquisarSala((String) tabelaDasSessoes.getValueAt(tabelaDasSessoes.getSelectedRow(), 1));
+				long idDaSessao = Long.parseLong(tabelaDasSessoes.getValueAt(tabelaDasSessoes.getSelectedRow(),  0) + "");
+				Sessao sessaoEscolihada = cpd.pesquisarSessao(local, idDaSessao);
+				
+				if(tabelaDasSessoes.getSelectedRow() == -1) {
+					JOptionPane.showMessageDialog(null, "NENHUMA SESSÃO FOI SELECIONADA!", "ATENÇÃO!", JOptionPane.ERROR_MESSAGE);
+				} else {
+					dispose();
+					new WindowsInformacoesSessao(local, sessaoEscolihada, usuarioAtivo);
+				}
+			}
+		});
 		add(btnInformacoes);
 		
 	}

@@ -53,17 +53,23 @@ public class WindowsExcluirSala extends Windows {
 		JButton btnConfirmar = new ButtonPersonalizado("CONFIRMAR", 20, 125, 145, 35);
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String dadosDaSala = (String) cbSalas.getSelectedItem();
-				String[] dados = dadosDaSala.split("-");
-				long ID = Long.parseLong(dados[0].trim());
-				cpd.excluirSala(ID);
-				JOptionPane.showMessageDialog(null, "SALA EXCLUÍDA COM SUCESSO!", "AVISO!", JOptionPane.WARNING_MESSAGE);
-				bancoDeInformacoes.salvarCentralDeInformacoes(cpd);
-				
 				if(salasCadastradas.isEmpty()) {
 					JOptionPane.showMessageDialog(null, "NÃO EXISTE SALAS CADASTRADAS!", "ATENÇÃO", JOptionPane.ERROR_MESSAGE);
 					dispose();
 				} else {
+					String dadosDaSala = (String) cbSalas.getSelectedItem();
+					String[] dados = dadosDaSala.split("-");
+					long ID = Long.parseLong(dados[0].trim());
+					
+					try {
+						cpd.excluirSala(ID);
+						JOptionPane.showMessageDialog(null, "SALA EXCLUÍDA COM SUCESSO!", "AVISO!", JOptionPane.WARNING_MESSAGE);
+						bancoDeInformacoes.salvarCentralDeInformacoes(cpd);
+					} catch (Exception erro) {
+						JOptionPane.showMessageDialog(null, erro.getMessage(), "ATENÇÃO", JOptionPane.ERROR_MESSAGE);
+					}	
+					
+					 
 					dispose();
 					new WindowsExcluirSala();
 				}

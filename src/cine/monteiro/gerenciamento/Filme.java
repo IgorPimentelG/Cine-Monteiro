@@ -43,7 +43,7 @@ public class Filme {
 		return genero;
 	}
 	
-	public long getDuracaco() {
+	public long getDuracao() {
 		return duracao;
 	}
 		
@@ -53,6 +53,6 @@ public class Filme {
 	
 	// Sobreescritas
 	public String toString() {
-		return "\nNome do filme: " + this.nomeDoFilme + "\nSinopse: " + this.sinopse + "\nDuração: " + this.duracao + "\nClassificação Etária: " + this.classificacaoEtaria;
+		return "\nNome do filme: " + this.nomeDoFilme + "\nSinopse: " + this.sinopse + "\nDuraï¿½ï¿½o: " + this.duracao + "\nClassificaï¿½ï¿½o Etï¿½ria: " + this.classificacaoEtaria;
 	}
 }

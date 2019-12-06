@@ -40,11 +40,11 @@ public class Sala {
 	}
 	
 	public void setQuantidadeDeIngressoVendidos(int quantidadeDeIngressoVendidos) {
-		this.quantidadeDeIngressoVendidos = quantidadeDeIngressoVendidos;
+		this.quantidadeDeIngressoVendidos += quantidadeDeIngressoVendidos;
 	}
 	
-	public void setTotalArrecadado() {
-		this.totalArrecadado *= quantidadeDeIngressoVendidos;
+	public void setTotalArrecadado(float valor) {
+		this.totalArrecadado += valor;
 	}
 	
 	// Getters

@@ -32,6 +32,7 @@ public class WindowsListarFilmes extends Windows {
 	// Atributos
 	private JCheckBox filtroFilmesAtivos;
 	private JTable tabelaDeTodosOsFilmes;
+	private JLabel lblTitulo;
 	private JScrollPane painelDaTabela;
 	
 	// Construtor
@@ -39,15 +40,14 @@ public class WindowsListarFilmes extends Windows {
 		super("Filme - Todos os Filmes", 700, 500);
 		adicionarLabels();
 		adicionarMenuBar();
-		adicionarPainelDaTabela();
-		adicionarTabela(false);
 		adicionarCheckBox();
+		adicionarTabela();
 		setVisible(true);
 	}
 	
 	// Componentes
 	private void adicionarLabels() {
-		JLabel lblTitulo = new RotuloTitulo("TODOS OS FILMES CADASTRADOS", 0, 15, 700, 30);
+	 lblTitulo = new RotuloTitulo("TODOS OS FILMES CADASTRADOS", 0, 15, 700, 30);
 		add(lblTitulo);
 	}
 	
@@ -68,52 +68,31 @@ public class WindowsListarFilmes extends Windows {
 		menu.add(itemSair);
 	}
 	
-	private void adicionarPainelDaTabela() {
-		tabelaDeTodosOsFilmes = new JTable();
-		painelDaTabela = new JScrollPane(tabelaDeTodosOsFilmes);
-		painelDaTabela.setBounds(0, 100, 685, 500);	
-	}
-	
-	private void adicionarTabela(boolean ativos) {
+	private void adicionarTabela() {
 		Persistencia bancoDeInformacoes = new Persistencia();
 		CentralDeInformacoes cpd = bancoDeInformacoes.recuperarCentralDeInformacoes();
-		
 		DefaultTableModel modeloDaTabela = new DefaultTableModel();
 		modeloDaTabela.addColumn("Nome Do Filme");
-		modeloDaTabela.addColumn("Sinopse");
 		modeloDaTabela.addColumn("Genêro");
 		modeloDaTabela.addColumn("Duração");
 		modeloDaTabela.addColumn("Classificação Etária");
 		
-		ArrayList<Sala> salas = cpd.getSalas();
-		for(Sala sala : salas) {
-			ArrayList<Sessao> sessoes = sala.getSessoes();
-			for(Sessao sessao : sessoes) {
-				if(ativos) {
-					if(sessao.isAtiva()) {
-						Object[] linha = new Object[5];
-						linha[0] = sessao.getFilme().getNomeDoFilme();
-						linha[1] = sessao.getFilme().getSinopse();
-						linha[2] = sessao.getFilme().getGenero();
-						linha[3] = sessao.getFilme().getDuracaco();
-						linha[4] = sessao.getFilme().getClassificacaoEtaria();
-						
-						modeloDaTabela.addRow(linha);
-					}
-				} else {
-					Object[] linha = new Object[5];
-					linha[0] = sessao.getFilme().getNomeDoFilme();
-					linha[1] = sessao.getFilme().getSinopse();
-					linha[2] = sessao.getFilme().getGenero();
-					linha[3] = sessao.getFilme().getDuracaco();
-					linha[4] = sessao.getFilme().getClassificacaoEtaria();
-					
-					modeloDaTabela.addRow(linha);
-				}	
-			}
+	
+		ArrayList<Filme> todosFilmes = cpd.getFilmes();				
+		
+		for(Filme f : todosFilmes) {
+			Object[] linha = new Object[4];
+			linha[0] = f.getNomeDoFilme();
+			linha[1] = f.getGenero();
+			linha[2] = f.getDuracao() + " min";
+			linha[3] = f.getClassificacaoEtaria();
+			modeloDaTabela.addRow(linha);
 		}
 		
-		tabelaDeTodosOsFilmes.setModel(modeloDaTabela);
+		
+		tabelaDeTodosOsFilmes = new JTable(modeloDaTabela);
+		painelDaTabela = new JScrollPane(tabelaDeTodosOsFilmes);
+		painelDaTabela.setBounds(0, 100, 685, 500);	
 		add(painelDaTabela);
 		repaint();
 	}
@@ -123,17 +102,42 @@ public class WindowsListarFilmes extends Windows {
 		filtroFilmesAtivos.setBounds(0, 60, 700, 20);
 		filtroFilmesAtivos.setHorizontalAlignment(JCheckBox.CENTER);
 		filtroFilmesAtivos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {	
-				if (filtroFilmesAtivos.isSelected()) {
-					remove(tabelaDeTodosOsFilmes);
-					adicionarTabela(true);
+			public void actionPerformed(ActionEvent e) {
+				if(filtroFilmesAtivos.isSelected()) {	
+					remove(painelDaTabela);
+					DefaultTableModel modeloDaTabela = new DefaultTableModel();
+					modeloDaTabela.addColumn("Nome Do Filme");
+					modeloDaTabela.addColumn("Genêro");
+					modeloDaTabela.addColumn("Duração");
+					modeloDaTabela.addColumn("Classificação Etária");
+
+					ArrayList<Sala> salas = cpd.getSalas();
+					for(Sala sala : salas) {
+						ArrayList<Sessao> sessoes = sala.getSessoes();
+						for(Sessao sessao : sessoes) {
+							if(sessao.isAtiva()) {
+								Object[] linha = new Object[4];
+								linha[0] = sessao.getFilme().getNomeDoFilme();
+								linha[1] = sessao.getFilme().getGenero();
+								linha[2] = sessao.getFilme().getDuracao() + " min";
+								linha[3] = sessao.getFilme().getClassificacaoEtaria();
+								modeloDaTabela.addRow(linha);
+							}
+						}
+					}
+					
+					tabelaDeTodosOsFilmes = new JTable(modeloDaTabela);
+					painelDaTabela = new JScrollPane(tabelaDeTodosOsFilmes);
+					painelDaTabela.setBounds(0, 100, 685, 500);	
+					add(painelDaTabela);
 					repaint();
 				} else {
-					remove(tabelaDeTodosOsFilmes);
-					adicionarTabela(false);
+					remove(painelDaTabela);
+					adicionarTabela();
 					repaint();
 				}
-			} // Fim do ActionPerformed
+				repaint();
+			}
 		});
 		add(filtroFilmesAtivos);
 	}

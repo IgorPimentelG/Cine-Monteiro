@@ -31,7 +31,7 @@ public class WindowsCadastrarSessao extends Windows {
 	private JComboBox<String> cbFilmesDisponiveis;
 	private JComboBox<String> cbSalasCadastradas;
 	private JTextField tfIdentificacao;
-	private JFormattedTextField tfPeridoEmExibicao;
+	private JFormattedTextField tfPeriodoEmExibicao;
 	private JFormattedTextField tfHorarioDaSessao;
 	
 	// Instâncias
@@ -85,19 +85,15 @@ public class WindowsCadastrarSessao extends Windows {
 			tfHorarioDaSessao.setHorizontalAlignment(JFormattedTextField.CENTER);
 			tfHorarioDaSessao.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
 			add(tfHorarioDaSessao);
-		} catch (Exception e) {
 			
-		}	
-		
-		try {
 			MaskFormatter mascaraData = new MaskFormatter("##/##/####");
-			tfPeridoEmExibicao = new JFormattedTextField(mascaraData);
-			tfPeridoEmExibicao.setBounds(175, 290, 185, 30);
-			tfPeridoEmExibicao.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
-			tfPeridoEmExibicao.setHorizontalAlignment(JFormattedTextField.CENTER);
-			add(tfPeridoEmExibicao);
+			tfPeriodoEmExibicao = new JFormattedTextField(mascaraData);
+			tfPeriodoEmExibicao.setBounds(175, 290, 185, 30);
+			tfPeriodoEmExibicao.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
+			tfPeriodoEmExibicao.setHorizontalAlignment(JFormattedTextField.CENTER);
+			add(tfPeriodoEmExibicao);
 		} catch (Exception e) {
-		
+			JOptionPane.showMessageDialog(null, "ERRO DURANTE A VALIDAÇÃO DOS DADOS. TENTE NOVAMENTE!", "ERROR", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
@@ -134,26 +130,42 @@ public class WindowsCadastrarSessao extends Windows {
 				try {
 					Filme filmeDaSessao = cpd.pesquisarFilme((String) cbFilmesDisponiveis.getSelectedItem());
 					novaSessao.setFilme(filmeDaSessao);
+					
 					LocalTime horaDeInicio = LocalTime.parse(tfHorarioDaSessao.getText());
 					novaSessao.setHoraDeInicio(horaDeInicio);
 				
-					long duracao = filmeDaSessao.getDuracaco();
+					long duracao = filmeDaSessao.getDuracao();
 					novaSessao.setHoraDoTermino(duracao);
 					
-					SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
-					formatoData.setLenient(true);
-					Date terminoDoPeriodoDeExibicao = formatoData.parse(tfPeridoEmExibicao.getText());
-					novaSessao.setTerminoDoPeridoDeExibicao(terminoDoPeriodoDeExibicao);
+					try {
+						SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
+						formatoData.setLenient(false);             // Validar Data
+						Date terminoDoPeriodoDeExibicao = formatoData.parse(tfPeriodoEmExibicao.getText());
+						Date dataAtual = new Date();
+						if(terminoDoPeriodoDeExibicao.after(dataAtual)) {
+							novaSessao.setTerminoDoPeridoDeExibicao(terminoDoPeriodoDeExibicao);
+						} else {
+							JOptionPane.showMessageDialog(null, "A DATA DO PERÍODO DE EXIBIÇÃO NÃO PODE SER UMA DATA ANTIGA!", "ATENÇÃO!", JOptionPane.ERROR_MESSAGE);
+							tfPeriodoEmExibicao.setText("");
+							return;
+						}
+					} catch (Exception erroDaData) {
+						JOptionPane.showMessageDialog(null, "DATA DO PERIODO DE EXIBIÇÃO INVÁLIDA!", "ATENÇÃO!", JOptionPane.WARNING_MESSAGE);
+						tfPeriodoEmExibicao.setText("");
+						return;
+					}
 					
 					novaSessao.setAtiva();
+					
 					String salaSelecionada = (String) cbSalasCadastradas.getSelectedItem();
 					Sala sala = cpd.pesquisarSala(salaSelecionada);
+					
 					cpd.adicionarSessao(novaSessao, sala);
 					sala.addFilmeExibido(filmeDaSessao);
 					novaSessao.setVagasDisponiveis(sala.getQuantidadeDeAssentos());
+					novaSessao.setDataAtualDaSessaoDate(new Date());
 					JOptionPane.showMessageDialog(null, "SESSÃO CADASTRADA COM SUCESSO!", "AVISO!", JOptionPane.INFORMATION_MESSAGE);
 					bancoDeInformacoes.salvarCentralDeInformacoes(cpd);
-					
 					dispose();
 					new WindowsSessao();
 				} catch(Exception erro) {

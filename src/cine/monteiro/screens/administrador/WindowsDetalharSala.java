@@ -59,7 +59,7 @@ public class WindowsDetalharSala extends Windows {
 		JLabel lblQuantidadeDePessoas = new RotuloDetalhar("Quantidade de pessoas que já frequentou a sala: " + sala.getQuantidadeDeIngressoVendidos(), 20, 135, 350, 20);
 		add(lblQuantidadeDePessoas);
 		
-		JLabel lblTotalArrecadado = new RotuloDetalhar("Total arrecadado: ", 20, 160, 150, 20);
+		JLabel lblTotalArrecadado = new RotuloDetalhar("Total arrecadado: " + sala.getTotalArrecadado(), 20, 160, 300, 20);
 		add(lblTotalArrecadado);
 		
 		JLabel lblTotalArrecadadoSemana = new RotuloDetalhar("Total arrecadado nos nltimos 7 dias: ", 20, 185, 300, 20);

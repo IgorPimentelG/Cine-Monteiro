@@ -70,7 +70,7 @@ public class WindowsCadastro extends Windows {
 			tfTelefone.setHorizontalAlignment(JTextField.CENTER);
 			add(tfTelefone);
 		} catch(ParseException e) {
-			JOptionPane.showMessageDialog(null, "HOUVE UM ERRO DURANTE A CRIAÇÃO DAS MASCARAS DE VALIDAÇÃO!");
+			JOptionPane.showMessageDialog(null, "HOUVE UM ERRO DURANTE HÁ VALIDAÇÃO DOS DADOS!");
 		}
 		
 		tfEmail = new Input(195, 295, 400, 35);

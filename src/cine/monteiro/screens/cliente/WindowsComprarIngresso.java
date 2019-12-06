@@ -27,6 +27,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
+import com.sun.mail.imap.protocol.SaslAuthenticator;
+
 import cine.monteiro.dados.CentralDeInformacoes;
 import cine.monteiro.dados.Persistencia;
 import cine.monteiro.email.Boleto;
@@ -48,8 +50,12 @@ public class WindowsComprarIngresso extends Windows {
 	private JTextField tfQntdIngressos;
 	
 	// Instâncias	
-	private ArrayList<String> assentosReservados = new ArrayList<String>();
+	private ArrayList<String> assentosReservados;
 	private ArrayList<JButton> assentos = new ArrayList<JButton>();
+	private ArrayList<String> assentosEscolhidos = new ArrayList<String>();
+	
+	Persistencia bancoDeInformacoes = new Persistencia();
+	CentralDeInformacoes cpd = bancoDeInformacoes.recuperarCentralDeInformacoes();
 	
 	// Construtor
 	public WindowsComprarIngresso(Usuario cliente, Sala local, Sessao sessao) {
@@ -57,6 +63,7 @@ public class WindowsComprarIngresso extends Windows {
 		this.local = local;
 		this.sessao = sessao;
 		this.cliente = cliente;
+		assentosReservados = sessao.getAssentosReservado();
 		total = Float.parseFloat(local.getPrecoDoIngresso().split(" ")[1]);
 		adicionarImagem();
 		adicionarMenuBar();
@@ -64,7 +71,6 @@ public class WindowsComprarIngresso extends Windows {
 		adicionarLabels();
 		adicionarInput();
 		adicionarButtons();
-		configurarButtons();
 		setVisible(true);
 	}
 	
@@ -82,6 +88,12 @@ public class WindowsComprarIngresso extends Windows {
 		menuBar.add(menu);
 		
 		JMenuItem opSair = new JMenuItem("SAIR");
+		opSair.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new WindowsHomeCliente(cliente);
+			}
+		});
 		menu.add(opSair);
 	}
 	
@@ -104,7 +116,7 @@ public class WindowsComprarIngresso extends Windows {
 		lblTela.setBackground(Color.WHITE);
 		lblTela.setBorder(bordar);
 		lblTela.setHorizontalAlignment(JLabel.CENTER);
-		lblTela.setBounds(270, 55, 535, 35);
+		lblTela.setBounds(270, 45, 535, 35);
 		add(lblTela);
 		
 		JLabel lblIngresso = new RotuloTitulo("INGRESSO", 0, 115, 250, 20);
@@ -165,6 +177,7 @@ public class WindowsComprarIngresso extends Windows {
 					tfQntdIngressos.setText("1");
 				} else {
 					tfQntdIngressos.setEditable(false);
+					configurarButtons();
 					total = Float.parseFloat(local.getPrecoDoIngresso().split(" ")[1]) * Integer.parseInt(tfQntdIngressos.getText());
 					lblTotal.setText("Total: " + NumberFormat.getCurrencyInstance().format(total));
 					repaint();
@@ -182,25 +195,47 @@ public class WindowsComprarIngresso extends Windows {
 	
 	private void adicionarButtons() {
 		JButton btnComprar = new ButtonPersonalizado("COMPRAR", 20, 415, 210, 35);
+		btnComprar.setForeground(Color.WHITE);
+		btnComprar.setBackground(new Color(238, 82, 83));
 		btnComprar.addActionListener(new ActionListener() {
-			
 			public void actionPerformed(ActionEvent e) {
-				Persistencia bancoDeInformacoes = new Persistencia();
-				CentralDeInformacoes cpd = bancoDeInformacoes.recuperarCentralDeInformacoes();
 				
 				Ingresso ingresso = new Ingresso(cliente, local, sessao, total, assentosReservados);
 				Boleto boleto = new Boleto(ingresso);
 				
-				try {
-					boleto.enviarBoleto();
-					JOptionPane.showMessageDialog(null, "INGRESSOS COMPRADO COM SUCESSO. VERIFIQUE SEU E-MAIL!", "ATENÇÃO!", JOptionPane.PLAIN_MESSAGE, Imagens.CONFIRMAR_25x25);
-					sessao.setVagasDisponiveis(sessao.getVagasDisponiveis() - assentosReservados.size());
-					bancoDeInformacoes.salvarCentralDeInformacoes(cpd);
-					dispose();
-					new WindowsHomeCliente(cliente);
-					
-				} catch (Exception e1) {
-					JOptionPane.showMessageDialog(null, "ERRO AO ENVIAR BOLETO!", "ATENÇÃO!", JOptionPane.ERROR_MESSAGE);
+				if(Integer.parseInt(tfQntdIngressos.getText()) != assentosEscolhidos.size()) {
+					JOptionPane.showMessageDialog(null, "RESERVE SEUS ASSENTOS!", "ATENÇÃO!", JOptionPane.WARNING_MESSAGE);
+				} else {
+					if(cliente instanceof Cliente) {
+						try {
+							boleto.enviarBoleto();
+							JOptionPane.showMessageDialog(null, "INGRESSOS COMPRADO COM SUCESSO. VERIFIQUE SEU E-MAIL!", "ATENÇÃO!", JOptionPane.PLAIN_MESSAGE, Imagens.CONFIRMAR_25x25);
+							ArrayList<Sala> salas = cpd.getSalas();
+							
+							for(Sala s : salas) {
+								ArrayList<Sessao> sessoesC = s.getSessoes();
+								if(s.getID() == local.getID()) {
+									s.setQuantidadeDeIngressoVendidos(assentosEscolhidos.size());
+									s.setTotalArrecadado(total);
+								}
+								for(Sessao ses : sessoesC)  {
+									if(ses.getID() == sessao.getID()) {
+										ses.setVagasDisponiveis(sessao.getVagasDisponiveis() - assentosEscolhidos.size());
+										ses.setAssentosReservado(assentosReservados);
+										ses.setTotalDeIngressosVendidos(ses.getTotalDeIngressosVendidos() + assentosEscolhidos.size());
+										ses.setTotalArrecadado(ses.getTotalArrecadado() + total);
+									}
+								}
+							}
+							bancoDeInformacoes.salvarCentralDeInformacoes(cpd);
+							dispose();
+							new WindowsHomeCliente(cliente);
+						} catch (Exception e1) {
+							JOptionPane.showMessageDialog(null, "ERRO AO ENVIAR BOLETO!", "ATENÇÃO!", JOptionPane.ERROR_MESSAGE);
+						}
+					} else {
+						JOptionPane.showMessageDialog(null, "NÃO É POSSÍVEL COMPRAR INGRESSO COM ADMINISTRADOR DO SISTEMA.", "ATENÇÃO!", JOptionPane.WARNING_MESSAGE);
+					}
 				}
 			}
 		});
@@ -227,8 +262,21 @@ public class WindowsComprarIngresso extends Windows {
 	
 	private void configurarButtons() {
 		for(int i = 0; i < local.getQuantidadeDeAssentos(); i++) {
-			assentos.get(i).setEnabled(true);
+			boolean btnNaoReservado = true;
+			if(assentosReservados.size() > 0) {
+				for(String a : assentosReservados) {
+					if(a.equals(assentos.get(i).getText())) {
+						assentos.get(i).setBackground(new Color(39, 60, 117));
+						btnNaoReservado = false;
+					}
+				}
+			} 
+		
+			if(btnNaoReservado) {
+				assentos.get(i).setEnabled(true);
+			}
 		}
+		repaint();
 	}
 	
 	// Ouvintes
@@ -240,25 +288,25 @@ public class WindowsComprarIngresso extends Windows {
 		}
 		
 		public void actionPerformed(ActionEvent e) {
-			if(assentosReservados.size() < Integer.parseInt(tfQntdIngressos.getText())) {
-				for(String assento : assentosReservados) {
+			if(assentosEscolhidos.size() < Integer.parseInt(tfQntdIngressos.getText())) {
+				for(String assento : assentosEscolhidos) {
 					if(assento.equals(btn.getText())) {
 						JOptionPane.showMessageDialog(null, "ASSENTO JÁ FOI SELECIONADO!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
 						return;
 					}
 				}
+				assentosEscolhidos.add(btn.getText());
 				assentosReservados.add(btn.getText());
-				btn.setBackground(new Color(78, 238, 148));
+				btn.setBackground(new Color(68, 189, 50));
 				repaint();
 				
-				if(assentosReservados.size() == Integer.parseInt(tfQntdIngressos.getText())) {
+				if(assentosEscolhidos.size() == Integer.parseInt(tfQntdIngressos.getText())) {
 					for(int i = 0; i < local.getQuantidadeDeAssentos(); i++) {
-						for(String assento : assentosReservados) {
+						for(String assento : assentosEscolhidos) {
 							if(!(assento.equals(assentos.get(i).getText()))) {
 								assentos.get(i).setEnabled(false);
 							}
 						}
-						
 					}
 				}
 			} 

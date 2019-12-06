@@ -61,8 +61,6 @@ public class WindowsLogin extends Windows {
 		lblLogoProjeto.setBounds(85, 25, 200, 173);
 		add(lblLogoProjeto);
 		
-		Border border = BorderFactory.createLineBorder(Color.GRAY, 1);
-		
 		JLabel lblUser = new Icone(Imagens.USER_25x25, 30, 225, 35, 35);
 		add(lblUser);
 		

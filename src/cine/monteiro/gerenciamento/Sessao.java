@@ -17,10 +17,19 @@ public class Sessao {
 	private LocalTime horaDoTermino;
 	private Date terminoDoPeriodoDeExibicao;
 	private int vagasDisponiveis;
+	private int totalDeIngressosVendidos;
+	private float totalArrecadado;
 	private boolean ativa;
+	private boolean interrompida;
+	private Date dataAtualDaSessao;
+	private ArrayList<ArrayList<String>> dadosDaSessao = new ArrayList<ArrayList<String>>();
+	private ArrayList<String> assentosReservado = new ArrayList<String>(); 
 	
 	// Construtor
 	public Sessao() {
+		interrompida = false;
+		totalDeIngressosVendidos = 0;
+		totalArrecadado = 0;
 		ID = System.currentTimeMillis();
 	}
 	
@@ -67,6 +76,30 @@ public class Sessao {
 		this.terminoDoPeriodoDeExibicao = terminoDoPeriodoDeExibicao;
 	}
 	
+	public void setAssentosReservado(ArrayList<String> assentosReservado) {
+		this.assentosReservado = assentosReservado;
+	}
+	
+	public void setTotalDeIngressosVendidos(int totalDeIngressosVendidos) {
+		this.totalDeIngressosVendidos = totalDeIngressosVendidos;
+	}
+	
+	public void setTotalArrecadado(float totalArrecadado) {
+		this.totalArrecadado = totalArrecadado;
+	}
+	
+	public void setInterrompida(boolean status) {
+		this.interrompida = status;
+	}
+	
+	public void setDataAtualDaSessaoDate(Date dataAtualDaSessao) {
+		this.dataAtualDaSessao = dataAtualDaSessao;
+	}
+	
+	public void setDadosDaSessao(ArrayList<String> dados) {
+		this.dadosDaSessao.add(dados);
+	}
+	
 	// Getters
 	public Filme getFilme() {
 		return filme;
@@ -96,10 +129,27 @@ public class Sessao {
 		return ativa;
 	}
 	
-	// Sobreescritas
-	public String toString() {
-		DateTimeFormatter formatoDoTempo = DateTimeFormatter.ofPattern("HH:mm:ss");
-		return "\nID: " + this.ID + "\nAtiva: " + this.ativa + "\nFilme: " + this.filme.toString() + "\nHora de ínicio: " + this.horaDeInicio.format(formatoDoTempo) + "\nHora do termíno: " + this.horaDoTermino.format(formatoDoTempo);
+	public boolean isInterrompida() {
+		return interrompida;
 	}
-
+	
+	public float getTotalArrecadado() {
+		return totalArrecadado;
+	}
+	
+	public int getTotalDeIngressosVendidos() {
+		return totalDeIngressosVendidos;
+	}
+	
+	public Date getDataAtualDaSessao() {
+		return dataAtualDaSessao;
+	}
+	
+	public ArrayList<ArrayList<String>> getDadosDaSessao()  {
+		return dadosDaSessao;
+	}
+	
+	public ArrayList<String> getAssentosReservado() {
+		return assentosReservado;
+	}
 }

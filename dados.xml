@@ -1,38 +1,69 @@
 <cine.monteiro.dados.CentralDeInformacoes>
   <usuarios>
     <cine.monteiro.usuarios.Administrador>
-      <nome>Igor Pimentel Gusmão</nome>
-      <CPF>123.125.584-39</CPF>
+      <nome>Igor Pimentel</nome>
+      <CPF>123.125.593-39</CPF>
       <telefone>(83) 9.9190-5120</telefone>
       <idade>21</idade>
       <dataDeNascimento>1998-03-18 03:00:00.0 UTC</dataDeNascimento>
       <email>igor.pimentel.msi@hotmail.com</email>
       <senha>admin</senha>
     </cine.monteiro.usuarios.Administrador>
+    <cine.monteiro.usuarios.Cliente>
+      <nome>Anderson</nome>
+      <CPF>129.384.755-47</CPF>
+      <telefone>(83) 9.1838-5647</telefone>
+      <idade>25</idade>
+      <dataDeNascimento>1994-10-08 03:00:00.0 UTC</dataDeNascimento>
+      <email>igorpimentel46@gmail.com</email>
+      <senha>ADMIN</senha>
+    </cine.monteiro.usuarios.Cliente>
   </usuarios>
   <salas>
     <cine.monteiro.gerenciamento.Sala>
-      <ID>1575432409026</ID>
+      <ID>1575594000177</ID>
       <nomeDaSala>Sala 01</nomeDaSala>
       <quantidadeDeAssentos>35</quantidadeDeAssentos>
-      <precoDoIngresso>R$ 18.30</precoDoIngresso>
-      <quantidadeDeIngressoVendidos>0</quantidadeDeIngressoVendidos>
-      <totalArrecadado>0.0</totalArrecadado>
+      <precoDoIngresso>R$ 19.39</precoDoIngresso>
+      <quantidadeDeIngressoVendidos>30</quantidadeDeIngressoVendidos>
+      <totalArrecadado>581.69995</totalArrecadado>
       <sessoes>
         <cine.monteiro.gerenciamento.Sessao>
-          <ID>1575432423287</ID>
+          <ID>1575596060656</ID>
           <filme>
             <nomeDoFilme>Coringa</nomeDoFilme>
-            <sinopse>Lorem Ipsum	</sinopse>
-            <genero>Aventura</genero>
-            <duracao>70</duracao>
+            <sinopse>lorem impsum.</sinopse>
+            <genero>Ação</genero>
+            <duracao>120</duracao>
             <classificacaoEtaria>I16</classificacaoEtaria>
           </filme>
           <horaDeInicio>19:30:00</horaDeInicio>
-          <horaDoTermino>20:40:00</horaDoTermino>
-          <terminoDoPeriodoDeExibicao>2020-03-22 03:00:00.0 UTC</terminoDoPeriodoDeExibicao>
+          <horaDoTermino>21:30:00</horaDoTermino>
+          <terminoDoPeriodoDeExibicao>2019-12-20 03:00:00.0 UTC</terminoDoPeriodoDeExibicao>
           <vagasDisponiveis>35</vagasDisponiveis>
+          <totalDeIngressosVendidos>0</totalDeIngressosVendidos>
+          <totalArrecadado>0.0</totalArrecadado>
           <ativa>true</ativa>
+          <interrompida>false</interrompida>
+          <dataAtualDaSessao>2019-12-08 03:00:00.0 UTC</dataAtualDaSessao>
+          <dadosDaSessao>
+            <list>
+              <string>05/12/2019</string>
+              <string>4</string>
+              <string>R$ 77,56</string>
+            </list>
+            <list>
+              <string>06/12/2019</string>
+              <string>7</string>
+              <string>R$ 135,73</string>
+            </list>
+            <list>
+              <string>07/12/2019</string>
+              <string>10</string>
+              <string>R$ 193,90</string>
+            </list>
+          </dadosDaSessao>
+          <assentosReservado/>
         </cine.monteiro.gerenciamento.Sessao>
       </sessoes>
       <todosOsFilmesExibidos>
@@ -43,6 +74,6 @@
   <filmes>
     <cine.monteiro.gerenciamento.Filme reference="../../salas/cine.monteiro.gerenciamento.Sala/sessoes/cine.monteiro.gerenciamento.Sessao/filme"/>
   </filmes>
-  <emailSalvo>igor.pimentel.msi@hotmail.com</emailSalvo>
+  <emailSalvo>igorpimentel46@gmail.com</emailSalvo>
   <statusCheckBox>true</statusCheckBox>
 </cine.monteiro.dados.CentralDeInformacoes>
