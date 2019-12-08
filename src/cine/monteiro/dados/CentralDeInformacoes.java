@@ -87,7 +87,7 @@ public class CentralDeInformacoes {
 				ArrayList<Sessao> sessoes = s.getSessoes();
 				for(Sessao sessao : sessoes) {
 					if(sessao.isAtiva()) {
-						throw new Exception("A SALA POSSUI SESSÃO ATIVA!");
+						throw new Exception("A SALA NÃO PODE SER EXCLUÍDA! EXISTE SESSÃO ATIVA NA SALA.");
 					}
 				}
 				salas.remove(s);
@@ -141,7 +141,7 @@ public class CentralDeInformacoes {
 					
 				for(Sessao velhaSessao : sessoesDaSala) {
 					if(!(novaSessao.getHoraDeInicio().isAfter(velhaSessao.getHoraDoTermino()) || novaSessao.getHoraDoTermino().isBefore(velhaSessao.getHoraDeInicio()))) {
-						throw new Exception("J� existe uma sess�o cadastrada neste per�odo de exibi��o.");
+						throw new Exception("JÁ EXISTE UMA SESSÃO CADASTRADA NESTE PERÍODO DE EXIBIÇÃO!");
 					}
 				}
 				sala.addSessao(novaSessao);
@@ -190,6 +190,4 @@ public class CentralDeInformacoes {
 	public boolean getStatusCheckBox() {
 		return statusCheckBox;
 	}
-
-	
 }

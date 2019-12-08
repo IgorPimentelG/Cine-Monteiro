@@ -1,5 +1,7 @@
 package cine.monteiro.email;
 
+import java.util.ArrayList;
+
 // APIs
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -40,7 +42,12 @@ public class RecuperarSenha extends Email {
 		Transport.send(mensagem);
 		
 		// Alterar Senha
-		usuario.setSenha(novaSenha);
+		ArrayList<Usuario> usuarios = cpd.getUsuarios();
+		for(Usuario usuarioCadastrado : usuarios) {
+			if(usuarioCadastrado.getCPF().equals(usuario.getCPF())) {
+				usuarioCadastrado.setSenha(novaSenha);
+			}
+		}
 		bancoDeInformacoes.salvarCentralDeInformacoes(cpd);
 	}
 }

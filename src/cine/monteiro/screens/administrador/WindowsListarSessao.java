@@ -82,7 +82,7 @@ public class WindowsListarSessao extends Windows {
 				linha[1] = sala.getNomeDaSala();
 				linha[2] = sessao.getFilme().getNomeDoFilme();
 				
-				if(sessao.isAtiva()) {
+				if(sessao.isAtiva() && !(sessao.isInterrompida())) {
 					linha[3] = "ATIVA";
 				} else {
 					linha[3] = "NÃO ATIVA";
@@ -124,7 +124,7 @@ public class WindowsListarSessao extends Windows {
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				new WindowsPainelDeControle();
+				new WindowsSessao();
 			}
 		});
 		add(btnVoltar);

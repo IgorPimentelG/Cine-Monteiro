@@ -1,5 +1,8 @@
 package cine.monteiro.gerenciamento;
 
+import java.text.NumberFormat;
+import java.util.ArrayList;
+
 public class Filme {
 	// Atributos
 	private String nomeDoFilme;
@@ -7,6 +10,7 @@ public class Filme {
 	private String genero;
 	private long duracao;
 	private ClassificacaoEtaria classificacaoEtaria;
+	private ArrayList<ArrayList<String>> dadosDaArrecadacao = new ArrayList<ArrayList<String>>();
 	
 	// Setters
 	public void setNomeDoFilme(String nomeDoFilme) {
@@ -29,6 +33,16 @@ public class Filme {
 		this.classificacaoEtaria = classificacaoEtaria;
 	}
 	
+	public void adicionarDadosArrecadao(ArrayList<String> dados) {
+		for(ArrayList<String> dadosCadastrados : dadosDaArrecadacao) {
+			if(dadosCadastrados.get(0).equals(dados.get(0))) {
+				float totalArrecadado = Float.parseFloat(dadosCadastrados.get(1)) + Float.parseFloat(dados.get(1));
+				dadosCadastrados.set(1,  totalArrecadado + "");
+				return;
+			}
+		}
+		dadosDaArrecadacao.add(dados);
+	}
 	
 	// Getters
 	public String getNomeDoFilme() {
@@ -51,8 +65,7 @@ public class Filme {
 		return classificacaoEtaria;
 	}
 	
-	// Sobreescritas
-	public String toString() {
-		return "\nNome do filme: " + this.nomeDoFilme + "\nSinopse: " + this.sinopse + "\nDura��o: " + this.duracao + "\nClassifica��o Et�ria: " + this.classificacaoEtaria;
+	public ArrayList<ArrayList<String>> getDadosDaArrecadacao() {
+		return dadosDaArrecadacao;
 	}
 }

@@ -2,7 +2,7 @@
   <usuarios>
     <cine.monteiro.usuarios.Administrador>
       <nome>Igor Pimentel</nome>
-      <CPF>123.125.593-39</CPF>
+      <CPF>128.939.585-83</CPF>
       <telefone>(83) 9.9190-5120</telefone>
       <idade>21</idade>
       <dataDeNascimento>1998-03-18 03:00:00.0 UTC</dataDeNascimento>
@@ -10,70 +10,200 @@
       <senha>admin</senha>
     </cine.monteiro.usuarios.Administrador>
     <cine.monteiro.usuarios.Cliente>
-      <nome>Anderson</nome>
-      <CPF>129.384.755-47</CPF>
-      <telefone>(83) 9.1838-5647</telefone>
+      <nome>Anderson Pimentel</nome>
+      <CPF>123.958.573-73</CPF>
+      <telefone>(83) 9.9195-0939</telefone>
       <idade>25</idade>
       <dataDeNascimento>1994-10-08 03:00:00.0 UTC</dataDeNascimento>
       <email>igorpimentel46@gmail.com</email>
-      <senha>ADMIN</senha>
+      <senha>admin</senha>
     </cine.monteiro.usuarios.Cliente>
   </usuarios>
   <salas>
     <cine.monteiro.gerenciamento.Sala>
-      <ID>1575594000177</ID>
+      <ID>1575784577277</ID>
       <nomeDaSala>Sala 01</nomeDaSala>
       <quantidadeDeAssentos>35</quantidadeDeAssentos>
-      <precoDoIngresso>R$ 19.39</precoDoIngresso>
-      <quantidadeDeIngressoVendidos>30</quantidadeDeIngressoVendidos>
-      <totalArrecadado>581.69995</totalArrecadado>
+      <precoDoIngresso>R$ 10.50</precoDoIngresso>
+      <quantidadeDeIngressoVendidos>5</quantidadeDeIngressoVendidos>
+      <totalArrecadado>52.5</totalArrecadado>
+      <totalArrecadadoNaSemena>0.0</totalArrecadadoNaSemena>
       <sessoes>
         <cine.monteiro.gerenciamento.Sessao>
-          <ID>1575596060656</ID>
+          <ID>1575784961010</ID>
           <filme>
-            <nomeDoFilme>Coringa</nomeDoFilme>
-            <sinopse>lorem impsum.</sinopse>
-            <genero>Ação</genero>
-            <duracao>120</duracao>
-            <classificacaoEtaria>I16</classificacaoEtaria>
+            <nomeDoFilme>Star Wars: Episódio IX</nomeDoFilme>
+            <sinopse>Lucasfilm e o diretor J.J. Abrams juntam forças mais uma vez para levar os espectadores a uma jornada épica em uma galáxia muito, muito distante em Star Wars: A Ascensão Skywalker, a fascinante conclusão da saga Skywalker, na qual novas lendas nascerão e a batalha final pela liberdade ainda está por vir.</sinopse>
+            <genero>Ficção Científica</genero>
+            <duracao>225</duracao>
+            <classificacaoEtaria>I12</classificacaoEtaria>
+            <dadosDaArrecadacao>
+              <list>
+                <string>12/2019</string>
+                <string>74.0</string>
+              </list>
+            </dadosDaArrecadacao>
           </filme>
-          <horaDeInicio>19:30:00</horaDeInicio>
-          <horaDoTermino>21:30:00</horaDoTermino>
-          <terminoDoPeriodoDeExibicao>2019-12-20 03:00:00.0 UTC</terminoDoPeriodoDeExibicao>
+          <horaDeInicio>13:30:00</horaDeInicio>
+          <horaDoTermino>17:15:00</horaDoTermino>
+          <terminoDoPeriodoDeExibicao>2019-12-20</terminoDoPeriodoDeExibicao>
           <vagasDisponiveis>35</vagasDisponiveis>
           <totalDeIngressosVendidos>0</totalDeIngressosVendidos>
           <totalArrecadado>0.0</totalArrecadado>
           <ativa>true</ativa>
           <interrompida>false</interrompida>
-          <dataAtualDaSessao>2019-12-08 03:00:00.0 UTC</dataAtualDaSessao>
-          <dadosDaSessao>
+          <dataAtualDaSessao>2019-12-09</dataAtualDaSessao>
+          <dadosDaSessaoDaSemana>
             <list>
-              <string>05/12/2019</string>
-              <string>4</string>
-              <string>R$ 77,56</string>
+              <string>2019-12-08</string>
+              <string>2</string>
+              <string>R$ 21,00</string>
             </list>
             <list>
-              <string>06/12/2019</string>
-              <string>7</string>
-              <string>R$ 135,73</string>
+              <string>2019-12-08</string>
+              <string>3</string>
+              <string>R$ 31,50</string>
             </list>
+          </dadosDaSessaoDaSemana>
+          <dadosDaSessaoDoMes>
             <list>
-              <string>07/12/2019</string>
-              <string>10</string>
-              <string>R$ 193,90</string>
+              <string>12/2019</string>
+              <string>52.5</string>
+              <string>5 </string>
+              <string>65</string>
             </list>
-          </dadosDaSessao>
+          </dadosDaSessaoDoMes>
           <assentosReservado/>
         </cine.monteiro.gerenciamento.Sessao>
       </sessoes>
       <todosOsFilmesExibidos>
         <cine.monteiro.gerenciamento.Filme reference="../../sessoes/cine.monteiro.gerenciamento.Sessao/filme"/>
       </todosOsFilmesExibidos>
+      <dadosDaSemana>
+        <list/>
+        <list/>
+        <list/>
+        <list/>
+        <list/>
+        <list/>
+        <list/>
+      </dadosDaSemana>
+    </cine.monteiro.gerenciamento.Sala>
+    <cine.monteiro.gerenciamento.Sala>
+      <ID>1575784594131</ID>
+      <nomeDaSala>Sala 02</nomeDaSala>
+      <quantidadeDeAssentos>40</quantidadeDeAssentos>
+      <precoDoIngresso>R$ 08.50</precoDoIngresso>
+      <quantidadeDeIngressoVendidos>22</quantidadeDeIngressoVendidos>
+      <totalArrecadado>187.0</totalArrecadado>
+      <totalArrecadadoNaSemena>0.0</totalArrecadadoNaSemena>
+      <sessoes>
+        <cine.monteiro.gerenciamento.Sessao>
+          <ID>1575784914418</ID>
+          <filme>
+            <nomeDoFilme>Vingadores: Ultimato </nomeDoFilme>
+            <sinopse>Após Thanos eliminar metade das criaturas vivas, os Vingadores têm de lidar com a perda de amigos e entes queridos. Com Tony Stark vagando perdido no espaço sem água e comida, Steve Rogers e Natasha Romanov lideram a resistência contra o titã louco.</sinopse>
+            <genero>Aventura</genero>
+            <duracao>310</duracao>
+            <classificacaoEtaria>I12</classificacaoEtaria>
+            <dadosDaArrecadacao>
+              <list>
+                <string>12/2019</string>
+                <string>42.5</string>
+              </list>
+            </dadosDaArrecadacao>
+          </filme>
+          <horaDeInicio>19:30:00</horaDeInicio>
+          <horaDoTermino>00:40:00</horaDoTermino>
+          <terminoDoPeriodoDeExibicao>2019-12-20</terminoDoPeriodoDeExibicao>
+          <vagasDisponiveis>40</vagasDisponiveis>
+          <totalDeIngressosVendidos>0</totalDeIngressosVendidos>
+          <totalArrecadado>0.0</totalArrecadado>
+          <ativa>true</ativa>
+          <interrompida>false</interrompida>
+          <dataAtualDaSessao>2019-12-09</dataAtualDaSessao>
+          <dadosDaSessaoDaSemana>
+            <list>
+              <string>2019-12-08</string>
+              <string>8</string>
+              <string>R$ 68,00</string>
+            </list>
+            <list>
+              <string>2019-12-08</string>
+              <string>5</string>
+              <string>R$ 42,50</string>
+            </list>
+          </dadosDaSessaoDaSemana>
+          <dadosDaSessaoDoMes>
+            <list>
+              <string>2/2020</string>
+              <string>68.0</string>
+              <string>8</string>
+              <string>32</string>
+            </list>
+            <list>
+              <string>12/2019</string>
+              <string>42.5</string>
+              <string>5</string>
+              <string>35</string>
+            </list>
+          </dadosDaSessaoDoMes>
+          <assentosReservado/>
+        </cine.monteiro.gerenciamento.Sessao>
+        <cine.monteiro.gerenciamento.Sessao>
+          <ID>1575784937394</ID>
+          <filme reference="../../../../cine.monteiro.gerenciamento.Sala/sessoes/cine.monteiro.gerenciamento.Sessao/filme"/>
+          <horaDeInicio>20:40:00</horaDeInicio>
+          <horaDoTermino>00:25:00</horaDoTermino>
+          <terminoDoPeriodoDeExibicao>2019-12-20</terminoDoPeriodoDeExibicao>
+          <vagasDisponiveis>40</vagasDisponiveis>
+          <totalDeIngressosVendidos>0</totalDeIngressosVendidos>
+          <totalArrecadado>0.0</totalArrecadado>
+          <ativa>true</ativa>
+          <interrompida>false</interrompida>
+          <dataAtualDaSessao>2019-12-09</dataAtualDaSessao>
+          <dadosDaSessaoDaSemana>
+            <list>
+              <string>2019-12-08</string>
+              <string>4</string>
+              <string>R$ 34,00</string>
+            </list>
+            <list>
+              <string>2019-12-08</string>
+              <string>5</string>
+              <string>R$ 42,50</string>
+            </list>
+          </dadosDaSessaoDaSemana>
+          <dadosDaSessaoDoMes>
+            <list>
+              <string>12/2019</string>
+              <string>76.5</string>
+              <string>9 </string>
+              <string>71</string>
+            </list>
+          </dadosDaSessaoDoMes>
+          <assentosReservado/>
+        </cine.monteiro.gerenciamento.Sessao>
+      </sessoes>
+      <todosOsFilmesExibidos>
+        <cine.monteiro.gerenciamento.Filme reference="../../sessoes/cine.monteiro.gerenciamento.Sessao/filme"/>
+        <cine.monteiro.gerenciamento.Filme reference="../../../cine.monteiro.gerenciamento.Sala/sessoes/cine.monteiro.gerenciamento.Sessao/filme"/>
+      </todosOsFilmesExibidos>
+      <dadosDaSemana>
+        <list/>
+        <list/>
+        <list/>
+        <list/>
+        <list/>
+        <list/>
+        <list/>
+      </dadosDaSemana>
     </cine.monteiro.gerenciamento.Sala>
   </salas>
   <filmes>
+    <cine.monteiro.gerenciamento.Filme reference="../../salas/cine.monteiro.gerenciamento.Sala[2]/sessoes/cine.monteiro.gerenciamento.Sessao/filme"/>
     <cine.monteiro.gerenciamento.Filme reference="../../salas/cine.monteiro.gerenciamento.Sala/sessoes/cine.monteiro.gerenciamento.Sessao/filme"/>
   </filmes>
-  <emailSalvo>igorpimentel46@gmail.com</emailSalvo>
+  <emailSalvo>igor.pimentel.msi@hotmail.com</emailSalvo>
   <statusCheckBox>true</statusCheckBox>
 </cine.monteiro.dados.CentralDeInformacoes>

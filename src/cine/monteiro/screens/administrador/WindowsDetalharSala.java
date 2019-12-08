@@ -1,11 +1,11 @@
 package cine.monteiro.screens.administrador;
 
+// APIs
 import java.awt.Font;
-import java.awt.MenuBar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
 import java.util.ArrayList;
-
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -16,13 +16,17 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
+// Pacotes
 import cine.monteiro.gerenciamento.Filme;
 import cine.monteiro.gerenciamento.Sala;
 import cine.monteiro.gerenciamento.Sessao;
 import cine.monteiro.screens.componentes.*;
 
 public class WindowsDetalharSala extends Windows {
+	// Atributos
 	private Sala sala;
+	
+	// Construtor
 	public WindowsDetalharSala(Sala sala) {
 		super("Salas - Detalhar Sala", 500, 550);
 		this.sala = sala;
@@ -33,6 +37,7 @@ public class WindowsDetalharSala extends Windows {
 		setVisible(true);
 	}
 	
+	// Componentes
 	private void adicionarLabels() {
 		JLabel lblTitulo = new RotuloTitulo("DETALHAR SALA", 0, 15, 500, 30);
 		add(lblTitulo);
@@ -42,9 +47,9 @@ public class WindowsDetalharSala extends Windows {
 		lblFilmes.setBounds(105, 230, 100, 20);
 		add(lblFilmes);
 		
-		JLabel lblSessoes = new JLabel("SESSÕES");
+		JLabel lblSessoes = new JLabel("SESSÕES ATIVAS");
 		lblSessoes.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
-		lblSessoes.setBounds(325, 230, 100, 20);
+		lblSessoes.setBounds(305, 230, 200, 20);
 		add(lblSessoes);
 		
 		JLabel lblIDDaSala = new RotuloDetalhar("Identificação da sala: " + sala.getID(), 20, 60, 250, 20);
@@ -62,7 +67,7 @@ public class WindowsDetalharSala extends Windows {
 		JLabel lblTotalArrecadado = new RotuloDetalhar("Total arrecadado: " + sala.getTotalArrecadado(), 20, 160, 300, 20);
 		add(lblTotalArrecadado);
 		
-		JLabel lblTotalArrecadadoSemana = new RotuloDetalhar("Total arrecadado nos nltimos 7 dias: ", 20, 185, 300, 20);
+		JLabel lblTotalArrecadadoSemana = new RotuloDetalhar("Total arrecadado nos últimos 7 dias: " + sala.getTotalArrecadadoNaSemana(), 20, 185, 300, 20);
 		add(lblTotalArrecadadoSemana);
 	}
 	
@@ -103,12 +108,10 @@ public class WindowsDetalharSala extends Windows {
 		
 		ArrayList<Sessao> sessoes = sala.getSessoes();
 		for(Sessao sessao : sessoes) {
-			if(sessao.isAtiva()) {
+			if(sessao.isAtiva() && !sessao.isInterrompida()) {
 				Object[] linha = new Object[2];
-				
 				linha[0] = sessao.getID();
 				linha[1] = sessao.getFilme().getNomeDoFilme();
-				
 				modeloTabelaSessao.addRow(linha);
 			}
 		}

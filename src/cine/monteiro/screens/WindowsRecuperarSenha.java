@@ -48,7 +48,7 @@ public class WindowsRecuperarSenha extends Windows {
 	
 	private void adicionarSeparador() {
 		JSeparator separador = new JSeparator(SwingConstants.VERTICAL);
-		separador.setBounds(160, 15, 1, 160);
+		separador.setBounds(160, 5, 1, 175);
 		separador.setForeground(Color.GRAY);
 		add(separador);
 	}

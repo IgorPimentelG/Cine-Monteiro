@@ -1,20 +1,23 @@
 package cine.monteiro.screens.administrador;
 
+// APIs
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
-
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
-// Pacotes
+//Pacotes
+import cine.monteiro.dados.CentralDeInformacoes;
+import cine.monteiro.dados.Persistencia;
 import cine.monteiro.gerenciamento.Sala;
 import cine.monteiro.gerenciamento.Sessao;
 import cine.monteiro.screens.componentes.RotuloDetalhar;
@@ -32,11 +35,12 @@ public class WindowsDetalharSessao extends Windows {
 	
 	// Construtor
 	public WindowsDetalharSessao(Sala sala, long idDaSessao) {
-		super("Sessões - Detalhar Sessão", 500, 415);
+		super("Sessões - Detalhar Sessão", 500, 480);
 		this.sala = sala;
 		this.idDaSessao = idDaSessao;
 		pesquisarSessao();
 		adicionarLabels();
+		adicionarCheckBox();
 		adicionarSeparador();
 		adicionarMenuBar();
 		adicionarComBox();
@@ -57,21 +61,22 @@ public class WindowsDetalharSessao extends Windows {
 		JLabel lblTitulo = new RotuloTitulo("DETALHAR SESSÃO", 0, 15, 500, 30);
 		add(lblTitulo);
 		
-		JLabel lblIDDaSala = new RotuloDetalhar("Identificação da sessão: " + idDaSessao, 20, 60, 300, 20);
+		JLabel lblEstatisticas = new RotuloTitulo("ESTATÍSTICAS", 0, 255, 500, 30);
+		add(lblEstatisticas);
+		
+		JLabel lblIDDaSala = new RotuloDetalhar("Identificação da sessão: " + idDaSessao, 20, 80, 300, 20);
 		add(lblIDDaSala);
 		
-		JLabel lblSalaDaSessao = new RotuloDetalhar("Sala da sessão: " + sala.getNomeDaSala(), 20, 85, 300, 20);
+		JLabel lblSalaDaSessao = new RotuloDetalhar("Sala da sessão: " + sala.getNomeDaSala(), 20, 105, 300, 20);
 		add(lblSalaDaSessao);
 		
-		JLabel lblFilmeDaSessao = new RotuloDetalhar("Filme da sessão: " + sessao.getFilme().getNomeDoFilme(), 20, 110, 400, 20);
+		JLabel lblFilmeDaSessao = new RotuloDetalhar("Filme da sessão: " + sessao.getFilme().getNomeDoFilme(), 20, 130, 400, 20);
 		add(lblFilmeDaSessao);
 		
-		JLabel lblHorararioDaSessao = new RotuloDetalhar("Horário da sessão: " + sessao.getHoraDeInicio() + " - " + sessao.getHoraDoTermino(), 20, 135, 350, 20);
+		JLabel lblHorararioDaSessao = new RotuloDetalhar("Horário da sessão: " + sessao.getHoraDeInicio() + " - " + sessao.getHoraDoTermino(), 20, 155, 350, 20);
 		add(lblHorararioDaSessao);
 		
-		SimpleDateFormat formatoDaData = new SimpleDateFormat("dd/MM/yyyy");
-		
-		JLabel lblPeridoDeExibicao = new RotuloDetalhar("Em Exibição até: " + formatoDaData.format(sessao.getTerminoDoPeriodoDeExibicao()), 20, 160, 350, 20);
+		JLabel lblPeridoDeExibicao = new RotuloDetalhar("Em Exibição até: " + sessao.getTerminoDoPeriodoDeExibicao(), 20, 180, 350, 20);
 		add(lblPeridoDeExibicao);
 		
 		String status = "";
@@ -81,31 +86,68 @@ public class WindowsDetalharSessao extends Windows {
 			status = "Não ativa";
 		}
 		
-		JLabel lblStatus = new RotuloDetalhar("Status: " + status, 20, 185, 200, 20);
+		JLabel lblStatus = new RotuloDetalhar("Status: " + status, 20, 205, 200, 20);
 		add(lblStatus);
 		
-		JLabel lblDia = new RotuloDetalhar("DIA:", 180, 245, 50, 20);
+		JLabel lblDia = new RotuloDetalhar("DIA:", 175, 305, 50, 20);
 		add(lblDia);
 		
-		lblQuantidadeDeIngressosVendidos = new RotuloDetalhar("Quantidade de ingressos vendidos: ", 20, 290, 300, 20);
+		lblQuantidadeDeIngressosVendidos = new RotuloDetalhar("Quantidade de ingressos vendidos: 0", 0, 345, 500, 20);
+		lblQuantidadeDeIngressosVendidos.setHorizontalAlignment(JLabel.CENTER);
 		add(lblQuantidadeDeIngressosVendidos);
 		
-		lblQuantidadeArrecadado = new RotuloDetalhar("Quantidade arrecadado: ", 20, 315, 300, 20);
+		lblQuantidadeArrecadado = new RotuloDetalhar("Quantidade arrecadado: R$ 0", 0, 370, 500, 20);
+		lblQuantidadeArrecadado.setHorizontalAlignment(JLabel.CENTER);
 		add(lblQuantidadeArrecadado);
 	}
 	
+	private void adicionarCheckBox() {
+		Persistencia bancoDeInformacoes = new Persistencia();
+		CentralDeInformacoes cpd = bancoDeInformacoes.recuperarCentralDeInformacoes();
+		
+		JCheckBox cbInterromperSessao = new JCheckBox("INTERROMPER SESSÃO EM UM DIA", sessao.isInterrompida());
+		cbInterromperSessao.setBounds(0, 50, 500, 20);
+		cbInterromperSessao.setHorizontalAlignment(JCheckBox.CENTER);
+		if(sessao.isInterrompida()) {
+			cbInterromperSessao.setEnabled(false);
+		}
+		cbInterromperSessao.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(cbInterromperSessao.isSelected()) {
+					if(sessao.isInterrompida()) {
+						JOptionPane.showMessageDialog(null, "A SESSÃO JÁ ESTÁ INTERROMPIDA!", "ATENÇÃO!", JOptionPane.ERROR_MESSAGE);
+					} else {
+						ArrayList<Sala> salas = cpd.getSalas();
+						for(Sala sala : salas) {
+							ArrayList<Sessao> sessoes = sala.getSessoes();
+							for(Sessao s : sessoes) {
+								if(s.getID() == sessao.getID()) {
+									s.setInterrompida(true);
+									s.setAtiva();
+								}
+							}
+						}
+						bancoDeInformacoes.salvarCentralDeInformacoes(cpd);
+						cbInterromperSessao.setEnabled(false);
+						JOptionPane.showMessageDialog(null, "A SESSÃO FOI INTERROMPIDA EM UM DIA!", "ATENÇÃO!", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			}
+		});
+		add(cbInterromperSessao);
+	}
+	
 	private void adicionarComBox() {
-		String[] opcoes = new String[sessao.getDadosDaSessao().size()];
-		ArrayList<ArrayList<String>> dadosDaSessao = sessao.getDadosDaSessao();
+		String[] opcoes = new String[sessao.getDadosDaSessaoDaSemana().size()];
+		ArrayList<ArrayList<String>> dadosDaSessao = sessao.getDadosDaSessaoDaSemana();
 		
 		for(int i = 0; i < dadosDaSessao.size(); i++) {
 			ArrayList<String> dados = dadosDaSessao.get(i);
-			System.out.println(dados.get(0));
 			opcoes[i] = dados.get(0);
 		}
 		
 		cbData = new JComboBox<String>(opcoes);
-		cbData.setBounds(215, 240, 100, 30);
+		cbData.setBounds(205, 300, 120, 30);
 		cbData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String dataSelecionada = (String) cbData.getSelectedItem();
@@ -124,7 +166,7 @@ public class WindowsDetalharSessao extends Windows {
 	
 	private void adicionarSeparador() {
 		JSeparator separador = new JSeparator(SwingConstants.HORIZONTAL);
-		separador.setBounds(10, 220, 465, 2);
+		separador.setBounds(10, 240, 465, 2);
 		add(separador);
 	}
 	

@@ -5,7 +5,9 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -68,6 +70,11 @@ public class WindowsCadastrarSessao extends Windows {
 		
 		JLabel lblPeridoEmExibicao = new Rotulo("Em exibição até:", 175, 265, 150, 20);
 		add(lblPeridoEmExibicao);
+		
+		JLabel lblFormatoDaData = new JLabel("[ano-mês-ano]");
+		lblFormatoDaData.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 10));
+		lblFormatoDaData.setBounds(285, 266, 150, 20);
+		add(lblFormatoDaData);
 	}
 	
 	private void adicionarInputs() {
@@ -86,9 +93,9 @@ public class WindowsCadastrarSessao extends Windows {
 			tfHorarioDaSessao.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
 			add(tfHorarioDaSessao);
 			
-			MaskFormatter mascaraData = new MaskFormatter("##/##/####");
+			MaskFormatter mascaraData = new MaskFormatter("####-##-##");
 			tfPeriodoEmExibicao = new JFormattedTextField(mascaraData);
-			tfPeriodoEmExibicao.setBounds(175, 290, 185, 30);
+			tfPeriodoEmExibicao.setBounds(175, 290, 190, 30);
 			tfPeriodoEmExibicao.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
 			tfPeriodoEmExibicao.setHorizontalAlignment(JFormattedTextField.CENTER);
 			add(tfPeriodoEmExibicao);
@@ -137,12 +144,10 @@ public class WindowsCadastrarSessao extends Windows {
 					long duracao = filmeDaSessao.getDuracao();
 					novaSessao.setHoraDoTermino(duracao);
 					
-					try {
-						SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
-						formatoData.setLenient(false);             // Validar Data
-						Date terminoDoPeriodoDeExibicao = formatoData.parse(tfPeriodoEmExibicao.getText());
-						Date dataAtual = new Date();
-						if(terminoDoPeriodoDeExibicao.after(dataAtual)) {
+					try {	
+						LocalDate terminoDoPeriodoDeExibicao = LocalDate.parse(tfPeriodoEmExibicao.getText());
+						LocalDate dataAtual = LocalDate.now();
+						if(terminoDoPeriodoDeExibicao.isAfter(dataAtual)) {
 							novaSessao.setTerminoDoPeridoDeExibicao(terminoDoPeriodoDeExibicao);
 						} else {
 							JOptionPane.showMessageDialog(null, "A DATA DO PERÍODO DE EXIBIÇÃO NÃO PODE SER UMA DATA ANTIGA!", "ATENÇÃO!", JOptionPane.ERROR_MESSAGE);
@@ -150,10 +155,11 @@ public class WindowsCadastrarSessao extends Windows {
 							return;
 						}
 					} catch (Exception erroDaData) {
-						JOptionPane.showMessageDialog(null, "DATA DO PERIODO DE EXIBIÇÃO INVÁLIDA!", "ATENÇÃO!", JOptionPane.WARNING_MESSAGE);
-						tfPeriodoEmExibicao.setText("");
+						JOptionPane.showMessageDialog(null, "A DATA DO PERÍODO DE EXIBIÇÃO INVÁLIDA!", "ATENÇÃO!", JOptionPane.ERROR_MESSAGE);
 						return;
 					}
+					
+					
 					
 					novaSessao.setAtiva();
 					
@@ -163,7 +169,7 @@ public class WindowsCadastrarSessao extends Windows {
 					cpd.adicionarSessao(novaSessao, sala);
 					sala.addFilmeExibido(filmeDaSessao);
 					novaSessao.setVagasDisponiveis(sala.getQuantidadeDeAssentos());
-					novaSessao.setDataAtualDaSessaoDate(new Date());
+					novaSessao.setDataAtualDaSessao(LocalDate.now());
 					JOptionPane.showMessageDialog(null, "SESSÃO CADASTRADA COM SUCESSO!", "AVISO!", JOptionPane.INFORMATION_MESSAGE);
 					bancoDeInformacoes.salvarCentralDeInformacoes(cpd);
 					dispose();

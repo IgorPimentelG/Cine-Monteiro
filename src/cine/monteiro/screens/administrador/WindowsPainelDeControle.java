@@ -77,6 +77,12 @@ public class WindowsPainelDeControle extends Windows {
 		add(btnSalas);
 		
 		JButton btnRelatorios = new ButtonPersonalizado("RELATÁRIOS", 230, 150, 130, 80);
+		btnRelatorios.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new WindowsRelatorio();
+			}
+		});
 		add(btnRelatorios);
 		 
 		JButton btnAreaDoCliente = new ButtonPersonalizado("<html><center>ÁREA<br> DO CLIENTE<center></html>", 380, 150, 130, 80);

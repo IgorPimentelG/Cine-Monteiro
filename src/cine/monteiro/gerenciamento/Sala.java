@@ -12,8 +12,10 @@ public class Sala {
 	private String precoDoIngresso;
 	private int quantidadeDeIngressoVendidos;
 	private float totalArrecadado;
+	private float totalArrecadadoNaSemena;
 	private ArrayList<Sessao> sessoes = new ArrayList<Sessao>();
 	private ArrayList<Filme> todosOsFilmesExibidos = new ArrayList<Filme>();
+	private ArrayList<ArrayList<Float>> dadosDaSemana = new ArrayList<ArrayList<Float>>();
 	
 	// Construtor
 	public Sala() {
@@ -47,6 +49,29 @@ public class Sala {
 		this.totalArrecadado += valor;
 	}
 	
+	public void setTotalArrecadadoNaSemana() {
+		float total = 0;
+		
+		for(ArrayList<Float> dados : dadosDaSemana) {
+			for(float dado : dados) {
+				total += dado;
+			}
+		}
+		
+		this.totalArrecadadoNaSemena = total;
+	}
+	
+	public void adicionarDadosDaSemana(ArrayList<Float> dados) {
+		if(dadosDaSemana.size() == 7) {
+			dadosDaSemana.remove(0);
+			dadosDaSemana.add(dados);
+		} else {
+			dadosDaSemana.add(dados);
+		}
+		
+		setTotalArrecadadoNaSemana();
+	}
+	
 	// Getters
 	public long getID() {
 		return ID;
@@ -78,6 +103,14 @@ public class Sala {
 	
 	public String getTotalArrecadado() {
 		return NumberFormat.getCurrencyInstance().format(totalArrecadado);
+	}
+	
+	public String getTotalArrecadadoNaSemana() {
+		return NumberFormat.getCurrencyInstance().format(totalArrecadadoNaSemena);
+	}
+	
+	public ArrayList<ArrayList<Float>> getDadosDaSemana() {
+		return dadosDaSemana;
 	}
 	
 	// Métodos

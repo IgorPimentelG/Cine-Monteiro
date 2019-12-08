@@ -1,13 +1,10 @@
 package cine.monteiro.gerenciamento;
 
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 // APIs
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 
-import javax.swing.JOptionPane;
 
 public class Sessao {
 	// Atributos
@@ -15,14 +12,17 @@ public class Sessao {
 	private Filme filme;
 	private LocalTime horaDeInicio;
 	private LocalTime horaDoTermino;
-	private Date terminoDoPeriodoDeExibicao;
+	private LocalDate terminoDoPeriodoDeExibicao;
 	private int vagasDisponiveis;
 	private int totalDeIngressosVendidos;
 	private float totalArrecadado;
 	private boolean ativa;
 	private boolean interrompida;
-	private Date dataAtualDaSessao;
-	private ArrayList<ArrayList<String>> dadosDaSessao = new ArrayList<ArrayList<String>>();
+	private LocalTime horaDaInterrupcao;
+	private LocalDate dataDaInterrupcao;
+	private LocalDate dataAtualDaSessao;
+	private ArrayList<ArrayList<String>> dadosDaSessaoDaSemana = new ArrayList<ArrayList<String>>();
+	private ArrayList<ArrayList<String>> dadosDaSessaoDoMes = new ArrayList<ArrayList<String>>();
 	private ArrayList<String> assentosReservado = new ArrayList<String>(); 
 	
 	// Construtor
@@ -51,28 +51,26 @@ public class Sessao {
 	}
 	
 	public void setAtiva() {
-		SimpleDateFormat formatoDaData = new SimpleDateFormat("dd/MM/yyyy");
-		Date obterDataAtual = new Date();
-		String dataString = formatoDaData.format(obterDataAtual);
-		
-		try {
-			Date dataAtual = formatoDaData.parse(dataString);
-			
-			if((dataAtual.before(terminoDoPeriodoDeExibicao) || dataAtual.equals(terminoDoPeriodoDeExibicao))) {
+		if(isInterrompida()) {
+			if(dataDaInterrupcao.isBefore(dataAtualDaSessao) && (horaDaInterrupcao.equals(LocalTime.now())|| horaDaInterrupcao.isBefore(LocalTime.now()))) {
+				System.out.println(dataDaInterrupcao.isBefore(dataAtualDaSessao));
 				ativa = true;
+				interrompida = false;
 			} else {
 				ativa = false;
 			}
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "ERRO AO CONVERTER DATA DO TERMINO DA SESSÃO", "ATENÇÃO!", JOptionPane.ERROR_MESSAGE);
-		}		
+		} else if((LocalDate.now().isBefore(terminoDoPeriodoDeExibicao) || LocalDate.now().equals(terminoDoPeriodoDeExibicao))) {
+			ativa = true;
+		} else {
+			ativa = false;
+		}
 	}
 	
 	public void setAtiva(Boolean status) {
 		ativa = status;
 	}
 	
-	public void setTerminoDoPeridoDeExibicao(Date terminoDoPeriodoDeExibicao) {
+	public void setTerminoDoPeridoDeExibicao(LocalDate terminoDoPeriodoDeExibicao) {
 		this.terminoDoPeriodoDeExibicao = terminoDoPeriodoDeExibicao;
 	}
 	
@@ -90,14 +88,35 @@ public class Sessao {
 	
 	public void setInterrompida(boolean status) {
 		this.interrompida = status;
+		
+		if(status)  {
+			this.horaDaInterrupcao = LocalTime.now();
+			this.dataDaInterrupcao = this.dataAtualDaSessao;
+		}
 	}
 	
-	public void setDataAtualDaSessaoDate(Date dataAtualDaSessao) {
+	public void setDataAtualDaSessao(LocalDate dataAtualDaSessao) {
 		this.dataAtualDaSessao = dataAtualDaSessao;
 	}
 	
-	public void setDadosDaSessao(ArrayList<String> dados) {
-		this.dadosDaSessao.add(dados);
+	public void adicionarDadosDaSessaoDaSeamana(ArrayList<String> dados) {
+		this.dadosDaSessaoDaSemana.add(dados);
+	}
+	
+	public void adicionDadosDaSessaoDoMes(ArrayList<String> dados) {
+		for(ArrayList<String> dadosCadastrados : dadosDaSessaoDoMes) {
+			if(dadosCadastrados.get(0).equals(dados.get(0))) {
+				float totalArrecadadoNoMes = Float.parseFloat(dadosCadastrados.get(1)) + Float.parseFloat(dados.get(1));
+				int totalDeIngressosVendidosNoMes = Integer.parseInt(dadosCadastrados.get(2)) + Integer.parseInt(dados.get(2));
+				int totalDeVagasNoMes = Integer.parseInt(dadosCadastrados.get(3)) + Integer.parseInt(dados.get(3));
+				dadosCadastrados.set(1, totalArrecadadoNoMes + "");
+				dadosCadastrados.set(2, totalDeIngressosVendidosNoMes + " ");
+				dadosCadastrados.set(3, totalDeVagasNoMes + "");
+				return;
+			}
+		}
+		
+		dadosDaSessaoDoMes.add(dados);
 	}
 	
 	// Getters
@@ -113,7 +132,7 @@ public class Sessao {
 		return horaDoTermino;
 	}
 	
-	public Date getTerminoDoPeriodoDeExibicao() {
+	public LocalDate getTerminoDoPeriodoDeExibicao() {
 		return terminoDoPeriodoDeExibicao;
 	}
 	
@@ -141,12 +160,16 @@ public class Sessao {
 		return totalDeIngressosVendidos;
 	}
 	
-	public Date getDataAtualDaSessao() {
+	public LocalDate getDataAtualDaSessao() {
 		return dataAtualDaSessao;
 	}
 	
-	public ArrayList<ArrayList<String>> getDadosDaSessao()  {
-		return dadosDaSessao;
+	public ArrayList<ArrayList<String>> getDadosDaSessaoDaSemana()  {
+		return dadosDaSessaoDaSemana;
+	}
+	
+	public ArrayList<ArrayList<String>> getDadosDaSessaoDoMes() {
+		return dadosDaSessaoDoMes;
 	}
 	
 	public ArrayList<String> getAssentosReservado() {

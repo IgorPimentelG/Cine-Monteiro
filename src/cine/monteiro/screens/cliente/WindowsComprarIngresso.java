@@ -65,6 +65,9 @@ public class WindowsComprarIngresso extends Windows {
 		this.cliente = cliente;
 		assentosReservados = sessao.getAssentosReservado();
 		total = Float.parseFloat(local.getPrecoDoIngresso().split(" ")[1]);
+		
+		JOptionPane.showMessageDialog(null, "DEFINE PRIMEIRO A QUANTIDADE DE INGRESSOS PARA ESCOLHER O(S) ASSENTO(S)!", "ATENÇÃO!", JOptionPane.WARNING_MESSAGE);
+		
 		adicionarImagem();
 		adicionarMenuBar();
 		adicionarSeparador();
@@ -209,7 +212,7 @@ public class WindowsComprarIngresso extends Windows {
 					if(cliente instanceof Cliente) {
 						try {
 							boleto.enviarBoleto();
-							JOptionPane.showMessageDialog(null, "INGRESSOS COMPRADO COM SUCESSO. VERIFIQUE SEU E-MAIL!", "ATENÇÃO!", JOptionPane.PLAIN_MESSAGE, Imagens.CONFIRMAR_25x25);
+							JOptionPane.showMessageDialog(null, "INGRESSOS COMPRADO COM SUCESSO. VERIFIQUE SEU E-MAIL!", "ATENÇÃO!", JOptionPane.INFORMATION_MESSAGE);
 							ArrayList<Sala> salas = cpd.getSalas();
 							
 							for(Sala s : salas) {

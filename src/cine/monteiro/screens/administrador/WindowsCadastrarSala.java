@@ -4,6 +4,8 @@ package cine.monteiro.screens.administrador;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.text.ParseException;
@@ -56,8 +58,8 @@ public class WindowsCadastrarSala extends Windows {
 		JLabel lblPrecoDoIngresso = new Rotulo("Preço do Ingresso:", 20 , 195, 200, 30);
 		add(lblPrecoDoIngresso);
 		
-		JLabel lblQuantidadeDeAssentos = new Rotulo("Qntd. de Assentos:", 175, 195, 200, 30);
-		add(lblQuantidadeDeAssentos);;
+		JLabel lblQuantidadeDeAssentos = new Rotulo("Qntd. de Assentos:", 175, 195, 200, 20);
+		add(lblQuantidadeDeAssentos);;		
 	}
 	
 	private void adicionarInputs() {
@@ -82,7 +84,20 @@ public class WindowsCadastrarSala extends Windows {
 			
 		}
 		
-		tfQuantidadeDeAssentos = new Input(175, 225, 145, 30);
+		tfQuantidadeDeAssentos = new JTextField("Max. 40");
+		tfQuantidadeDeAssentos.setBounds(175, 225, 145, 30);
+		tfQuantidadeDeAssentos.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
+		tfQuantidadeDeAssentos.setHorizontalAlignment(JTextField.CENTER);
+		tfQuantidadeDeAssentos.addFocusListener(new FocusListener() {
+			public void focusLost(FocusEvent e) {
+				
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				tfQuantidadeDeAssentos.setText("");
+			}
+		});
 		tfQuantidadeDeAssentos.addKeyListener(new KeyListener() {
 			public void keyTyped(KeyEvent e) {
 				char caractere =  e.getKeyChar();
@@ -116,7 +131,15 @@ public class WindowsCadastrarSala extends Windows {
 					// Configurar Nova Sala
 					novaSala.setNomeDaSala(tfNomeDaSala.getText());
 					novaSala.setPrecoDoIngresso(tfPrecoDoIngresso.getText());
-					novaSala.setQuantidadeDeAssentos(Integer.parseInt(tfQuantidadeDeAssentos.getText()));
+					
+					if(Integer.parseInt(tfQuantidadeDeAssentos.getText()) <= 40) {
+						novaSala.setQuantidadeDeAssentos(Integer.parseInt(tfQuantidadeDeAssentos.getText()));
+					} else {
+						JOptionPane.showMessageDialog(null, "MÁXIMO DE ASSENTOS PERMITIDO É 40.", "ATENÇÃO!", JOptionPane.ERROR_MESSAGE);
+						tfQuantidadeDeAssentos.setText("");
+						return;
+					}
+					
 					
 					// Adicionar Nova Sala
 					try {

@@ -37,12 +37,15 @@ import cine.monteiro.usuarios.Administrador;
 import cine.monteiro.usuarios.Usuario;
 
 public class WindowsHomeCliente extends Windows {
+	// Atributos
 	private Usuario usuarioAtivo;
 	private JTable tabelaDasSessoes;
 	
+	// Instâncias
 	Persistencia bancoDeInformacoes = new Persistencia();
 	CentralDeInformacoes cpd = bancoDeInformacoes.recuperarCentralDeInformacoes();
 	
+	// Construtor
 	public WindowsHomeCliente(Usuario usuarioAtivo) {
 		super("Cine Monteiro - Home", 855, 400);
 		this.usuarioAtivo = usuarioAtivo;
@@ -55,6 +58,7 @@ public class WindowsHomeCliente extends Windows {
 		setVisible(true);
 	}
 	
+	// Componentes
 	private void adicionarMenuBar() {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -80,7 +84,7 @@ public class WindowsHomeCliente extends Windows {
 		menu.add(itemSobre);
 		
 		if(usuarioAtivo instanceof Administrador) {
-			JMenuItem itemVoltar = new JMenuItem("VOLTAR");
+			JMenuItem itemVoltar = new JMenuItem("PAINEL DE CONTROLE");
 			itemVoltar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					dispose();
@@ -193,13 +197,13 @@ public class WindowsHomeCliente extends Windows {
 		
 		tabelaDasSessoes = new JTable(modeloDaTabela);
 		
+		LocalTime horaAtual = LocalTime.now();
 		ArrayList<Sala> salas = cpd.getSalas();
 		for(Sala sala : salas) {
 			ArrayList<Sessao> sessoes = sala.getSessoes();
 			
 			for(Sessao sessao : sessoes) {
-				
-				if(sessao.isAtiva()) {		
+				if(sessao.isAtiva() && horaAtual.isBefore(sessao.getHoraDeInicio())) {		
 					Object[] linha = new Object[] {sessao.getID(), sala.getNomeDaSala(),  sessao.getFilme().getNomeDoFilme(), sessao.getFilme().getClassificacaoEtaria(), sala.getPrecoDoIngresso(), sessao.getVagasDisponiveis()};
 					modeloDaTabela.addRow(linha);
 				}

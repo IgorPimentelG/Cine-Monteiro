@@ -31,9 +31,9 @@ public class Boleto extends Email {
 		this.ingresso = ingresso;
 	}
 	
-	public void gerarBoleto() throws Exception {
+	private void gerarBoleto() throws Exception {
 		Document doc = new Document(PageSize.A4);
-		PdfWriter.getInstance(doc, new FileOutputStream("cine_monteiro_boleto.pdf"));
+		PdfWriter.getInstance(doc, new FileOutputStream("pdfs/cine_monteiro_boleto.pdf"));
 		doc.open();
 		
 		Image logoDoProjeto = Image.getInstance("imagens/logo-projeto_180x156.png");
@@ -56,8 +56,7 @@ public class Boleto extends Email {
 		Paragraph dadosDoLocal = new Paragraph("Local: " + ingresso.getLocal().getNomeDaSala(), fonteDoTexto);
 		doc.add(dadosDoLocal);
 		
-		SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
-		Paragraph dadosDaSessao = new Paragraph("Início da Sessão: " + ingresso.getSessao().getHoraDeInicio() + "\nFilme: " + ingresso.getSessao().getFilme().getNomeDoFilme() + "\nDuração: " + ingresso.getSessao().getFilme().getDuracao() + " min" + "\nClassificação Etária: " + ingresso.getSessao().getFilme().getClassificacaoEtaria() + "\nVálido até: " + formatoData.format(ingresso.getSessao().getTerminoDoPeriodoDeExibicao()), fonteDoTexto);
+		Paragraph dadosDaSessao = new Paragraph("Início da Sessão: " + ingresso.getSessao().getHoraDeInicio() + "\nFilme: " + ingresso.getSessao().getFilme().getNomeDoFilme() + "\nDuração: " + ingresso.getSessao().getFilme().getDuracao() + " min" + "\nClassificação Etária: " + ingresso.getSessao().getFilme().getClassificacaoEtaria() + "\nVálido até: " + ingresso.getSessao().getTerminoDoPeriodoDeExibicao(), fonteDoTexto);
 		doc.add(dadosDaSessao);
 		
 		Paragraph dadosDoAssento = new Paragraph("Assento(s) reservado(s): " + ingresso.getAssentoReservado(), fonteDoTexto);
@@ -79,8 +78,10 @@ public class Boleto extends Email {
 	}
 	
 	public void enviarBoleto() throws Exception {
-		gerarBoleto();
+		// Gerar boleto
+		this.gerarBoleto();
 		
+		// Criar mensagem
 		Message mensagem = super.configuracao();
 		mensagem.setFrom(new InternetAddress(super.getRemetente()));
 		mensagem.setRecipient(Message.RecipientType.TO, new InternetAddress(ingresso.getCliente().getEmail()));
@@ -90,7 +91,7 @@ public class Boleto extends Email {
 		texto.setText("Seu Ingresso será válido logo após o pagamento do boleto.");
 		
 		MimeBodyPart anexo = new MimeBodyPart();
-		FileDataSource arquivo = new FileDataSource("cine_monteiro_boleto.pdf");
+		FileDataSource arquivo = new FileDataSource("pdfs/cine_monteiro_boleto.pdf");
 		anexo.setDataHandler(new DataHandler(arquivo));
 		anexo.setFileName(arquivo.getName());
 		

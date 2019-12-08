@@ -4,7 +4,6 @@ package cine.monteiro.screens.administrador;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.mail.MessagingException;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -22,9 +21,6 @@ import cine.monteiro.screens.ouvintes.OuvinteBtnVoltarPainelDeControle;
 import cine.monteiro.usuarios.Usuario;
 
 public class WindowsMarketing extends Windows {
-	// Atributos
-	private Usuario usuarioAtivo;
-	
 	// Instâncias
 	Persistencia bancoDeInformacoes = new Persistencia();
 	CentralDeInformacoes cpd = bancoDeInformacoes.recuperarCentralDeInformacoes();
@@ -74,7 +70,8 @@ public class WindowsMarketing extends Windows {
 					JOptionPane.showMessageDialog(null, "PROGRAMAÇÃO ENVIADA COM SUCESSO PARA TODOS OS CLIENTES!", "AVISO!", JOptionPane.INFORMATION_MESSAGE);
 					dispose();
 					new WindowsPainelDeControle();
-				} catch(MessagingException erro) {
+				} catch(Exception erro) {
+					erro.printStackTrace();
 					JOptionPane.showMessageDialog(null, "HOUVE UM ERRO AO ENVIAR A PROGRAMAÇÃO!", "ATENÇÃO!", JOptionPane.ERROR_MESSAGE);
 				}
 			}
