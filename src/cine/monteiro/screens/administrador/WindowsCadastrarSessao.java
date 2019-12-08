@@ -4,13 +4,9 @@ package cine.monteiro.screens.administrador;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
@@ -167,7 +163,7 @@ public class WindowsCadastrarSessao extends Windows {
 					Sala sala = cpd.pesquisarSala(salaSelecionada);
 					
 					cpd.adicionarSessao(novaSessao, sala);
-					sala.addFilmeExibido(filmeDaSessao);
+					sala.adicionarFilmeExibido(filmeDaSessao);
 					novaSessao.setVagasDisponiveis(sala.getQuantidadeDeAssentos());
 					novaSessao.setDataAtualDaSessao(LocalDate.now());
 					JOptionPane.showMessageDialog(null, "SESSÃO CADASTRADA COM SUCESSO!", "AVISO!", JOptionPane.INFORMATION_MESSAGE);

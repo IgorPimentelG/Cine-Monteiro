@@ -56,8 +56,7 @@ public class WindowsInformacoesSessao extends Windows {
 		JLabel lblVagasDisponiveis = new RotuloDetalhar("Qntd. vagas disponíveis: " + sessao.getVagasDisponiveis(), 20, 120, 300, 30);
 		add(lblVagasDisponiveis);
 		
-		SimpleDateFormat formatoDaData = new SimpleDateFormat("dd/MM/yyyy");
-		JLabel lblPeriodo = new RotuloDetalhar("Ativa até: " + formatoDaData.format(sessao.getTerminoDoPeriodoDeExibicao()), 20, 145, 300, 30);
+		JLabel lblPeriodo = new RotuloDetalhar("Ativa até: " + sessao.getTerminoDoPeriodoDeExibicao(), 20, 145, 300, 30);
 		add(lblPeriodo);
 		
 		JLabel lblGenero = new RotuloDetalhar("Gênero: " + sessao.getFilme().getGenero(), 20, 170, 200, 30);

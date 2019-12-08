@@ -36,11 +36,7 @@ public class Sala {
 	public void setPrecoDoIngresso(String precoDoIngresso) {
 		this.precoDoIngresso = precoDoIngresso;
 	}
-	
-	public void setTodosOsFilmesExibidos(ArrayList<Filme> todosOsFilmesExibidos) {
-		this.todosOsFilmesExibidos = todosOsFilmesExibidos;
-	}
-	
+		
 	public void setQuantidadeDeIngressoVendidos(int quantidadeDeIngressoVendidos) {
 		this.quantidadeDeIngressoVendidos += quantidadeDeIngressoVendidos;
 	}
@@ -114,11 +110,11 @@ public class Sala {
 	}
 	
 	// Métodos
-	public void addSessao(Sessao novaSessao) {
+	public void adicionarSessao(Sessao novaSessao) {
 		sessoes.add(novaSessao);
 	}
 	
-	public void addFilmeExibido(Filme filme) {
+	public void adicionarFilmeExibido(Filme filme) {
 		for(Filme filmeCadastrado : todosOsFilmesExibidos) {
 			if(filmeCadastrado.getNomeDoFilme().equals(filme.getNomeDoFilme())) {
 				return;

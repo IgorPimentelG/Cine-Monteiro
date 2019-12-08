@@ -50,8 +50,9 @@
           <vagasDisponiveis>35</vagasDisponiveis>
           <totalDeIngressosVendidos>0</totalDeIngressosVendidos>
           <totalArrecadado>0.0</totalArrecadado>
-          <ativa>true</ativa>
-          <interrompida>false</interrompida>
+          <ativa>false</ativa>
+          <interrompidaEmUmDia>false</interrompidaEmUmDia>
+          <interrompida>true</interrompida>
           <dataAtualDaSessao>2019-12-09</dataAtualDaSessao>
           <dadosDaSessaoDaSemana>
             <list>
@@ -75,9 +76,52 @@
           </dadosDaSessaoDoMes>
           <assentosReservado/>
         </cine.monteiro.gerenciamento.Sessao>
+        <cine.monteiro.gerenciamento.Sessao>
+          <ID>1575823111620</ID>
+          <filme>
+            <nomeDoFilme>Vingadores: Ultimato </nomeDoFilme>
+            <sinopse>Após Thanos eliminar metade das criaturas vivas, os Vingadores têm de lidar com a perda de amigos e entes queridos. Com Tony Stark vagando perdido no espaço sem água e comida, Steve Rogers e Natasha Romanov lideram a resistência contra o titã louco.</sinopse>
+            <genero>Aventura</genero>
+            <duracao>310</duracao>
+            <classificacaoEtaria>I12</classificacaoEtaria>
+            <dadosDaArrecadacao>
+              <list>
+                <string>12/2019</string>
+                <string>42.5</string>
+              </list>
+            </dadosDaArrecadacao>
+          </filme>
+          <horaDeInicio>10:30:00</horaDeInicio>
+          <horaDoTermino>15:40:00</horaDoTermino>
+          <terminoDoPeriodoDeExibicao>2019-12-20</terminoDoPeriodoDeExibicao>
+          <vagasDisponiveis>35</vagasDisponiveis>
+          <totalDeIngressosVendidos>0</totalDeIngressosVendidos>
+          <totalArrecadado>0.0</totalArrecadado>
+          <ativa>true</ativa>
+          <interrompidaEmUmDia>false</interrompidaEmUmDia>
+          <interrompida>false</interrompida>
+          <dataAtualDaSessao>2019-12-09</dataAtualDaSessao>
+          <dadosDaSessaoDaSemana>
+            <list>
+              <string>2019-12-08</string>
+              <string>0</string>
+              <string>R$ 0,00</string>
+            </list>
+          </dadosDaSessaoDaSemana>
+          <dadosDaSessaoDoMes>
+            <list>
+              <string>12/2019</string>
+              <string>0.0</string>
+              <string>0</string>
+              <string>35</string>
+            </list>
+          </dadosDaSessaoDoMes>
+          <assentosReservado/>
+        </cine.monteiro.gerenciamento.Sessao>
       </sessoes>
       <todosOsFilmesExibidos>
         <cine.monteiro.gerenciamento.Filme reference="../../sessoes/cine.monteiro.gerenciamento.Sessao/filme"/>
+        <cine.monteiro.gerenciamento.Filme reference="../../sessoes/cine.monteiro.gerenciamento.Sessao[2]/filme"/>
       </todosOsFilmesExibidos>
       <dadosDaSemana>
         <list/>
@@ -100,27 +144,18 @@
       <sessoes>
         <cine.monteiro.gerenciamento.Sessao>
           <ID>1575784914418</ID>
-          <filme>
-            <nomeDoFilme>Vingadores: Ultimato </nomeDoFilme>
-            <sinopse>Após Thanos eliminar metade das criaturas vivas, os Vingadores têm de lidar com a perda de amigos e entes queridos. Com Tony Stark vagando perdido no espaço sem água e comida, Steve Rogers e Natasha Romanov lideram a resistência contra o titã louco.</sinopse>
-            <genero>Aventura</genero>
-            <duracao>310</duracao>
-            <classificacaoEtaria>I12</classificacaoEtaria>
-            <dadosDaArrecadacao>
-              <list>
-                <string>12/2019</string>
-                <string>42.5</string>
-              </list>
-            </dadosDaArrecadacao>
-          </filme>
+          <filme reference="../../../../cine.monteiro.gerenciamento.Sala/sessoes/cine.monteiro.gerenciamento.Sessao[2]/filme"/>
           <horaDeInicio>19:30:00</horaDeInicio>
           <horaDoTermino>00:40:00</horaDoTermino>
           <terminoDoPeriodoDeExibicao>2019-12-20</terminoDoPeriodoDeExibicao>
           <vagasDisponiveis>40</vagasDisponiveis>
           <totalDeIngressosVendidos>0</totalDeIngressosVendidos>
           <totalArrecadado>0.0</totalArrecadado>
-          <ativa>true</ativa>
-          <interrompida>false</interrompida>
+          <ativa>false</ativa>
+          <interrompidaEmUmDia>false</interrompidaEmUmDia>
+          <interrompida>true</interrompida>
+          <horaDaInterrupcao>04:36:10.9004402</horaDaInterrupcao>
+          <dataDaInterrupcao>2019-12-09</dataDaInterrupcao>
           <dataAtualDaSessao>2019-12-09</dataAtualDaSessao>
           <dadosDaSessaoDaSemana>
             <list>
@@ -159,8 +194,11 @@
           <vagasDisponiveis>40</vagasDisponiveis>
           <totalDeIngressosVendidos>0</totalDeIngressosVendidos>
           <totalArrecadado>0.0</totalArrecadado>
-          <ativa>true</ativa>
-          <interrompida>false</interrompida>
+          <ativa>false</ativa>
+          <interrompidaEmUmDia>false</interrompidaEmUmDia>
+          <interrompida>true</interrompida>
+          <horaDaInterrupcao>04:31:38.8936602</horaDaInterrupcao>
+          <dataDaInterrupcao>2019-12-09</dataDaInterrupcao>
           <dataAtualDaSessao>2019-12-09</dataAtualDaSessao>
           <dadosDaSessaoDaSemana>
             <list>
@@ -184,9 +222,39 @@
           </dadosDaSessaoDoMes>
           <assentosReservado/>
         </cine.monteiro.gerenciamento.Sessao>
+        <cine.monteiro.gerenciamento.Sessao>
+          <ID>1575823143255</ID>
+          <filme reference="../../../../cine.monteiro.gerenciamento.Sala/sessoes/cine.monteiro.gerenciamento.Sessao[2]/filme"/>
+          <horaDeInicio>14:30:00</horaDeInicio>
+          <horaDoTermino>19:40:00</horaDoTermino>
+          <terminoDoPeriodoDeExibicao>2019-12-20</terminoDoPeriodoDeExibicao>
+          <vagasDisponiveis>40</vagasDisponiveis>
+          <totalDeIngressosVendidos>0</totalDeIngressosVendidos>
+          <totalArrecadado>0.0</totalArrecadado>
+          <ativa>true</ativa>
+          <interrompidaEmUmDia>false</interrompidaEmUmDia>
+          <interrompida>false</interrompida>
+          <dataAtualDaSessao>2019-12-09</dataAtualDaSessao>
+          <dadosDaSessaoDaSemana>
+            <list>
+              <string>2019-12-08</string>
+              <string>0</string>
+              <string>R$ 0,00</string>
+            </list>
+          </dadosDaSessaoDaSemana>
+          <dadosDaSessaoDoMes>
+            <list>
+              <string>12/2019</string>
+              <string>0.0</string>
+              <string>0</string>
+              <string>40</string>
+            </list>
+          </dadosDaSessaoDoMes>
+          <assentosReservado/>
+        </cine.monteiro.gerenciamento.Sessao>
       </sessoes>
       <todosOsFilmesExibidos>
-        <cine.monteiro.gerenciamento.Filme reference="../../sessoes/cine.monteiro.gerenciamento.Sessao/filme"/>
+        <cine.monteiro.gerenciamento.Filme reference="../../../cine.monteiro.gerenciamento.Sala/sessoes/cine.monteiro.gerenciamento.Sessao[2]/filme"/>
         <cine.monteiro.gerenciamento.Filme reference="../../../cine.monteiro.gerenciamento.Sala/sessoes/cine.monteiro.gerenciamento.Sessao/filme"/>
       </todosOsFilmesExibidos>
       <dadosDaSemana>
@@ -201,7 +269,7 @@
     </cine.monteiro.gerenciamento.Sala>
   </salas>
   <filmes>
-    <cine.monteiro.gerenciamento.Filme reference="../../salas/cine.monteiro.gerenciamento.Sala[2]/sessoes/cine.monteiro.gerenciamento.Sessao/filme"/>
+    <cine.monteiro.gerenciamento.Filme reference="../../salas/cine.monteiro.gerenciamento.Sala/sessoes/cine.monteiro.gerenciamento.Sessao[2]/filme"/>
     <cine.monteiro.gerenciamento.Filme reference="../../salas/cine.monteiro.gerenciamento.Sala/sessoes/cine.monteiro.gerenciamento.Sessao/filme"/>
   </filmes>
   <emailSalvo>igor.pimentel.msi@hotmail.com</emailSalvo>

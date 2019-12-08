@@ -58,25 +58,25 @@ public class WindowsDetalharSessao extends Windows {
 	}
 	
 	private void adicionarLabels() {
-		JLabel lblTitulo = new RotuloTitulo("DETALHAR SESSÃO", 0, 15, 500, 30);
+		JLabel lblTitulo = new RotuloTitulo("DETALHAR SESSÃO", 0, 10, 500, 30);
 		add(lblTitulo);
 		
 		JLabel lblEstatisticas = new RotuloTitulo("ESTATÍSTICAS", 0, 255, 500, 30);
 		add(lblEstatisticas);
 		
-		JLabel lblIDDaSala = new RotuloDetalhar("Identificação da sessão: " + idDaSessao, 20, 80, 300, 20);
+		JLabel lblIDDaSala = new RotuloDetalhar("Identificação da sessão: " + idDaSessao, 20, 95, 300, 20);
 		add(lblIDDaSala);
 		
-		JLabel lblSalaDaSessao = new RotuloDetalhar("Sala da sessão: " + sala.getNomeDaSala(), 20, 105, 300, 20);
+		JLabel lblSalaDaSessao = new RotuloDetalhar("Sala da sessão: " + sala.getNomeDaSala(), 20, 120, 300, 20);
 		add(lblSalaDaSessao);
 		
-		JLabel lblFilmeDaSessao = new RotuloDetalhar("Filme da sessão: " + sessao.getFilme().getNomeDoFilme(), 20, 130, 400, 20);
+		JLabel lblFilmeDaSessao = new RotuloDetalhar("Filme da sessão: " + sessao.getFilme().getNomeDoFilme(), 20, 145, 400, 20);
 		add(lblFilmeDaSessao);
 		
-		JLabel lblHorararioDaSessao = new RotuloDetalhar("Horário da sessão: " + sessao.getHoraDeInicio() + " - " + sessao.getHoraDoTermino(), 20, 155, 350, 20);
+		JLabel lblHorararioDaSessao = new RotuloDetalhar("Horário da sessão: " + sessao.getHoraDeInicio() + " - " + sessao.getHoraDoTermino(), 20, 170, 350, 20);
 		add(lblHorararioDaSessao);
 		
-		JLabel lblPeridoDeExibicao = new RotuloDetalhar("Em Exibição até: " + sessao.getTerminoDoPeriodoDeExibicao(), 20, 180, 350, 20);
+		JLabel lblPeridoDeExibicao = new RotuloDetalhar("Em Exibição até: " + sessao.getTerminoDoPeriodoDeExibicao(), 20, 195, 350, 20);
 		add(lblPeridoDeExibicao);
 		
 		String status = "";
@@ -86,7 +86,7 @@ public class WindowsDetalharSessao extends Windows {
 			status = "Não ativa";
 		}
 		
-		JLabel lblStatus = new RotuloDetalhar("Status: " + status, 20, 205, 200, 20);
+		JLabel lblStatus = new RotuloDetalhar("Status: " + status, 20, 220, 200, 20);
 		add(lblStatus);
 		
 		JLabel lblDia = new RotuloDetalhar("DIA:", 175, 305, 50, 20);
@@ -105,45 +105,84 @@ public class WindowsDetalharSessao extends Windows {
 		Persistencia bancoDeInformacoes = new Persistencia();
 		CentralDeInformacoes cpd = bancoDeInformacoes.recuperarCentralDeInformacoes();
 		
-		JCheckBox cbInterromperSessao = new JCheckBox("INTERROMPER SESSÃO EM UM DIA", sessao.isInterrompida());
-		cbInterromperSessao.setBounds(0, 50, 500, 20);
-		cbInterromperSessao.setHorizontalAlignment(JCheckBox.CENTER);
-		if(sessao.isInterrompida()) {
+		JCheckBox cbInterromperSessaoEmUmDia = new JCheckBox("INTERROMPER SESSÃO EM UM DIA", sessao.isInterrompidaEmUmDia());
+		JCheckBox cbInterromperSessao = new JCheckBox("INTERROMPER SESSÃO", sessao.isInterrompida());
+		
+		if(sessao.isInterrompidaEmUmDia() || sessao.isInterrompida()) {
+			cbInterromperSessaoEmUmDia.setEnabled(false);
 			cbInterromperSessao.setEnabled(false);
 		}
-		cbInterromperSessao.addActionListener(new ActionListener() {
+		
+		cbInterromperSessaoEmUmDia.setBounds(0, 45, 500, 20);
+		cbInterromperSessaoEmUmDia.setHorizontalAlignment(JCheckBox.CENTER);
+		cbInterromperSessaoEmUmDia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(cbInterromperSessao.isSelected()) {
-					if(sessao.isInterrompida()) {
-						JOptionPane.showMessageDialog(null, "A SESSÃO JÁ ESTÁ INTERROMPIDA!", "ATENÇÃO!", JOptionPane.ERROR_MESSAGE);
-					} else {
-						ArrayList<Sala> salas = cpd.getSalas();
-						for(Sala sala : salas) {
-							ArrayList<Sessao> sessoes = sala.getSessoes();
-							for(Sessao s : sessoes) {
-								if(s.getID() == sessao.getID()) {
-									s.setInterrompida(true);
-									s.setAtiva();
-								}
+				if(cbInterromperSessaoEmUmDia.isSelected()) {
+					ArrayList<Sala> salas = cpd.getSalas();
+					for(Sala sala : salas) {
+						ArrayList<Sessao> sessoes = sala.getSessoes();
+						for(Sessao s : sessoes) {
+							if(s.getID() == sessao.getID()) {
+								s.setInterrompidaEmUmDia(true);
+								s.setAtiva();
 							}
 						}
-						bancoDeInformacoes.salvarCentralDeInformacoes(cpd);
-						cbInterromperSessao.setEnabled(false);
-						JOptionPane.showMessageDialog(null, "A SESSÃO FOI INTERROMPIDA EM UM DIA!", "ATENÇÃO!", JOptionPane.ERROR_MESSAGE);
+					cbInterromperSessaoEmUmDia.setEnabled(false);
+					cbInterromperSessao.setEnabled(false);
+					JOptionPane.showMessageDialog(null, "A SESSÃO FOI INTERROMPIDA EM UM DIA!", "ATENÇÃO!", JOptionPane.ERROR_MESSAGE);
+					bancoDeInformacoes.salvarCentralDeInformacoes(cpd);
 					}
 				}
 			}
 		});
-		add(cbInterromperSessao);
+		add(cbInterromperSessaoEmUmDia);
+		
+		cbInterromperSessao.setBounds(0, 65, 500, 20);
+		cbInterromperSessao.setHorizontalAlignment(JCheckBox.CENTER);
+		cbInterromperSessao.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(cbInterromperSessao.isSelected()) {
+					ArrayList<Sala> salas = cpd.getSalas();
+					for(Sala sala : salas) {
+						ArrayList<Sessao> sessoes = sala.getSessoes();
+						for(Sessao s : sessoes) {
+							if(s.getID() == sessao.getID()) {
+								s.setInterrompida(true);
+								s.setAtiva();
+							}
+						}
+					}
+					cbInterromperSessaoEmUmDia.setEnabled(false);
+					cbInterromperSessao.setEnabled(false);
+					JOptionPane.showMessageDialog(null, "A SESSÃO FOI INTERROMPIDA!", "ATENÇÃO!", JOptionPane.ERROR_MESSAGE);
+					bancoDeInformacoes.salvarCentralDeInformacoes(cpd);
+				}
+			}
+		});
+		add(cbInterromperSessao);		
 	}
 	
 	private void adicionarComBox() {
-		String[] opcoes = new String[sessao.getDadosDaSessaoDaSemana().size()];
 		ArrayList<ArrayList<String>> dadosDaSessao = sessao.getDadosDaSessaoDaSemana();
+		ArrayList<String> datas = new ArrayList<String>();
 		
-		for(int i = 0; i < dadosDaSessao.size(); i++) {
-			ArrayList<String> dados = dadosDaSessao.get(i);
-			opcoes[i] = dados.get(0);
+		for(ArrayList<String> dados : dadosDaSessao) {
+			boolean dataNaoExiste = true;
+			for(String dataSalva : datas) {
+				if(dataSalva.equals(dados.get(0))) {
+					dataNaoExiste = false;
+				}
+			}
+			
+			if(dataNaoExiste) {
+				datas.add(dados.get(0));
+			}
+		}
+		
+		String[] opcoes = new String[datas.size()];
+		
+		for(int i = 0; i < datas.size(); i++) {
+			opcoes[i] = datas.get(i);
 		}
 		
 		cbData = new JComboBox<String>(opcoes);
@@ -166,7 +205,7 @@ public class WindowsDetalharSessao extends Windows {
 	
 	private void adicionarSeparador() {
 		JSeparator separador = new JSeparator(SwingConstants.HORIZONTAL);
-		separador.setBounds(10, 240, 465, 2);
+		separador.setBounds(10, 250, 465, 2);
 		add(separador);
 	}
 	

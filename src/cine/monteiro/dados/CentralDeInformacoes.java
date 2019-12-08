@@ -140,11 +140,11 @@ public class CentralDeInformacoes {
 				ArrayList<Sessao> sessoesDaSala = sala.getSessoes();
 					
 				for(Sessao velhaSessao : sessoesDaSala) {
-					if(!(novaSessao.getHoraDeInicio().isAfter(velhaSessao.getHoraDoTermino()) || novaSessao.getHoraDoTermino().isBefore(velhaSessao.getHoraDeInicio()))) {
+					if(!(novaSessao.getHoraDeInicio().isAfter(velhaSessao.getHoraDoTermino()) || novaSessao.getHoraDoTermino().isBefore(velhaSessao.getHoraDeInicio())) && !velhaSessao.isInterrompida()) {
 						throw new Exception("JÁ EXISTE UMA SESSÃO CADASTRADA NESTE PERÍODO DE EXIBIÇÃO!");
 					}
 				}
-				sala.addSessao(novaSessao);
+				sala.adicionarSessao(novaSessao);
 			}
 	}
 	

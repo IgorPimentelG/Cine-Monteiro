@@ -17,6 +17,7 @@ public class Sessao {
 	private int totalDeIngressosVendidos;
 	private float totalArrecadado;
 	private boolean ativa;
+	private boolean interrompidaEmUmDia;
 	private boolean interrompida;
 	private LocalTime horaDaInterrupcao;
 	private LocalDate dataDaInterrupcao;
@@ -27,6 +28,7 @@ public class Sessao {
 	
 	// Construtor
 	public Sessao() {
+		interrompidaEmUmDia = false;
 		interrompida = false;
 		totalDeIngressosVendidos = 0;
 		totalArrecadado = 0;
@@ -51,14 +53,15 @@ public class Sessao {
 	}
 	
 	public void setAtiva() {
-		if(isInterrompida()) {
+		if(isInterrompidaEmUmDia()) {
 			if(dataDaInterrupcao.isBefore(dataAtualDaSessao) && (horaDaInterrupcao.equals(LocalTime.now())|| horaDaInterrupcao.isBefore(LocalTime.now()))) {
-				System.out.println(dataDaInterrupcao.isBefore(dataAtualDaSessao));
 				ativa = true;
-				interrompida = false;
+				interrompidaEmUmDia = false;
 			} else {
 				ativa = false;
 			}
+		} else if(isInterrompida()) {
+			ativa = false;
 		} else if((LocalDate.now().isBefore(terminoDoPeriodoDeExibicao) || LocalDate.now().equals(terminoDoPeriodoDeExibicao))) {
 			ativa = true;
 		} else {
@@ -86,13 +89,17 @@ public class Sessao {
 		this.totalArrecadado = totalArrecadado;
 	}
 	
-	public void setInterrompida(boolean status) {
-		this.interrompida = status;
+	public void setInterrompidaEmUmDia(boolean status) {
+		this.interrompidaEmUmDia = status;
 		
 		if(status)  {
 			this.horaDaInterrupcao = LocalTime.now();
 			this.dataDaInterrupcao = this.dataAtualDaSessao;
 		}
+	}
+	
+	public void setInterrompida(boolean status) {
+		this.interrompida = true;
 	}
 	
 	public void setDataAtualDaSessao(LocalDate dataAtualDaSessao) {
@@ -146,6 +153,10 @@ public class Sessao {
 	
 	public boolean isAtiva() {
 		return ativa;
+	}
+	
+	public boolean isInterrompidaEmUmDia() {
+		return interrompidaEmUmDia;
 	}
 	
 	public boolean isInterrompida() {

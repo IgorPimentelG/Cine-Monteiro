@@ -108,7 +108,7 @@ public class WindowsDetalharSala extends Windows {
 		
 		ArrayList<Sessao> sessoes = sala.getSessoes();
 		for(Sessao sessao : sessoes) {
-			if(sessao.isAtiva() && !sessao.isInterrompida()) {
+			if(sessao.isAtiva() && !sessao.isInterrompidaEmUmDia()) {
 				Object[] linha = new Object[2];
 				linha[0] = sessao.getID();
 				linha[1] = sessao.getFilme().getNomeDoFilme();
