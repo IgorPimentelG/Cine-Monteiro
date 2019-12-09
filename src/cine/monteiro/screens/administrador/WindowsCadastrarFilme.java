@@ -158,7 +158,7 @@ public class WindowsCadastrarFilme extends Windows {
 				Persistencia bancoDeInformacoes = new Persistencia();
 				CentralDeInformacoes cpd = bancoDeInformacoes.recuperarCentralDeInformacoes();
 				
-				if(tfNomeDoFilme.getText().isBlank() || tfDuracao.getText().isBlank() || areaSinopse.getText().isBlank()) {
+				if(tfNomeDoFilme.getText().isEmpty() || tfDuracao.getText().isEmpty() || areaSinopse.getText().isEmpty()) {
 					JOptionPane.showMessageDialog(null, "PREENCHA TODOS OS DADOS!", "ATENÇÃOO!", JOptionPane.WARNING_MESSAGE);
 				} else {
 					Filme novoFilme = new Filme();

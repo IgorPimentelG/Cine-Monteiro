@@ -1,12 +1,10 @@
+  
 package cine.monteiro.dados;
 
 // Bibliotecas
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
 
 // Pacotes
 import cine.monteiro.usuarios.*;
@@ -35,6 +33,7 @@ public class CentralDeInformacoes {
 	}
 	
 	public ArrayList<Usuario> getUsuarios() {
+
 		return usuarios;
 	}
 
@@ -73,6 +72,7 @@ public class CentralDeInformacoes {
 	
 	// Sala
 	public void adicionarSala(Sala novaSala) throws Exception {
+		
 		for(Sala s : salas) {
 			if(s.getNomeDaSala().equalsIgnoreCase(novaSala.getNomeDaSala()) || s.getID() == novaSala.getID()) {
 				throw new Exception("JÁ UMA SALA COM O MESMO NOME CADASTRADO!");
@@ -147,20 +147,9 @@ public class CentralDeInformacoes {
 				sala.adicionarSessao(novaSessao);
 			}
 	}
-	
-	public void interromperSessao(long ID) throws Exception {
-		for(int i = 0; i < salas.size(); i++) {
-			ArrayList<Sessao> sessoes = salas.get(i).getSessoes();
-			
-			for(Sessao sessao : sessoes) {
-				if(sessao.getID() == ID) {
-					sessao.setAtiva(false);
-				}
-			}
-		}
-	}
-	
+		
 	public Sessao pesquisarSessao(Sala local,long idDaSessao) {
+		
 		for(Sala salaCadastrada : salas) {
 			if(salaCadastrada.getNomeDaSala().equals(local.getNomeDaSala())) {
 				ArrayList<Sessao> sessoesCadastradas = salaCadastrada.getSessoes();

@@ -83,18 +83,14 @@ public class Relatorio extends Email {
 		
 		ArrayList<Filme> filmesCadastrados = cpd.getFilmes();
 		for(Filme filme : filmesCadastrados) {
-			System.out.println(filme.getNomeDoFilme());
 			ArrayList<ArrayList<String>> dadosDaArrecadacao = filme.getDadosDaArrecadacao();
 			for(ArrayList<String> dados : dadosDaArrecadacao) {
 				if(dados.get(0).equals(mes)) {
 					Paragraph dadosDoFilme = new Paragraph("\nFilme: " + filme.getNomeDoFilme() + "\nTotal Arrecadado: " + NumberFormat.getCurrencyInstance().format(Float.parseFloat(dados.get(1))));
 					relatorio.add(dadosDoFilme);
 				}
-			}
-			
+			}	
 		}
-		
-		
 		relatorio.close();
 	}
 	

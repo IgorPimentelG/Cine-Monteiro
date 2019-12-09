@@ -56,7 +56,7 @@ public class Boleto extends Email {
 		Paragraph dadosDoLocal = new Paragraph("Local: " + ingresso.getLocal().getNomeDaSala(), fonteDoTexto);
 		doc.add(dadosDoLocal);
 		
-		Paragraph dadosDaSessao = new Paragraph("Início da Sessão: " + ingresso.getSessao().getHoraDeInicio() + "\nFilme: " + ingresso.getSessao().getFilme().getNomeDoFilme() + "\nDuração: " + ingresso.getSessao().getFilme().getDuracao() + " min" + "\nClassificação Etária: " + ingresso.getSessao().getFilme().getClassificacaoEtaria() + "\nVálido até: " + ingresso.getSessao().getTerminoDoPeriodoDeExibicao(), fonteDoTexto);
+		Paragraph dadosDaSessao = new Paragraph("Início da Sessão: " + ingresso.getSessao().getHoraDeInicio() + "\nFilme: " + ingresso.getSessao().getFilme().getNomeDoFilme() + "\nDuração: " + ingresso.getSessao().getFilme().getDuracao() + " min" + "\nClassificação Etária: " + ingresso.getSessao().getFilme().getClassificacaoEtaria() + "\nVálido até: " + ingresso.getSessao().getDataAtualDaSessao(), fonteDoTexto);
 		doc.add(dadosDaSessao);
 		
 		Paragraph dadosDoAssento = new Paragraph("Assento(s) reservado(s): " + ingresso.getAssentoReservado(), fonteDoTexto);

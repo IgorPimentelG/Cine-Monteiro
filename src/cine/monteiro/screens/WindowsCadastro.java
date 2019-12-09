@@ -89,9 +89,7 @@ public class WindowsCadastro extends Windows {
 	
 	private void adicionarLabels() {
 		// Modificar aqui
-		JLabel lblSubTitulo = new JLabel("PREENCHA TODOS OS DADOS");
-		lblSubTitulo.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
-		lblSubTitulo.setBounds(285, 20, 300, 20);
+		JLabel lblSubTitulo = new RotuloTitulo("PREENCHA TODOS OS DADOS", 170, 20, 465,20);
 		add(lblSubTitulo);
 		
 		JLabel lblTitulo = new JLabel("NOVA CONTA");
@@ -146,16 +144,26 @@ public class WindowsCadastro extends Windows {
 			CentralDeInformacoes cpd = bancoDeInformacoes.recuperarCentralDeInformacoes();
 			
 			// Validar Dados
-			if(!(new String(tfSenha.getPassword()).equals(new String(tfConfirmarSenha.getPassword())))) {
+			if (tfNome.getText().isEmpty() || tfCPF.getText().isEmpty() || tfTelefone.getText().isEmpty() || tfDataDeNascimento.getText().isEmpty() ||tfEmail.getText().isEmpty() || tfSenha.getPassword().length == 0){
+				JOptionPane.showMessageDialog(null, "PREENCHA TODOS OS DADOS!", "ATENÇÃO!", JOptionPane.WARNING_MESSAGE);
+			} else if(!(new String(tfSenha.getPassword()).equals(new String(tfConfirmarSenha.getPassword())))) {
 				JOptionPane.showMessageDialog(null, "SENHAS INCORRETAS!", "ATENÇÃO!", JOptionPane.ERROR_MESSAGE);
 				tfSenha.setText("");
 				tfConfirmarSenha.setText("");
 				repaint();
-			} else if (tfNome.getText().isEmpty() || tfCPF.getText().isEmpty() || tfTelefone.getText().isEmpty() || tfDataDeNascimento.getText().isEmpty() ||tfEmail.getText().isEmpty() || tfSenha.getPassword().length == 0){
-				JOptionPane.showMessageDialog(null, "PREENCHA TODOS OS DADOS!", "ATENÇÃO!", JOptionPane.WARNING_MESSAGE);
-			} else if(!(cpd.validarEmail(tfEmail.getText()))) {
+			} else if (new String(tfSenha.getPassword()).length() < 5){
+				JOptionPane.showMessageDialog(null, "SENHA CURTA. DIGITE UMA SENHA COM PELO O MENOS 5 CARACTERES!", "ATENÇÃO!", JOptionPane.WARNING_MESSAGE);
+				tfSenha.setText("");
+				tfConfirmarSenha.setText("");
+			}  else if(!(cpd.validarEmail(tfEmail.getText()))) {
 				JOptionPane.showMessageDialog(null, "E-MAIL INVÁLIDO!", "ATENÇÃO!", JOptionPane.ERROR_MESSAGE);
 				tfEmail.setText("");
+			} else if (tfCPF.getText().equals("000.000.000-00")){
+				JOptionPane.showMessageDialog(null, "CPF INVÁLIDO!", "ATENÇÃO!", JOptionPane.ERROR_MESSAGE);
+				tfCPF.setText("");
+			} else if(tfTelefone.getText().equals("(00) 0.0000-0000")) {
+				JOptionPane.showMessageDialog(null, "TELEFONE INVÁLIDO!", "ATENÇÃO!", JOptionPane.ERROR_MESSAGE);
+				tfTelefone.setText("");
 			} else {
 				Usuario novoUsuario;
 				Date dataDeNascimento = null;
@@ -163,9 +171,10 @@ public class WindowsCadastro extends Windows {
 				try {
 					SimpleDateFormat formatoDataDeNascimento = new SimpleDateFormat("dd/MM/yyyy");
 					formatoDataDeNascimento.setLenient(false);
-					 dataDeNascimento = formatoDataDeNascimento.parse(tfDataDeNascimento.getText());
+					dataDeNascimento = formatoDataDeNascimento.parse(tfDataDeNascimento.getText());
 				} catch (Exception erro) {
 					JOptionPane.showMessageDialog(null, "DATA DE NASCIMENTO INVÁLIDA!", "ATENÇÃO!", JOptionPane.ERROR_MESSAGE);
+					tfDataDeNascimento.setText("");
 					return;
 				}
 				

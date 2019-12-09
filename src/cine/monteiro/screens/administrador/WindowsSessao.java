@@ -6,8 +6,11 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 
+import cine.monteiro.dados.CentralDeInformacoes;
+import cine.monteiro.dados.Persistencia;
 import cine.monteiro.imagens.Imagens;
 import cine.monteiro.screens.componentes.*;
 import cine.monteiro.screens.ouvintes.OuvinteBtnVoltarPainelDeControle;
@@ -36,11 +39,21 @@ public class WindowsSessao extends Windows {
 	}
 	
 	private void adicionarButtons() {
+		Persistencia bancoDeInformacoes = new Persistencia();
+		CentralDeInformacoes cpd = bancoDeInformacoes.recuperarCentralDeInformacoes();
+		
 		JButton btnCadastrarSessao = new ButtonPersonalizado("CADASTRAR SESSÃO", 120, 15, 200, 30);
 		btnCadastrarSessao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
-				new WindowsCadastrarSessao();
+				
+				if(cpd.getSalas().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "NÃO EXISTE SALAS CADASTRADAS!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
+				} else if(cpd.getFilmes().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "NÃO EXISTE FILMES CADASTRADOS!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
+				} else {
+					dispose();
+					new WindowsCadastrarSessao();
+				}	
 			}
 		});
 		add(btnCadastrarSessao);

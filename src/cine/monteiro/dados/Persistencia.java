@@ -8,12 +8,14 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Writer;
 
+import javax.swing.JOptionPane;
+
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
 
 public class Persistencia {
-	private XStream xStream = new XStream(new DomDriver("UTF-8"));
+	private XStream xStream = new XStream(new DomDriver("utf-8"));
 	private File arquivo = new File("dados.xml");
 	
 	OutputStream outputStream = null;
@@ -27,7 +29,7 @@ public class Persistencia {
 			gravar.print(dados);
 			gravar.close();
 		} catch(IOException erro) {
-			erro.printStackTrace();
+			JOptionPane.showMessageDialog(null, "ERRO AO SALVAR CENTRAL DE INFORMAÇÕES!", "ATENÇÃO", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
@@ -38,7 +40,7 @@ public class Persistencia {
 				return (CentralDeInformacoes) xStream.fromXML(file);
 			}
 		} catch(FileNotFoundException erro) {
-			erro.printStackTrace();
+			JOptionPane.showMessageDialog(null, "ERRO AO RECUPERAR CENTRAL DE INFORMAÇÕES!", "ATENÇÃO", JOptionPane.ERROR_MESSAGE);
 		}
 		return new CentralDeInformacoes();
 	}

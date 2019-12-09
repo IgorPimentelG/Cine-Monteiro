@@ -125,7 +125,7 @@ public class WindowsCadastrarSala extends Windows {
 			CentralDeInformacoes cpd = bancoDeInformacoes.recuperarCentralDeInformacoes();
 			
 			public void actionPerformed(ActionEvent e) {
-				if(tfNomeDaSala.getText().isEmpty() || tfPrecoDoIngresso.getText().isEmpty() || tfQuantidadeDeAssentos.getText().isEmpty()) {
+				if(tfNomeDaSala.getText().isEmpty() || tfPrecoDoIngresso.getText().equals("R$  .  ") || tfQuantidadeDeAssentos.getText().equals("Max. 40")) {
 					JOptionPane.showMessageDialog(null, "PREENCHA TODOS OS DADOS!", "ATENÇÃO!", JOptionPane.WARNING_MESSAGE);
 				} else {
 					// Configurar Nova Sala

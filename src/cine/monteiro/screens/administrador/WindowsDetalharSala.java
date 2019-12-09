@@ -67,7 +67,7 @@ public class WindowsDetalharSala extends Windows {
 		JLabel lblTotalArrecadado = new RotuloDetalhar("Total arrecadado: " + sala.getTotalArrecadado(), 20, 160, 300, 20);
 		add(lblTotalArrecadado);
 		
-		JLabel lblTotalArrecadadoSemana = new RotuloDetalhar("Total arrecadado nos últimos 7 dias: " + sala.getTotalArrecadadoNaSemana(), 20, 185, 300, 20);
+		JLabel lblTotalArrecadadoSemana = new RotuloDetalhar("Total arrecadado nos últimos 7 dias: " + sala.getTotalArrecadadoNaSemana(), 20, 185, 350, 20);
 		add(lblTotalArrecadadoSemana);
 	}
 	

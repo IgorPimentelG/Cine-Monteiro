@@ -80,7 +80,7 @@ public class WindowsListarSalas extends Windows {
 	}
 	
 	private void adicionarButtons() {
-		JButton btnDetalhar = new ButtonPersonalizado("Detalhar", 260, 312, 150, 35);
+		JButton btnDetalhar = new ButtonPersonalizado("DETALHAR", 260, 312, 150, 35);
 		btnDetalhar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(tabelaSalas.getSelectedRow() == -1) {
@@ -94,7 +94,7 @@ public class WindowsListarSalas extends Windows {
 		}); 
 		add(btnDetalhar);
 		
-		JButton btnVoltar = new ButtonPersonalizado("Voltar", 430, 312, 150, 35);
+		JButton btnVoltar = new ButtonPersonalizado("VOLTAR", 430, 312, 150, 35);
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();

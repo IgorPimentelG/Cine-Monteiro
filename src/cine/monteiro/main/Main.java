@@ -1,17 +1,10 @@
 package cine.monteiro.main;
 
-import java.nio.channels.NonReadableChannelException;
 import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.swing.JOptionPane;
-
-import com.thoughtworks.xstream.benchmark.jmh.Base64Benchmark.Data;
-import com.thoughtworks.xstream.converters.time.LocalDateConverter;
 
 // Pacotes
 import cine.monteiro.dados.*;
@@ -21,18 +14,21 @@ import cine.monteiro.gerenciamento.Sessao;
 import cine.monteiro.screens.*;
 
 public class Main {
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) {
 		Persistencia bancoDeInformacoes = new Persistencia();
 		CentralDeInformacoes cpd = bancoDeInformacoes.recuperarCentralDeInformacoes();
 		
-		//WindowsSplash splash = new WindowsSplash();
-		//Thread.sleep(3000);
-		//splash.dispose();
-	
-		LocalDate dataAtual = LocalDate.parse("2019-12-09");
+		WindowsSplash splash = new WindowsSplash();
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			JOptionPane.showMessageDialog(null, "ERRO NO TIME!", "ATENÇÃO", JOptionPane.ERROR_MESSAGE);
+		}
+		splash.dispose();
 		
+		LocalDate dataAtual = LocalDate.now();
 		ArrayList<Sala> salas = cpd.getSalas();
-		
+	
 		for(Sala sala : salas) {
 			ArrayList<Sessao> sessoesDaSala = sala.getSessoes();
 			ArrayList<Float> dadosDaSala = new ArrayList<Float>();
@@ -77,7 +73,6 @@ public class Main {
 			}
 			sala.adicionarDadosDaSemana(dadosDaSala);
 		}
-		
 		bancoDeInformacoes.salvarCentralDeInformacoes(cpd);
 		
 		if(cpd.getUsuarios().isEmpty()) {

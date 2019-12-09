@@ -3,7 +3,6 @@ package cine.monteiro.gerenciamento;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
-
 public class Sala {
 	//Atributos
 	private final long ID;
